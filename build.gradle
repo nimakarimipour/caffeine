@@ -92,6 +92,10 @@ subprojects {
       options.errorprone.nullaway {
         severity = CheckSeverity.OFF
       }
+    }else{
+      options.errorprone.nullaway {
+        severity = CheckSeverity.ERROR
+      }
     }
   }
 
