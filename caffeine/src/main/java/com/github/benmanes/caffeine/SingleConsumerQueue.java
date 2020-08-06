@@ -32,7 +32,6 @@ import java.util.concurrent.atomic.AtomicReference;
 import java.util.function.Function;
 
 import org.checkerframework.checker.nullness.qual.NonNull;
-import org.checkerframework.checker.nullness.qual.Nullable;
 
 import com.github.benmanes.caffeine.SingleConsumerQueue.Node;
 import com.github.benmanes.caffeine.base.UnsafeAccess;
@@ -331,7 +330,7 @@ public final class SingleConsumerQueue<E> extends SCQHeader.HeadAndTailRef<E>
    * @return either {@code null} if the element was transferred, the first node if neither a
    *         transfer nor receive were successful, or the received last element from a producer
    */
-  @Nullable Node<E> transferOrCombine(@NonNull Node<E> first, Node<E> last) {
+  Node<E> transferOrCombine(@NonNull Node<E> first, Node<E> last) {
     int index = index();
     AtomicReference<Node<E>> slot = arena[index];
 
@@ -472,19 +471,19 @@ public final class SingleConsumerQueue<E> extends SCQHeader.HeadAndTailRef<E>
   static class Node<E> {
     static final long NEXT_OFFSET = UnsafeAccess.objectFieldOffset(Node.class, "next");
 
-    @Nullable E value;
-    @Nullable volatile Node<E> next;
+     E value;
+     volatile Node<E> next;
 
-    Node(@Nullable E value) {
+    Node( E value) {
       this.value = value;
     }
 
     @SuppressWarnings("unchecked")
-    @Nullable Node<E> getNextRelaxed() {
+     Node<E> getNextRelaxed() {
       return (Node<E>) UnsafeAccess.UNSAFE.getObject(this, NEXT_OFFSET);
     }
 
-    void lazySetNext(@Nullable Node<E> newNext) {
+    void lazySetNext( Node<E> newNext) {
       UnsafeAccess.UNSAFE.putOrderedObject(this, NEXT_OFFSET, newNext);
     }
 
@@ -508,7 +507,7 @@ public final class SingleConsumerQueue<E> extends SCQHeader.HeadAndTailRef<E>
   static final class LinearizableNode<E> extends Node<E> {
     volatile boolean done;
 
-    LinearizableNode(@Nullable E value) {
+    LinearizableNode( E value) {
       super(value);
     }
 
@@ -541,7 +540,7 @@ final class SCQHeader {
 
   /** Enforces a memory layout to avoid false sharing by padding the head node. */
   abstract static class HeadRef<E> extends PadHead<E> {
-    @Nullable Node<E> head;
+    Node<E> head;
   }
 
   abstract static class PadHeadAndTail<E> extends HeadRef<E> {
@@ -553,7 +552,7 @@ final class SCQHeader {
   abstract static class HeadAndTailRef<E> extends PadHeadAndTail<E> {
     static final long TAIL_OFFSET = UnsafeAccess.objectFieldOffset(HeadAndTailRef.class, "tail");
 
-    @Nullable volatile Node<E> tail;
+    volatile Node<E> tail;
 
     void lazySetTail(Node<E> next) {
       UnsafeAccess.UNSAFE.putOrderedObject(this, TAIL_OFFSET, next);
