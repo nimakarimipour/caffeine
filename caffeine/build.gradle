@@ -14,7 +14,7 @@ apply plugin: 'edu.ucr.cs.riple.plugin'
 
 autoFixMode {
   fixPath = "/tmp/NullAwayFix"
-  maximumRound = 0
+  maximumRound = 1
 }
 
 annotationEditor {

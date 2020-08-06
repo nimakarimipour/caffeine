@@ -32,10 +32,10 @@ import java.util.concurrent.atomic.AtomicReference;
 import java.util.function.Function;
 
 import org.checkerframework.checker.nullness.qual.NonNull;
+import org.checkerframework.checker.nullness.qual.Nullable;
 
 import com.github.benmanes.caffeine.SingleConsumerQueue.Node;
 import com.github.benmanes.caffeine.base.UnsafeAccess;
-
 
 /**
  * A lock-free unbounded queue based on linked nodes that supports concurrent producers and is
@@ -78,7 +78,7 @@ import com.github.benmanes.caffeine.base.UnsafeAccess;
  */
 @SuppressWarnings("NullAway")
 public final class SingleConsumerQueue<E> extends SCQHeader.HeadAndTailRef<E>
-    implements Queue<E>, Serializable {
+        implements Queue<E>, Serializable {
 
   /*
    * The queue is represented as a singly-linked list with an atomic head and tail reference. It is
@@ -330,7 +330,7 @@ public final class SingleConsumerQueue<E> extends SCQHeader.HeadAndTailRef<E>
    * @return either {@code null} if the element was transferred, the first node if neither a
    *         transfer nor receive were successful, or the received last element from a producer
    */
-  Node<E> transferOrCombine(@NonNull Node<E> first, Node<E> last) {
+  @Nullable Node<E> transferOrCombine(@NonNull Node<E> first, Node<E> last) {
     int index = index();
     AtomicReference<Node<E>> slot = arena[index];
 
@@ -471,19 +471,19 @@ public final class SingleConsumerQueue<E> extends SCQHeader.HeadAndTailRef<E>
   static class Node<E> {
     static final long NEXT_OFFSET = UnsafeAccess.objectFieldOffset(Node.class, "next");
 
-     E value;
-     volatile Node<E> next;
+    @Nullable E value;
+    @Nullable volatile Node<E> next;
 
-    Node( E value) {
+    Node(@Nullable E value) {
       this.value = value;
     }
 
     @SuppressWarnings("unchecked")
-     Node<E> getNextRelaxed() {
+    @Nullable Node<E> getNextRelaxed() {
       return (Node<E>) UnsafeAccess.UNSAFE.getObject(this, NEXT_OFFSET);
     }
 
-    void lazySetNext( Node<E> newNext) {
+    void lazySetNext(@Nullable Node<E> newNext) {
       UnsafeAccess.UNSAFE.putOrderedObject(this, NEXT_OFFSET, newNext);
     }
 
@@ -507,7 +507,7 @@ public final class SingleConsumerQueue<E> extends SCQHeader.HeadAndTailRef<E>
   static final class LinearizableNode<E> extends Node<E> {
     volatile boolean done;
 
-    LinearizableNode( E value) {
+    LinearizableNode(@Nullable E value) {
       super(value);
     }
 
@@ -540,7 +540,7 @@ final class SCQHeader {
 
   /** Enforces a memory layout to avoid false sharing by padding the head node. */
   abstract static class HeadRef<E> extends PadHead<E> {
-    Node<E> head;
+    @Nullable Node<E> head;
   }
 
   abstract static class PadHeadAndTail<E> extends HeadRef<E> {
@@ -552,7 +552,7 @@ final class SCQHeader {
   abstract static class HeadAndTailRef<E> extends PadHeadAndTail<E> {
     static final long TAIL_OFFSET = UnsafeAccess.objectFieldOffset(HeadAndTailRef.class, "tail");
 
-    volatile Node<E> tail;
+    @Nullable volatile Node<E> tail;
 
     void lazySetTail(Node<E> next) {
       UnsafeAccess.UNSAFE.putOrderedObject(this, TAIL_OFFSET, next);
