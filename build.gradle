@@ -36,6 +36,7 @@ allprojects {
 
   repositories {
     jcenter()
+    mavenLocal()
     mavenCentral()
     maven { url 'https://jitpack.io' }
   }
@@ -91,6 +92,16 @@ subprojects {
       options.errorprone.nullaway {
         severity = CheckSeverity.OFF
       }
+    }
+  }
+
+  tasks.withType(JavaCompile) {
+    // remove the if condition if you want to run NullAway on test code
+    if (!name.toLowerCase().contains("test")) {
+      options.errorprone {
+        option("NullAway:AutoFix", "true")
+      }
+      options.compilerArgs << "-Xmaxerrs" << "100000"
     }
   }
 

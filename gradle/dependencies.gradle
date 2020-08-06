@@ -131,7 +131,7 @@ ext {
       "com.koloboke:koloboke-api-jdk8:${versions.koloboke}",
       "com.koloboke:koloboke-impl-jdk8:${versions.koloboke}",
     ],
-    nullaway: "com.uber.nullaway:nullaway:${versions.nullaway}",
+    nullaway: "edu.ucr.cs.riple:nullaway:0.7.12-SNAPSHOT",
     ohc: "org.caffinitas.ohc:ohc-core-j8:${versions.ohc}",
     picocli: "info.picocli:picocli:${versions.picocli}",
     slf4jNop: "org.slf4j:slf4j-nop:${versions.slf4j}",
