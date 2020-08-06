@@ -80,6 +80,7 @@ import com.github.benmanes.caffeine.base.UnsafeAccess;
 public final class SingleConsumerQueue<E> extends SCQHeader.HeadAndTailRef<E>
     implements Queue<E>, Serializable {
 
+
   /*
    * The queue is represented as a singly-linked list with an atomic head and tail reference. It is
    * based on the non-intrusive multi-producer / single-consumer node queue described by
