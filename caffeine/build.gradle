@@ -14,12 +14,12 @@ apply plugin: 'edu.ucr.cs.riple.plugin'
 
 autoFixMode {
   fixPath = "/tmp/NullAwayFix"
-  maximumRound = 1
+  maximumRound = 20
 }
 
 annotationEditor {
-  remove = "org.checkerframework.checker.nullness.qual.Nullable"
-  srcSets = ["main"]
+  remove = ["org.checkerframework.checker.nullness.qual.Nullable", "org.checkerframework.checker.nullness.qual.NonNull"]
+  srcSets = ["main", "jmh", "javaPoet"]
 }
 
 apply from: "${rootDir}/gradle/jmh.gradle"
