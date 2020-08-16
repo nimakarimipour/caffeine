@@ -104,6 +104,7 @@ subprojects {
     if (!name.toLowerCase().contains("test")) {
       options.errorprone {
         option("NullAway:AutoFix", "true")
+        option("NullAway:FixAnnotations", "org.checkerframework.checker.nullness.qual.NonNull,org.checkerframework.checker.nullness.qual.Nullable")
       }
       options.compilerArgs << "-Xmaxerrs" << "100000"
     }
