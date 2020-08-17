@@ -1,26 +1,5 @@
 import org.gradle.plugins.ide.eclipse.model.SourceFolder
 
-buildscript {
-  repositories {
-    mavenLocal()
-    mavenCentral()
-  }
-  dependencies {
-    classpath 'edu.ucr.cs.riple:NullAwayAutoFixer:1.0-SNAPSHOT'
-  }
-}
-
-apply plugin: 'edu.ucr.cs.riple.plugin'
-
-autoFixMode {
-  fixPath = "/tmp/NullAwayFix"
-  maximumRound = 20
-}
-
-annotationEditor {
-  remove = ["org.checkerframework.checker.nullness.qual.Nullable", "org.checkerframework.checker.nullness.qual.NonNull"]
-}
-
 apply from: "${rootDir}/gradle/jmh.gradle"
 apply from: "${projectDir}/testing.gradle"
 

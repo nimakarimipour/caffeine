@@ -1,5 +1,28 @@
 import net.ltgt.gradle.errorprone.CheckSeverity
 
+buildscript {
+  repositories {
+    mavenLocal()
+    mavenCentral()
+  }
+  dependencies {
+    classpath 'edu.ucr.cs.riple:NullAwayAutoFixer:1.0-SNAPSHOT'
+  }
+}
+
+apply plugin: 'edu.ucr.cs.riple.plugin'
+
+autoFixMode {
+  fixPath = "/tmp/NullAwayFix"
+  maximumRound = 20
+}
+
+annotationEditor {
+  remove = ["org.checkerframework.checker.nullness.qual.Nullable", "org.checkerframework.checker.nullness.qual.NonNull"]
+  subProjects = ["caffeine"]
+}
+
+
 apply plugin: 'com.github.mjdetullio.gradle.coverity'
 apply plugin: 'com.github.ben-manes.versions'
 apply plugin: 'com.github.kt3k.coveralls'
