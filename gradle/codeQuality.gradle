@@ -108,6 +108,8 @@ tasks.withType(JavaCompile) {
       "-Xep:AnnotatorScanner:OFF",
       "-XepOpt:AnnotatorScanner:ConfigPath=/home/nima/Developer/nullness-benchmarks/caffeine/annotator-out/scanner.xml",
     ]
+    options.compilerArgs << "-Xmaxerrs" << "100000"
+    options.compilerArgs << "-Xmaxwarns" << "100000"
   }
 }
 
