@@ -59,6 +59,8 @@ dependencies {
 
   compileOnly libraries.jsr305
   compileOnly libraries.errorProneAnnotations
+  compileOnly "org.jspecify:jspecify:0.3.0"
+  compileOnly "com.uber.nullaway:nullaway-annotations:0.10.10"
 }
 
 compileCodeGenJava {
