@@ -49,7 +49,6 @@ allprojects {
 subprojects {
   apply plugin: 'com.github.ethankhall.semantic-versioning'
   apply plugin: 'net.ltgt.errorprone'
-  apply plugin: 'propdeps-maven'
   apply plugin: 'eclipse'
   apply plugin: 'java'
   apply plugin: 'idea'
@@ -75,16 +74,8 @@ subprojects {
   }
   archivesBaseName = path[1..-1].replaceAll(':', '-').toLowerCase()
 
-  idea.module {
-    scopes.PROVIDED.plus += [ configurations.provided ]
-  }
 
   dependencies {
-    provided libraries.jsr305
-    provided libraries.errorProneAnnotations
-
-    errorprone libraries.errorProneCore
-
     testCompile libraries.guava
     testCompile testLibraries.mockito
     testCompile testLibraries.hamcrest

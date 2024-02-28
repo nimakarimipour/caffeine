@@ -1,0 +1,60 @@
+caffeine/src/jmh/java/com/github/benmanes/caffeine/cache/BasicCache.java:  @Nullable
+caffeine/src/main/java/com/github/benmanes/caffeine/ConcurrentLinkedStack.java:  public boolean contains(@Nullable Object o) {
+caffeine/src/main/java/com/github/benmanes/caffeine/ConcurrentLinkedStack.java:  @Nullable
+caffeine/src/main/java/com/github/benmanes/caffeine/ConcurrentLinkedStack.java:  @Nullable
+caffeine/src/main/java/com/github/benmanes/caffeine/ConcurrentLinkedStack.java:  @Nullable Node<E> tryReceive() {
+caffeine/src/main/java/com/github/benmanes/caffeine/ConcurrentLinkedStack.java:  @Nullable Node<E> transferOrCombine(Node<E> first, Node<E> last) {
+caffeine/src/main/java/com/github/benmanes/caffeine/ConcurrentLinkedStack.java:  void unlink(@Nullable Node<E> previous, Node<E> deleted) {
+caffeine/src/main/java/com/github/benmanes/caffeine/ConcurrentLinkedStack.java:    @Nullable E advance() {
+caffeine/src/main/java/com/github/benmanes/caffeine/ConcurrentLinkedStack.java:    public boolean contains(@Nullable Object o) {
+caffeine/src/main/java/com/github/benmanes/caffeine/ConcurrentLinkedStack.java:    void lazySetNext(@Nullable Node<E> newNext) {
+caffeine/src/main/java/com/github/benmanes/caffeine/SingleConsumerQueue.java:  @Nullable Node<E> transferOrCombine(@Nonnull Node<E> first, Node<E> last) {
+caffeine/src/main/java/com/github/benmanes/caffeine/SingleConsumerQueue.java:    Node(@Nullable E value) {
+caffeine/src/main/java/com/github/benmanes/caffeine/SingleConsumerQueue.java:    @Nullable Node<E> getNextRelaxed() {
+caffeine/src/main/java/com/github/benmanes/caffeine/SingleConsumerQueue.java:    void lazySetNext(@Nullable Node<E> newNext) {
+caffeine/src/main/java/com/github/benmanes/caffeine/SingleConsumerQueue.java:    LinearizableNode(@Nullable E value) {
+caffeine/src/main/java/com/github/benmanes/caffeine/cache/Async.java:  static boolean isReady(@Nullable CompletableFuture<?> future) {
+caffeine/src/main/java/com/github/benmanes/caffeine/cache/Async.java:  static @Nullable <V> V getIfReady(@Nullable CompletableFuture<V> future) {
+caffeine/src/main/java/com/github/benmanes/caffeine/cache/Async.java:  static @Nullable <V> V getWhenSuccessful(@Nullable CompletableFuture<V> future) {
+caffeine/src/main/java/com/github/benmanes/caffeine/cache/BoundedLocalCache.java:  void notifyRemoval(@Nullable K key, @Nullable V value, RemovalCause cause) {
+caffeine/src/main/java/com/github/benmanes/caffeine/cache/BoundedLocalCache.java:  @Nullable
+caffeine/src/main/java/com/github/benmanes/caffeine/cache/BoundedLocalCache.java:  @Nullable
+caffeine/src/main/java/com/github/benmanes/caffeine/cache/BoundedLocalCache.java:  void afterWrite(@Nullable Node<K, V> node, Runnable task, long now) {
+caffeine/src/main/java/com/github/benmanes/caffeine/cache/CacheWriter.java:  void delete(@Nonnull K key, @Nullable V value, @Nonnull RemovalCause cause);
+caffeine/src/main/java/com/github/benmanes/caffeine/cache/LocalCache.java:  @Nullable
+caffeine/src/main/java/com/github/benmanes/caffeine/cache/LocalCache.java:  @Nullable
+caffeine/src/main/java/com/github/benmanes/caffeine/cache/LocalManualCache.java:  default @Nullable V getIfPresent(Object key) {
+caffeine/src/main/java/com/github/benmanes/caffeine/cache/Node.java:  @Nullable
+caffeine/src/main/java/com/github/benmanes/caffeine/cache/Node.java:  @Nullable
+caffeine/src/main/java/com/github/benmanes/caffeine/cache/Node.java:  void setValue(@Nonnull V value, @Nullable ReferenceQueue<V> referenceQueue);
+caffeine/src/main/java/com/github/benmanes/caffeine/cache/Node.java:  default void setPreviousInAccessOrder(@Nullable Node<K, V> prev) {
+caffeine/src/main/java/com/github/benmanes/caffeine/cache/Node.java:  default void setNextInAccessOrder(@Nullable Node<K, V> next) {
+caffeine/src/main/java/com/github/benmanes/caffeine/cache/Node.java:  default void setPreviousInWriteOrder(@Nullable Node<K, V> prev) {
+caffeine/src/main/java/com/github/benmanes/caffeine/cache/Node.java:  default void setNextInWriteOrder(@Nullable Node<K, V> next) {
+caffeine/src/main/java/com/github/benmanes/caffeine/cache/References.java:    default boolean referenceEquals(@Nullable Object object) {
+caffeine/src/main/java/com/github/benmanes/caffeine/cache/References.java:    public WeakKeyReference(@Nullable K key, @Nonnull ReferenceQueue<K> queue) {
+caffeine/src/main/java/com/github/benmanes/caffeine/cache/RemovalNotification.java:  @Nullable private final K key;
+caffeine/src/main/java/com/github/benmanes/caffeine/cache/RemovalNotification.java:  @Nullable private final V value;
+caffeine/src/main/java/com/github/benmanes/caffeine/cache/RemovalNotification.java:  public RemovalNotification(@Nullable K key, @Nullable V value, @Nonnull RemovalCause cause) {
+caffeine/src/main/java/com/github/benmanes/caffeine/cache/RemovalNotification.java:  @Override @Nullable
+caffeine/src/main/java/com/github/benmanes/caffeine/cache/RemovalNotification.java:  @Override @Nullable
+caffeine/src/main/java/com/github/benmanes/caffeine/cache/UnboundedLocalCache.java:  @Nullable final RemovalListener<K, V> removalListener;
+caffeine/src/main/java/com/github/benmanes/caffeine/cache/UnboundedLocalCache.java:  void notifyRemoval(@Nullable K key, @Nullable V value, RemovalCause cause) {
+caffeine/src/test/java/com/github/benmanes/caffeine/cache/testing/CacheContext.java:  @Nullable Integer firstKey;
+caffeine/src/test/java/com/github/benmanes/caffeine/cache/testing/CacheContext.java:  @Nullable Integer middleKey;
+caffeine/src/test/java/com/github/benmanes/caffeine/cache/testing/CacheContext.java:  @Nullable Integer lastKey;
+caffeine/src/test/java/com/github/benmanes/caffeine/cache/testing/HasRemovalNotifications.java:  public HasRemovalNotifications(CacheContext context, int count, @Nullable RemovalCause cause) {
+guava/src/main/java/com/github/benmanes/caffeine/guava/CaffeinatedGuavaCache.java:  @Override @Nullable
+guava/src/test/java/com/google/common/cache/CacheBuilderFactory.java:        @Override public Optional<?> apply(@Nullable Object obj) {
+guava/src/test/java/com/google/common/cache/CacheTesting.java:    void accept(@Nullable T object);
+guava/src/test/java/com/google/common/cache/TestingCacheLoaders.java:  static <K, V> ConstantLoader<K, V> constantLoader(@Nullable V constant) {
+jcache/src/main/java/com/github/benmanes/caffeine/jcache/CacheFactory.java:  public @Nullable <K, V> CacheProxy<K, V> tryToCreateFromExternalSettings(String cacheName) {
+jcache/src/main/java/com/github/benmanes/caffeine/jcache/CacheManagerImpl.java:  private @Nullable <K, V> CacheProxy<K, V> getOrCreateCache(String cacheName) {
+jcache/src/main/java/com/github/benmanes/caffeine/jcache/CacheProxy.java:  protected @Nullable <T> T copyOf(@Nullable T object) {
+jcache/src/main/java/com/github/benmanes/caffeine/jcache/CacheProxy.java:  protected @Nullable V copyValue(@Nullable Expirable<V> expirable) {
+jcache/src/main/java/com/github/benmanes/caffeine/jcache/configuration/CaffeineConfiguration.java:  public @Nullable CacheWriter<K , V> getCacheWriter() {
+jcache/src/main/java/com/github/benmanes/caffeine/jcache/processor/EntryProcessorEntry.java:  public EntryProcessorEntry(K key, @Nullable V value, Optional<CacheLoader<K, V>> cacheLoader) {
+tracing/api/src/main/java/com/github/benmanes/caffeine/cache/tracing/TraceEvent.java:  public @Nullable String name() {
+tracing/api/src/main/java/com/github/benmanes/caffeine/cache/tracing/TraceEvent.java:  public void setName(@Nullable String name) {
+tracing/api/src/main/java/com/github/benmanes/caffeine/cache/tracing/TraceEvent.java:  public @Nullable Action action() {
+tracing/api/src/main/java/com/github/benmanes/caffeine/cache/tracing/TraceEvent.java:  public void setAction(@Nullable Action action) {

@@ -56,6 +56,9 @@ dependencies {
   javaPoetCompile libraries.jsr305
   javaPoetCompile libraries.javapoet
   javaPoetCompile libraries.commonsLang3
+
+  compileOnly libraries.jsr305
+  compileOnly libraries.errorProneAnnotations
 }
 
 compileCodeGenJava {
