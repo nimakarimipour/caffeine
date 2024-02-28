@@ -1,1 +1,7 @@
 kind	class	method	param	index	uri	field
+METHOD	com.github.benmanes.caffeine.cache.AbstractLinkedDeque	linkFirst(E)	null	null	/home/nima/Developer/nullness-benchmarks/caffeine/caffeine/src/main/java/com/github/benmanes/caffeine/cache/AbstractLinkedDeque.java	first
+METHOD	com.github.benmanes.caffeine.cache.AbstractLinkedDeque	linkLast(E)	null	null	/home/nima/Developer/nullness-benchmarks/caffeine/caffeine/src/main/java/com/github/benmanes/caffeine/cache/AbstractLinkedDeque.java	last
+METHOD	com.github.benmanes.caffeine.cache.AbstractLinkedDeque	unlinkFirst()	null	null	/home/nima/Developer/nullness-benchmarks/caffeine/caffeine/src/main/java/com/github/benmanes/caffeine/cache/AbstractLinkedDeque.java	first
+METHOD	com.github.benmanes.caffeine.cache.AbstractLinkedDeque	unlinkLast()	null	null	/home/nima/Developer/nullness-benchmarks/caffeine/caffeine/src/main/java/com/github/benmanes/caffeine/cache/AbstractLinkedDeque.java	last
+METHOD	com.github.benmanes.caffeine.cache.AbstractLinkedDeque$AbstractLinkedIterator	next()	null	null	/home/nima/Developer/nullness-benchmarks/caffeine/caffeine/src/main/java/com/github/benmanes/caffeine/cache/AbstractLinkedDeque.java	previous
+METHOD	com.github.benmanes.caffeine.cache.AbstractLinkedDeque$AbstractLinkedIterator	next()	null	null	/home/nima/Developer/nullness-benchmarks/caffeine/caffeine/src/main/java/com/github/benmanes/caffeine/cache/AbstractLinkedDeque.java	cursor

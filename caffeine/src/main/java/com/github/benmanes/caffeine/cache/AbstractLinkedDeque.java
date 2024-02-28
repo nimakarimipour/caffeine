@@ -20,6 +20,7 @@ import java.util.Collection;
 import java.util.NoSuchElementException;
 
 import javax.annotation.concurrent.NotThreadSafe;
+import org.jspecify.annotations.NullUnmarked;
 
 /**
  * This class provides a skeletal implementation of the {@link LinkedDeque} interface to minimize
@@ -28,7 +29,7 @@ import javax.annotation.concurrent.NotThreadSafe;
  * @author ben.manes@gmail.com (Ben Manes)
  * @param <E> the type of elements held in this collection
  */
-@NotThreadSafe
+@NullUnmarked @NotThreadSafe
 abstract class AbstractLinkedDeque<E> extends AbstractCollection<E> implements LinkedDeque<E> {
 
   // This class provides a doubly-linked list that is optimized for the virtual machine. The first
@@ -352,7 +353,7 @@ abstract class AbstractLinkedDeque<E> extends AbstractCollection<E> implements L
     };
   }
 
-  abstract class AbstractLinkedIterator implements PeekingIterator<E> {
+  @NullUnmarked abstract class AbstractLinkedIterator implements PeekingIterator<E> {
     E previous;
     E cursor;
 

@@ -26,7 +26,7 @@ def run_annotator():
     commands += ['-cp', '{}/paths.tsv'.format(OUT_DIR)]
     commands += ['-i', 'com.uber.nullaway.annotations.Initializer']
     commands += ['-n', 'javax.annotation.Nullable']
-    # commands += ['-sre', 'org.jspecify.annotations.NullUnmarked']
+    commands += ['-sre', 'org.jspecify.annotations.NullUnmarked']
     commands += ['-cn', 'NULLAWAY']
     commands += ["--depth", "10"]
     # Uncomment to see build output
