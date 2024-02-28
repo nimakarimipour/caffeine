@@ -3,7 +3,7 @@ import os
 import shutil
 from pathlib import Path
 
-VERSION = '1.3.9-TAINT-SNAPSHOT'
+VERSION = '1.3.13-java-8-SNAPSHOT'
 CURRENT_DIR = os.path.dirname(os.path.realpath(__file__))
 REPO = os.path.dirname(CURRENT_DIR)
 OUT_DIR = '{}/annotator-out/'.format(REPO)
@@ -22,7 +22,7 @@ def run_annotator():
     commands = []
     commands += ["java", "-jar", ANNOTATOR_JAR]
     commands += ['-d', OUT_DIR]
-    commands += ['-bc', 'cd {} && ./gradlew caffeine:compileJava --rerun-tasks'.format(REPO)]
+    commands += ['-bc', 'cd {} && JAVA_HOME=/usr/lib/jvm/java-1.8.0-openjdk-amd64 ./gradlew caffeine:compileJava --rerun-tasks'.format(REPO)]
     commands += ['-cp', '{}/paths.tsv'.format(OUT_DIR)]
     commands += ['-i', 'com.uber.nullaway.annotations.Initializer']
     commands += ['-n', 'javax.annotation.Nullable']
