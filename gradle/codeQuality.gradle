@@ -18,6 +18,7 @@ dependencies {
   checkstyleConfig gradlePlugins.checkstyle
   errorprone libraries.errorProneCore
   apt annotationProcessors.nullaway
+  apt annotationProcessors.annotatorScanner
 }
 
 tasks.withType(JavaCompile) {
@@ -101,7 +102,11 @@ tasks.withType(JavaCompile) {
   if (name == 'compileJava') {
     options.compilerArgs += [
       '-XepOpt:NullAway:AnnotatedPackages=com.github.benmanes.caffeine',
+      "-XepOpt:NullAway:SerializeFixMetadata=true",
+      "-XepOpt:NullAway:FixSerializationConfigPath=/home/nima/Developer/nullness-benchmarks/caffeine/annotator-out/checker.xml",
       '-Xep:NullAway:ERROR',
+      "-Xep:AnnotatorScanner:OFF",
+      "-XepOpt:AnnotatorScanner:ConfigPath=/home/nima/Developer/nullness-benchmarks/caffeine/annotator-out/scanner.xml",
     ]
   }
 }

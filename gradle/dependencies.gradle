@@ -96,6 +96,7 @@ ext {
 
   annotationProcessorVersions = [
     nullaway: '0.10.23',
+    annotatorScanner: '1.3.13-java-8-SNAPSHOT'
   ]
 
   libraries = [
@@ -202,5 +203,6 @@ ext {
   ]
   annotationProcessors = [
     nullaway: "com.uber.nullaway:nullaway:${annotationProcessorVersions.nullaway}",
+    annotatorScanner: "edu.ucr.cs.riple.annotator:annotator-scanner:${annotationProcessorVersions.annotatorScanner}",
   ]
 }
