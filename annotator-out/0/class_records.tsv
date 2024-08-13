@@ -1,0 +1,8 @@
+class	path
+com.github.benmanes.caffeine.EliminationStack	/home/nima/Developer/nullness-benchmarks/caffeine/src/main/java/com/github/benmanes/caffeine/EliminationStack.java
+com.github.benmanes.caffeine.EliminationStack$1ReadOnlyIterator	/home/nima/Developer/nullness-benchmarks/caffeine/src/main/java/com/github/benmanes/caffeine/EliminationStack.java
+com.github.benmanes.caffeine.EliminationStack$1	/home/nima/Developer/nullness-benchmarks/caffeine/src/main/java/com/github/benmanes/caffeine/EliminationStack.java
+com.github.benmanes.caffeine.EliminationStack$SerializationProxy	/home/nima/Developer/nullness-benchmarks/caffeine/src/main/java/com/github/benmanes/caffeine/EliminationStack.java
+com.github.benmanes.caffeine.EliminationStack$Node	/home/nima/Developer/nullness-benchmarks/caffeine/src/main/java/com/github/benmanes/caffeine/EliminationStack.java
+com.github.benmanes.caffeine.EliminationStack$PaddedAtomicReference	/home/nima/Developer/nullness-benchmarks/caffeine/src/main/java/com/github/benmanes/caffeine/EliminationStack.java
+com.github.benmanes.caffeine.EliminationStack$AsLifoQueue	/home/nima/Developer/nullness-benchmarks/caffeine/src/main/java/com/github/benmanes/caffeine/EliminationStack.java
