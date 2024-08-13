@@ -1,2 +1,1 @@
 kind	class	method	param	index	uri	field
-METHOD	com.github.benmanes.caffeine.EliminationStack$1ReadOnlyIterator	computeNext()	null	null	/home/nima/Developer/nullness-benchmarks/caffeine/src/main/java/com/github/benmanes/caffeine/EliminationStack.java	current

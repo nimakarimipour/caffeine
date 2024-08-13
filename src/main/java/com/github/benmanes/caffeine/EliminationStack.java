@@ -118,7 +118,7 @@ final class EliminationStack<E> extends AbstractCollection<E> implements Seriali
   static final int SPINS_PER_STEP = (SPINS / LOOKAHEAD);
 
   /** A marker indicating that the arena slot is free. */
-  static final Object FREE = null;
+  @Nullable static final Object FREE = null;
 
   /** A marker indicating that a thread is waiting in that slot to be transfered an element. */
   static final Object WAITER = new Object();
@@ -232,7 +232,7 @@ final class EliminationStack<E> extends AbstractCollection<E> implements Seriali
    *
    * @return the top of the stack or <tt>null</tt> if this stack is empty
    */
-  public E peek() {
+  @Nullable public E peek() {
     for (;;) {
       Node<E> node = top.get();
       if (node == null) {
@@ -314,7 +314,7 @@ final class EliminationStack<E> extends AbstractCollection<E> implements Seriali
   @Override
   public Iterator<E> iterator() {
     final class ReadOnlyIterator extends AbstractIterator<E> {
-      Node<E> current = top.get();
+      @Nullable Node<E> current = top.get();
 
       @Override
       protected E computeNext() {
@@ -550,7 +550,7 @@ final class EliminationStack<E> extends AbstractCollection<E> implements Seriali
   static final class Node<E> extends AtomicReference<E> {
     private static final long serialVersionUID = 1L;
 
-    Node<E> next;
+    @Nullable Node<E> next;
 
     Node(E value) {
       super(value);
@@ -589,12 +589,12 @@ final class EliminationStack<E> extends AbstractCollection<E> implements Seriali
       return add(e);
     }
 
-    @Override
+    @Nullable @Override
     public E poll() {
       return stack.pop();
     }
 
-    @Override
+    @Nullable @Override
     public E peek() {
       return stack.peek();
     }
