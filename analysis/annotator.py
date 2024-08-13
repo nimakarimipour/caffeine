@@ -33,7 +33,7 @@ def run_annotator():
     commands = []
     commands += ["java", "-jar", ANNOTATOR_JAR]
     commands += ['-d', OUT_DIR]
-    commands += ['-bc', 'cd {} && ./gradlew library:build -x test'.format(REPO)]
+    commands += ['-bc', 'cd {} && ./gradlew build -x test'.format(REPO)]
     commands += ['-cp', '{}/paths.tsv'.format(OUT_DIR)]
     commands += ['-i', 'edu.ucr.Initializer']
     commands += ['-n', 'javax.annotation.Nullable']
