@@ -63,7 +63,7 @@ public final class WikipediaTraceReader extends TextTraceReader {
    *  <li>A flag to indicate if the request resulted in a database update or not ('-' or 'save')
    * </ul>
    */
-  private @Nullable String parseRequest(String line) {
+  private  String parseRequest(String line) {
     if (!isRead(line)) {
       return null;
     }

@@ -202,7 +202,7 @@ public final class HillClimberWindowTinyLfuPolicy implements Policy {
   }
 
   /** Performs the hill climbing process. */
-  private void climb(long key, @Nullable QueueType queue) {
+  private void climb(long key,  QueueType queue) {
     if (data.size() < maximumSize) {
       return;
     } else if (queue == null) {

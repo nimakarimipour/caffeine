@@ -113,7 +113,7 @@ class CacheBuilderFactory {
 
   private static final Function<Object, Optional<?>> NULLABLE_TO_OPTIONAL =
       new Function<Object, Optional<?>>() {
-        @Override public Optional<?> apply(@Nullable Object obj) {
+        @Override public Optional<?> apply( Object obj) {
           return Optional.fromNullable(obj);
         }
       };

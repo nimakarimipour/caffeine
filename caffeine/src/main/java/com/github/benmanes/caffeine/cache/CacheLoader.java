@@ -58,7 +58,7 @@ public interface CacheLoader<K, V> extends AsyncCacheLoader<K, V> {
    *         treated like any other {@code Exception} in all respects except that, when it is
    *         caught, the thread's interrupt status is set
    */
-  @Nullable
+  
   V load(@Nonnull K key) throws Exception;
 
   /**
@@ -162,7 +162,7 @@ public interface CacheLoader<K, V> extends AsyncCacheLoader<K, V> {
    *         treated like any other {@code Exception} in all respects except that, when it is
    *         caught, the thread's interrupt status is set
    */
-  @Nullable
+  
   default V reload(@Nonnull K key, @Nonnull V oldValue) throws Exception {
     return load(key);
   }

@@ -36,8 +36,8 @@ import com.github.benmanes.caffeine.cache.RemovalCause;
  */
 @Immutable
 public final class RemovalNotification<K, V> implements Entry<K, V> {
-  @Nullable private final K key;
-  @Nullable private final V value;
+   private final K key;
+   private final V value;
   private final RemovalCause cause;
 
   /**
@@ -47,7 +47,7 @@ public final class RemovalNotification<K, V> implements Entry<K, V> {
    * @param value the value represented by this entry
    * @param cause the reason for which the entry was removed
    */
-  public RemovalNotification(@Nullable K key, @Nullable V value, @Nonnull RemovalCause cause) {
+  public RemovalNotification( K key,  V value, @Nonnull RemovalCause cause) {
     this.cause = requireNonNull(cause);
     this.value = value;
     this.key = key;
@@ -75,7 +75,7 @@ public final class RemovalNotification<K, V> implements Entry<K, V> {
    * Returns the key of the removed entry or null if it was garbage collected due to
    * {@link Caffeine#weakKeys()} eviction.
    */
-  @Override @Nullable
+  @Override 
   public K getKey() {
     return key;
   }
@@ -84,7 +84,7 @@ public final class RemovalNotification<K, V> implements Entry<K, V> {
    * Returns the key of the removed entry or null if it was garbage collected due to
    * {@link Caffeine#weakValues()} or {@link Caffeine#softValues()} eviction.
    */
-  @Override @Nullable
+  @Override 
   public V getValue() {
     return value;
   }

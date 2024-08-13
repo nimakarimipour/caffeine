@@ -3,7 +3,7 @@ import os
 import shutil
 from pathlib import Path
 
-VERSION = '1.3.13-java-8-SNAPSHOT'
+VERSION = '1.3.13-SNAPSHOT'
 CURRENT_DIR = os.path.dirname(os.path.realpath(__file__))
 REPO = os.path.dirname(CURRENT_DIR)
 OUT_DIR = '{}/annotator-out/'.format(REPO)

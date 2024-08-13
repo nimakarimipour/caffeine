@@ -86,7 +86,7 @@ public abstract class AbstractJCacheTest {
 
   /* ---------------- Utility methods ------------- */
 
-  @Nullable
+  
   protected static Expirable<Integer> getExpirable(
       CacheProxy<Integer, Integer> cache, Integer key) {
     return cache.cache.getIfPresent(key);

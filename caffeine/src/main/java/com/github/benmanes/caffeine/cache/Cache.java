@@ -50,8 +50,8 @@ public interface Cache<K, V> {
    *         mapping for the key
    * @throws NullPointerException if the specified key is null
    */
-  @Nullable
-  V getIfPresent(@Nonnull Object key);
+  
+  @Nullable V getIfPresent(@Nonnull Object key);
 
   /**
    * Returns the value associated with the {@code key} in this cache, obtaining that value from the
@@ -78,7 +78,7 @@ public interface Cache<K, V> {
    * @throws RuntimeException or Error if the mappingFunction does so, in which case the mapping is
    *         left unestablished
    */
-  @Nullable
+  
   V get(@Nonnull K key, @Nonnull Function<? super K, ? extends V> mappingFunction);
 
   /**

@@ -149,16 +149,16 @@ public final class Caffeine<K, V> {
   long expireAfterWriteNanos = UNSET_INT;
   long expireAfterAccessNanos = UNSET_INT;
 
-  @Nullable RemovalListener<? super K, ? super V> removalListener;
-  @Nullable Supplier<StatsCounter> statsCounterSupplier;
-  @Nullable CacheWriter<? super K, ? super V> writer;
-  @Nullable Weigher<? super K, ? super V> weigher;
-  @Nullable Expiry<? super K, ? super V> expiry;
-  @Nullable Executor executor;
-  @Nullable Ticker ticker;
+   RemovalListener<? super K, ? super V> removalListener;
+   Supplier<StatsCounter> statsCounterSupplier;
+   CacheWriter<? super K, ? super V> writer;
+   Weigher<? super K, ? super V> weigher;
+   Expiry<? super K, ? super V> expiry;
+   Executor executor;
+   Ticker ticker;
 
-  @Nullable Strength keyStrength;
-  @Nullable Strength valueStrength;
+   Strength keyStrength;
+   Strength valueStrength;
 
   private Caffeine() {}
 
@@ -613,7 +613,7 @@ public final class Caffeine<K, V> {
   }
 
   @SuppressWarnings("unchecked")
-  @Nullable Expiry<K, V> getExpiry(boolean isAsync) {
+   Expiry<K, V> getExpiry(boolean isAsync) {
     return isAsync && (expiry != null)
         ? (Expiry<K, V>) new AsyncExpiry<>(expiry)
         : (Expiry<K, V>) expiry;
@@ -721,7 +721,7 @@ public final class Caffeine<K, V> {
   }
 
   @SuppressWarnings({"unchecked", "rawtypes"})
-  @Nullable <K1 extends K, V1 extends V> RemovalListener<K1, V1> getRemovalListener(boolean async) {
+   <K1 extends K, V1 extends V> RemovalListener<K1, V1> getRemovalListener(boolean async) {
     RemovalListener<K1, V1> castedListener = (RemovalListener<K1, V1>) removalListener;
     return async && (castedListener != null)
         ? new AsyncRemovalListener(castedListener, getExecutor())

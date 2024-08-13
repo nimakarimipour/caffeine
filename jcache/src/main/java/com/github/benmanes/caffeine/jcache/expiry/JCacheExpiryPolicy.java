@@ -38,7 +38,7 @@ public final class JCacheExpiryPolicy implements ExpiryPolicy, Serializable {
   private final Duration access;
 
   public JCacheExpiryPolicy(@Nonnull Duration creation, 
-      @Nullable Duration update, @Nullable Duration access) {
+       Duration update,  Duration access) {
     this.creation = requireNonNull(creation);
     this.update = update;
     this.access = access;

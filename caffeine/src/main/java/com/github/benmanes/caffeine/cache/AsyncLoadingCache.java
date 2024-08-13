@@ -48,8 +48,8 @@ public interface AsyncLoadingCache<K, V> {
    *         or {@code null} if this map contains no mapping for the key
    * @throws NullPointerException if the specified key is null
    */
-  @Nullable
-  CompletableFuture<V> getIfPresent(@Nonnull Object key);
+  
+  @Nullable CompletableFuture<V> getIfPresent(@Nonnull Object key);
 
   /**
    * Returns the future associated with {@code key} in this cache, obtaining that value from

@@ -54,7 +54,7 @@ class CaffeinatedGuavaCache<K, V> implements Cache<K, V>, Serializable {
     this.cache = requireNonNull(cache);
   }
 
-  @Override @Nullable
+  @Override 
   public V getIfPresent(Object key) {
     return cache.getIfPresent(key);
   }

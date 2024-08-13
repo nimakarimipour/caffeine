@@ -62,7 +62,7 @@ public class TestingCacheLoaders {
   /**
    * Returns a {@link CacheLoader} that returns the given {@code constant} for every request.
    */
-  static <K, V> ConstantLoader<K, V> constantLoader(@Nullable V constant) {
+  static <K, V> ConstantLoader<K, V> constantLoader( V constant) {
     return new ConstantLoader<K, V>(constant);
   }
 

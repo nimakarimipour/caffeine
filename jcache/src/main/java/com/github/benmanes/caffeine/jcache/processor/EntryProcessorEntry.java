@@ -40,7 +40,7 @@ public final class EntryProcessorEntry<K, V> implements MutableEntry<K, V> {
   private Action action;
   private Optional<CacheLoader<K, V>> cacheLoader;
 
-  public EntryProcessorEntry(K key, @Nullable V value, Optional<CacheLoader<K, V>> cacheLoader) {
+  public EntryProcessorEntry(K key,  V value, Optional<CacheLoader<K, V>> cacheLoader) {
     this.hasEntry = (value != null);
     this.cacheLoader = cacheLoader;
     this.action = Action.NONE;

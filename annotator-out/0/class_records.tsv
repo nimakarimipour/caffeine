@@ -1,0 +1,11 @@
+class	path
+com.github.benmanes.caffeine.cache.Expiry	/home/nima/Developer/nullness-benchmarks/caffeine/caffeine/src/main/java/com/github/benmanes/caffeine/cache/Expiry.java
+com.github.benmanes.caffeine.cache.AsyncCacheLoader	/home/nima/Developer/nullness-benchmarks/caffeine/caffeine/src/main/java/com/github/benmanes/caffeine/cache/AsyncCacheLoader.java
+com.github.benmanes.caffeine.cache.LocalAsyncLoadingCache	/home/nima/Developer/nullness-benchmarks/caffeine/caffeine/src/main/java/com/github/benmanes/caffeine/cache/LocalAsyncLoadingCache.java
+com.github.benmanes.caffeine.cache.LocalAsyncLoadingCache$AsyncBulkCompleter	/home/nima/Developer/nullness-benchmarks/caffeine/caffeine/src/main/java/com/github/benmanes/caffeine/cache/LocalAsyncLoadingCache.java
+com.github.benmanes.caffeine.cache.LocalAsyncLoadingCache$LoadingCacheView	/home/nima/Developer/nullness-benchmarks/caffeine/caffeine/src/main/java/com/github/benmanes/caffeine/cache/LocalAsyncLoadingCache.java
+com.github.benmanes.caffeine.cache.LocalAsyncLoadingCache$AsMapView	/home/nima/Developer/nullness-benchmarks/caffeine/caffeine/src/main/java/com/github/benmanes/caffeine/cache/LocalAsyncLoadingCache.java
+com.github.benmanes.caffeine.cache.LocalAsyncLoadingCache$AsMapView$Values	/home/nima/Developer/nullness-benchmarks/caffeine/caffeine/src/main/java/com/github/benmanes/caffeine/cache/LocalAsyncLoadingCache.java
+com.github.benmanes.caffeine.cache.LocalAsyncLoadingCache$AsMapView$Values$1	/home/nima/Developer/nullness-benchmarks/caffeine/caffeine/src/main/java/com/github/benmanes/caffeine/cache/LocalAsyncLoadingCache.java
+com.github.benmanes.caffeine.cache.LocalAsyncLoadingCache$AsMapView$EntrySet	/home/nima/Developer/nullness-benchmarks/caffeine/caffeine/src/main/java/com/github/benmanes/caffeine/cache/LocalAsyncLoadingCache.java
+com.github.benmanes.caffeine.cache.LocalAsyncLoadingCache$AsMapView$EntrySet$1	/home/nima/Developer/nullness-benchmarks/caffeine/caffeine/src/main/java/com/github/benmanes/caffeine/cache/LocalAsyncLoadingCache.java
