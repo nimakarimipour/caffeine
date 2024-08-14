@@ -288,7 +288,7 @@ public final class SingleConsumerQueue<E> extends SCQHeader.HeadAndTailRef<E>
   }
 
   /** Adds the linked list of nodes to the queue. */
-  void append(@Nonnull Node<E> first, @Nonnull Node<E> last) {
+  void append( Node<E> first,  Node<E> last) {
     for (;;) {
       Node<E> t = tail;
       if (casTail(t, last)) {
@@ -327,7 +327,7 @@ public final class SingleConsumerQueue<E> extends SCQHeader.HeadAndTailRef<E>
    * @return either {@code null} if the element was transferred, the first node if neither a
    *         transfer nor receive were successful, or the received last element from a producer
    */
-  @Nullable Node<E> transferOrCombine(@Nonnull Node<E> first, Node<E> last) {
+   Node<E> transferOrCombine( Node<E> first, Node<E> last) {
     int index = index();
     AtomicReference<Node<E>> slot = arena[index];
 
@@ -369,7 +369,7 @@ public final class SingleConsumerQueue<E> extends SCQHeader.HeadAndTailRef<E>
   }
 
   /** Returns the last node in the linked list. */
-  @Nonnull static <E> Node<E> findLast(@Nonnull Node<E> node) {
+   static <E> Node<E> findLast( Node<E> node) {
     Node<E> next;
     while ((next = node.getNextRelaxed()) != null) {
       node = next;
@@ -470,16 +470,16 @@ public final class SingleConsumerQueue<E> extends SCQHeader.HeadAndTailRef<E>
     E value;
     volatile Node<E> next;
 
-    Node(@Nullable E value) {
+    Node( E value) {
       this.value = value;
     }
 
     @SuppressWarnings("unchecked")
-    @Nullable Node<E> getNextRelaxed() {
+     Node<E> getNextRelaxed() {
       return (Node<E>) UnsafeAccess.UNSAFE.getObject(this, NEXT_OFFSET);
     }
 
-    void lazySetNext(@Nullable Node<E> newNext) {
+    void lazySetNext( Node<E> newNext) {
       UnsafeAccess.UNSAFE.putOrderedObject(this, NEXT_OFFSET, newNext);
     }
 
@@ -503,7 +503,7 @@ public final class SingleConsumerQueue<E> extends SCQHeader.HeadAndTailRef<E>
   static final class LinearizableNode<E> extends Node<E> {
     volatile boolean done;
 
-    LinearizableNode(@Nullable E value) {
+    LinearizableNode( E value) {
       super(value);
     }
 

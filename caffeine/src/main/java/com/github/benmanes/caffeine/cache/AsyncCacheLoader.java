@@ -49,8 +49,8 @@ public interface AsyncCacheLoader<K, V> {
    * @param executor the executor with which the entry is asynchronously loaded
    * @return the future value associated with {@code key}
    */
-  @Nonnull
-  CompletableFuture<V> asyncLoad(@Nonnull K key, @Nonnull Executor executor);
+  
+  CompletableFuture<V> asyncLoad( K key,  Executor executor);
 
   /**
    * Asynchronously computes or retrieves the values corresponding to {@code keys}. This method is
@@ -70,9 +70,9 @@ public interface AsyncCacheLoader<K, V> {
    * @return a future containing the map from each key in {@code keys} to the value associated with
    *         that key; <b>may not contain null values</b>
    */
-  @Nonnull
+  
   default CompletableFuture<Map<K, V>> asyncLoadAll(
-      @Nonnull Iterable<? extends K> keys, @Nonnull Executor executor) {
+       Iterable<? extends K> keys,  Executor executor) {
     throw new UnsupportedOperationException();
   }
 
@@ -90,9 +90,9 @@ public interface AsyncCacheLoader<K, V> {
    * @return a future containing the new value associated with {@code key}, or containing
    *         {@code null} if the mapping is to be removed
    */
-  @Nonnull
+  
   default CompletableFuture<V> asyncReload(
-      @Nonnull K key, @Nonnull V oldValue, @Nonnull Executor executor) {
+       K key,  V oldValue,  Executor executor) {
     return asyncLoad(key, executor);
   }
 }

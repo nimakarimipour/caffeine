@@ -1,7 +1,1 @@
 kind	class	method	param	index	uri	field
-METHOD	com.github.benmanes.caffeine.cache.LocalAsyncLoadingCache	synchronous()	null	null	/home/nima/Developer/nullness-benchmarks/caffeine/caffeine/src/main/java/com/github/benmanes/caffeine/cache/LocalAsyncLoadingCache.java	localCacheView
-METHOD	com.github.benmanes.caffeine.cache.LocalAsyncLoadingCache$LoadingCacheView	asMap()	null	null	/home/nima/Developer/nullness-benchmarks/caffeine/caffeine/src/main/java/com/github/benmanes/caffeine/cache/LocalAsyncLoadingCache.java	asMapView
-METHOD	com.github.benmanes.caffeine.cache.LocalAsyncLoadingCache$AsMapView	values()	null	null	/home/nima/Developer/nullness-benchmarks/caffeine/caffeine/src/main/java/com/github/benmanes/caffeine/cache/LocalAsyncLoadingCache.java	values
-METHOD	com.github.benmanes.caffeine.cache.LocalAsyncLoadingCache$AsMapView	entrySet()	null	null	/home/nima/Developer/nullness-benchmarks/caffeine/caffeine/src/main/java/com/github/benmanes/caffeine/cache/LocalAsyncLoadingCache.java	entries
-METHOD	com.github.benmanes.caffeine.cache.LocalAsyncLoadingCache$AsMapView$EntrySet$1	hasNext()	null	null	/home/nima/Developer/nullness-benchmarks/caffeine/caffeine/src/main/java/com/github/benmanes/caffeine/cache/LocalAsyncLoadingCache.java	cursor
-METHOD	com.github.benmanes.caffeine.cache.LocalAsyncLoadingCache$AsMapView$EntrySet$1	next()	null	null	/home/nima/Developer/nullness-benchmarks/caffeine/caffeine/src/main/java/com/github/benmanes/caffeine/cache/LocalAsyncLoadingCache.java	removalKey

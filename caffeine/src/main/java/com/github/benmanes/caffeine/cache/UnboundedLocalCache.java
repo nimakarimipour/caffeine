@@ -52,7 +52,7 @@ import com.github.benmanes.caffeine.cache.stats.StatsCounter;
  * @author ben.manes@gmail.com (Ben Manes)
  */
 final class UnboundedLocalCache<K, V> implements LocalCache<K, V> {
-  @Nullable final RemovalListener<K, V> removalListener;
+   final RemovalListener<K, V> removalListener;
   final ConcurrentHashMap<K, V> data;
   final StatsCounter statsCounter;
   final boolean isRecordingStats;
@@ -149,7 +149,7 @@ final class UnboundedLocalCache<K, V> implements LocalCache<K, V> {
   }
 
   @Override
-  public void notifyRemoval(@Nullable K key, @Nullable V value, RemovalCause cause) {
+  public void notifyRemoval( K key,  V value, RemovalCause cause) {
     requireNonNull(removalListener, "Notification should be guarded with a check");
     executor.execute(() -> removalListener.onRemoval(key, value, cause));
   }

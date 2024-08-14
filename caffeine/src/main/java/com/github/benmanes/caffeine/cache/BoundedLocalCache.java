@@ -175,7 +175,7 @@ abstract class BoundedLocalCache<K, V> extends BLCHeader.DrainStatusRef<K, V>
 
   /** Creates an instance based on the builder's configuration. */
   protected BoundedLocalCache(Caffeine<K, V> builder,
-      @Nullable CacheLoader<K, V> cacheLoader, boolean isAsync) {
+       CacheLoader<K, V> cacheLoader, boolean isAsync) {
     this.isAsync = isAsync;
     this.cacheLoader = cacheLoader;
     executor = builder.getExecutor();
@@ -276,7 +276,7 @@ abstract class BoundedLocalCache<K, V> extends BLCHeader.DrainStatusRef<K, V>
   }
 
   @Override
-  public void notifyRemoval(@Nullable K key, @Nullable V value, RemovalCause cause) {
+  public void notifyRemoval( K key,  V value, RemovalCause cause) {
     requireState(hasRemovalListener(), "Notification should be guarded with a check");
     Runnable task = () -> {
       try {
@@ -305,12 +305,12 @@ abstract class BoundedLocalCache<K, V> extends BLCHeader.DrainStatusRef<K, V>
     return false;
   }
 
-  @Nullable
+  
   protected ReferenceQueue<K> keyReferenceQueue() {
     return null;
   }
 
-  @Nullable
+  
   protected ReferenceQueue<V> valueReferenceQueue() {
     return null;
   }
@@ -1092,7 +1092,7 @@ abstract class BoundedLocalCache<K, V> extends BLCHeader.DrainStatusRef<K, V>
    *
    * @param task an additional pending task to run, or {@code null} if not present
    */
-  void performCleanUp(@Nullable Runnable task) {
+  void performCleanUp( Runnable task) {
     evictionLock.lock();
     try {
       maintenance(task);
@@ -1109,7 +1109,7 @@ abstract class BoundedLocalCache<K, V> extends BLCHeader.DrainStatusRef<K, V>
    * @param task an additional pending task to run, or {@code null} if not present
    */
   @GuardedBy("evictionLock")
-  void maintenance(@Nullable Runnable task) {
+  void maintenance( Runnable task) {
     lazySetDrainStatus(PROCESSING_TO_IDLE);
 
     try {
@@ -1623,7 +1623,7 @@ abstract class BoundedLocalCache<K, V> extends BLCHeader.DrainStatusRef<K, V>
    * @param onlyIfAbsent a write is performed only if the key is not already associated with a value
    * @return the prior value in or null if no mapping was found
    */
-  V put(K key, V value, @Nullable Expiry<K, V> expiry, boolean notifyWriter, boolean onlyIfAbsent) {
+  V put(K key, V value,  Expiry<K, V> expiry, boolean notifyWriter, boolean onlyIfAbsent) {
     requireNonNull(key);
     requireNonNull(value);
 
@@ -3109,7 +3109,7 @@ abstract class BoundedLocalCache<K, V> extends BLCHeader.DrainStatusRef<K, V>
       @Override public boolean isWeighted() {
         return isWeighted;
       }
-      @Override public OptionalInt weightOf(@Nonnull K key) {
+      @Override public OptionalInt weightOf( K key) {
         requireNonNull(key);
         if (!isWeighted) {
           return OptionalInt.empty();
