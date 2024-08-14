@@ -35,7 +35,7 @@ import com.github.benmanes.caffeine.cache.WriteOrderDeque.WriteOrder;
 abstract class Node<K, V> implements AccessOrder<Node<K, V>>, WriteOrder<Node<K, V>> {
 
   /** Return the key or {@code null} if it has been reclaimed by the garbage collector. */
-  
+  @Nullable
   public abstract K getKey();
 
   /**
@@ -46,7 +46,7 @@ abstract class Node<K, V> implements AccessOrder<Node<K, V>>, WriteOrder<Node<K,
   public abstract Object getKeyReference();
 
   /** Return the value or {@code null} if it has been reclaimed by the garbage collector. */
-  
+  @Nullable
   public abstract V getValue();
 
   /**
@@ -61,7 +61,7 @@ abstract class Node<K, V> implements AccessOrder<Node<K, V>>, WriteOrder<Node<K,
    * and rely on the memory fence when the lock is released.
    */
   @GuardedBy("this")
-  public abstract void setValue(@Nonnull V value,  ReferenceQueue<V> referenceQueue);
+  public abstract void setValue(@Nonnull V value, @Nullable ReferenceQueue<V> referenceQueue);
 
   /**
    * Returns {@code true} if the given objects are considered equivalent. A strongly held value is
@@ -137,7 +137,7 @@ abstract class Node<K, V> implements AccessOrder<Node<K, V>>, WriteOrder<Node<K,
   }
 
   @GuardedBy("evictionLock")
-  public void setPreviousInVariableOrder( Node<K, V> prev) {
+  public void setPreviousInVariableOrder(@Nullable Node<K, V> prev) {
     throw new UnsupportedOperationException();
   }
 
@@ -147,7 +147,7 @@ abstract class Node<K, V> implements AccessOrder<Node<K, V>>, WriteOrder<Node<K,
   }
 
   @GuardedBy("evictionLock")
-  public void setNextInVariableOrder( Node<K, V> prev) {
+  public void setNextInVariableOrder(@Nullable Node<K, V> prev) {
     throw new UnsupportedOperationException();
   }
 
@@ -205,25 +205,25 @@ abstract class Node<K, V> implements AccessOrder<Node<K, V>>, WriteOrder<Node<K,
 
   @Override
   @GuardedBy("evictionLock")
-  public  Node<K, V> getPreviousInAccessOrder() {
+  public @Nullable Node<K, V> getPreviousInAccessOrder() {
     return null;
   }
 
   @Override
   @GuardedBy("evictionLock")
-  public void setPreviousInAccessOrder( Node<K, V> prev) {
+  public void setPreviousInAccessOrder(@Nullable Node<K, V> prev) {
     throw new UnsupportedOperationException();
   }
 
   @Override
   @GuardedBy("evictionLock")
-  public  Node<K, V> getNextInAccessOrder() {
+  public @Nullable Node<K, V> getNextInAccessOrder() {
     return null;
   }
 
   @Override
   @GuardedBy("evictionLock")
-  public void setNextInAccessOrder( Node<K, V> next) {
+  public void setNextInAccessOrder(@Nullable Node<K, V> next) {
     throw new UnsupportedOperationException();
   }
 
@@ -250,25 +250,25 @@ abstract class Node<K, V> implements AccessOrder<Node<K, V>>, WriteOrder<Node<K,
 
   @Override
   @GuardedBy("evictionLock")
-  public  Node<K, V> getPreviousInWriteOrder() {
+  public @Nullable Node<K, V> getPreviousInWriteOrder() {
     return null;
   }
 
   @Override
   @GuardedBy("evictionLock")
-  public void setPreviousInWriteOrder( Node<K, V> prev) {
+  public void setPreviousInWriteOrder(@Nullable Node<K, V> prev) {
     throw new UnsupportedOperationException();
   }
 
   @Override
   @GuardedBy("evictionLock")
-  public  Node<K, V> getNextInWriteOrder() {
+  public @Nullable Node<K, V> getNextInWriteOrder() {
     return null;
   }
 
   @Override
   @GuardedBy("evictionLock")
-  public void setNextInWriteOrder( Node<K, V> next) {
+  public void setNextInWriteOrder(@Nullable Node<K, V> next) {
     throw new UnsupportedOperationException();
   }
 

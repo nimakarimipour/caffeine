@@ -1,3 +1,7 @@
 kind	class	method	param	index	uri	field
-METHOD	com.github.benmanes.caffeine.cache.UnboundedLocalCache$UnboundedLocalManualCache	policy()	null	null	/home/nima/Developer/nullness-benchmarks/caffeine/caffeine/src/main/java/com/github/benmanes/caffeine/cache/UnboundedLocalCache.java	policy
-METHOD	com.github.benmanes.caffeine.cache.UnboundedLocalCache$UnboundedLocalAsyncLoadingCache	policy()	null	null	/home/nima/Developer/nullness-benchmarks/caffeine/caffeine/src/main/java/com/github/benmanes/caffeine/cache/UnboundedLocalCache.java	policy
+METHOD	com.github.benmanes.caffeine.cache.Caffeine	initialCapacity(int)	null	null	/home/nima/Developer/nullness-benchmarks/caffeine/caffeine/src/main/java/com/github/benmanes/caffeine/cache/Caffeine.java	initialCapacity
+METHOD	com.github.benmanes.caffeine.cache.Caffeine	maximumSize(long)	null	null	/home/nima/Developer/nullness-benchmarks/caffeine/caffeine/src/main/java/com/github/benmanes/caffeine/cache/Caffeine.java	maximumSize
+METHOD	com.github.benmanes.caffeine.cache.Caffeine	maximumWeight(long)	null	null	/home/nima/Developer/nullness-benchmarks/caffeine/caffeine/src/main/java/com/github/benmanes/caffeine/cache/Caffeine.java	maximumWeight
+METHOD	com.github.benmanes.caffeine.cache.Caffeine	expireAfterWrite(long,java.util.concurrent.TimeUnit)	null	null	/home/nima/Developer/nullness-benchmarks/caffeine/caffeine/src/main/java/com/github/benmanes/caffeine/cache/Caffeine.java	expireAfterWriteNanos
+METHOD	com.github.benmanes.caffeine.cache.Caffeine	expireAfterAccess(long,java.util.concurrent.TimeUnit)	null	null	/home/nima/Developer/nullness-benchmarks/caffeine/caffeine/src/main/java/com/github/benmanes/caffeine/cache/Caffeine.java	expireAfterAccessNanos
+METHOD	com.github.benmanes.caffeine.cache.Caffeine	refreshAfterWrite(long,java.util.concurrent.TimeUnit)	null	null	/home/nima/Developer/nullness-benchmarks/caffeine/caffeine/src/main/java/com/github/benmanes/caffeine/cache/Caffeine.java	refreshNanos

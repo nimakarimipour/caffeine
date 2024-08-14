@@ -53,7 +53,7 @@ public interface CacheWriter<K, V> {
    * @param cause the reason for which the entry was removed
    * @throws RuntimeException or Error, in which case the mapping is unchanged
    */
-  void delete(@Nonnull K key,  V value, @Nonnull RemovalCause cause);
+  void delete(@Nonnull K key, @Nullable V value, @Nonnull RemovalCause cause);
 
   /**
    * Returns a writer that does nothing.
@@ -76,5 +76,5 @@ enum DisabledWriter implements CacheWriter<Object, Object> {
   public void write(Object key, Object value) {}
 
   @Override
-  public void delete(Object key,  Object value, RemovalCause cause) {}
+  public void delete(Object key, @Nullable Object value, RemovalCause cause) {}
 }

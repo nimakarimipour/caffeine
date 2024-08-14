@@ -106,9 +106,9 @@ public final class CacheContext {
   CacheBuilder<Object, Object> guava;
   AsyncLoadingCache<?, ?> asyncCache;
 
-   Integer firstKey;
-   Integer middleKey;
-   Integer lastKey;
+  @Nullable Integer firstKey;
+  @Nullable Integer middleKey;
+  @Nullable Integer lastKey;
   long initialSize;
 
   // Generated on-demand

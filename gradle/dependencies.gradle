@@ -204,5 +204,6 @@ ext {
   annotationProcessors = [
     nullaway: "com.uber.nullaway:nullaway:${annotationProcessorVersions.nullaway}",
     annotatorScanner: "edu.ucr.cs.riple.annotator:annotator-scanner:${annotationProcessorVersions.annotatorScanner}",
+    annotSerializer: "edu.ucr.cs.riple.annot-util:AnnotLocator:0.1"
   ]
 }

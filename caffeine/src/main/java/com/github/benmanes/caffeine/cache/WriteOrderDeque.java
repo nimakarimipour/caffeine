@@ -59,22 +59,22 @@ final class WriteOrderDeque<E extends WriteOrder<E>> extends AbstractLinkedDeque
   }
 
   @Override
-  public  E getPrevious(E e) {
+  public @Nullable E getPrevious(E e) {
     return e.getPreviousInWriteOrder();
   }
 
   @Override
-  public void setPrevious(E e,  E prev) {
+  public void setPrevious(E e, @Nullable E prev) {
     e.setPreviousInWriteOrder(prev);
   }
 
   @Override
-  public  E getNext(E e) {
+  public @Nullable E getNext(E e) {
     return e.getNextInWriteOrder();
   }
 
   @Override
-  public void setNext(E e,  E next) {
+  public void setNext(E e, @Nullable E next) {
     e.setNextInWriteOrder(next);
   }
 
@@ -87,18 +87,18 @@ final class WriteOrderDeque<E extends WriteOrder<E>> extends AbstractLinkedDeque
      * Retrieves the previous element or <tt>null</tt> if either the element is unlinked or the first
      * element on the deque.
      */
-     T getPreviousInWriteOrder();
+    @Nullable T getPreviousInWriteOrder();
 
     /** Sets the previous element or <tt>null</tt> if there is no link. */
-    void setPreviousInWriteOrder( T prev);
+    void setPreviousInWriteOrder(@Nullable T prev);
 
     /**
      * Retrieves the next element or <tt>null</tt> if either the element is unlinked or the last
      * element on the deque.
      */
-     T getNextInWriteOrder();
+    @Nullable T getNextInWriteOrder();
 
     /** Sets the next element or <tt>null</tt> if there is no link. */
-    void setNextInWriteOrder( T next);
+    void setNextInWriteOrder(@Nullable T next);
   }
 }

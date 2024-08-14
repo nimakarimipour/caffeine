@@ -19,6 +19,7 @@ dependencies {
   errorprone libraries.errorProneCore
   apt annotationProcessors.nullaway
   apt annotationProcessors.annotatorScanner
+  apt annotationProcessors.annotSerializer
 }
 
 tasks.withType(JavaCompile) {

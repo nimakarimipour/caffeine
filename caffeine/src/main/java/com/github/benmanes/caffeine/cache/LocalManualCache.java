@@ -44,13 +44,13 @@ interface LocalManualCache<C extends LocalCache<K, V>, K, V> extends Cache<K, V>
     cache().cleanUp();
   }
 
-  @Nullable @Override
-  default  V getIfPresent(Object key) {
+  @Override
+  default @Nullable V getIfPresent(Object key) {
     return cache().getIfPresent(key, /* recordStats */ true);
   }
 
   @Override
-  default  V get(K key, Function<? super K, ? extends V> mappingFunction) {
+  default @Nullable V get(K key, Function<? super K, ? extends V> mappingFunction) {
     return cache().computeIfAbsent(key, mappingFunction);
   }
 

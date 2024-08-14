@@ -78,17 +78,17 @@ public final class CaffeineSpec {
   long maximumSize = UNSET_INT;
   boolean recordStats;
 
-   Strength keyStrength;
-   Strength valueStrength;
+  @Nullable Strength keyStrength;
+  @Nullable Strength valueStrength;
 
   long expireAfterAccessDuration = UNSET_INT;
-   TimeUnit expireAfterAccessTimeUnit;
+  @Nullable TimeUnit expireAfterAccessTimeUnit;
 
   long expireAfterWriteDuration = UNSET_INT;
-   TimeUnit expireAfterWriteTimeUnit;
+  @Nullable TimeUnit expireAfterWriteTimeUnit;
 
   long refreshAfterWriteDuration = UNSET_INT;
-   TimeUnit refreshAfterWriteTimeUnit;
+  @Nullable TimeUnit refreshAfterWriteTimeUnit;
 
   private CaffeineSpec(String specification) {
     this.specification = requireNonNull(specification);
@@ -169,7 +169,7 @@ public final class CaffeineSpec {
   }
 
   /** Configures the setting. */
-  void configure(String key,  String value) {
+  void configure(String key, @Nullable String value) {
     switch (key) {
       case "initialCapacity":
         initialCapacity(key, value);
@@ -207,14 +207,14 @@ public final class CaffeineSpec {
   }
 
   /** Configures the initial capacity. */
-  void initialCapacity(String key,  String value) {
+  void initialCapacity(String key, @Nullable String value) {
     requireArgument(initialCapacity == UNSET_INT,
         "initial capacity was already set to %,d", initialCapacity);
     initialCapacity = parseInt(key, value);
   }
 
   /** Configures the maximum size. */
-  void maximumSize(String key,  String value) {
+  void maximumSize(String key, @Nullable String value) {
     requireArgument(maximumSize == UNSET_INT,
         "maximum size was already set to %,d", maximumSize);
     requireArgument(maximumWeight == UNSET_INT,
@@ -223,7 +223,7 @@ public final class CaffeineSpec {
   }
 
   /** Configures the maximum size. */
-  void maximumWeight(String key,  String value) {
+  void maximumWeight(String key, @Nullable String value) {
     requireArgument(maximumWeight == UNSET_INT,
         "maximum weight was already set to %,d", maximumWeight);
     requireArgument(maximumSize == UNSET_INT,
@@ -232,49 +232,49 @@ public final class CaffeineSpec {
   }
 
   /** Configures the keys as weak references. */
-  void weakKeys( String value) {
+  void weakKeys(@Nullable String value) {
     requireArgument(value == null, "weak keys does not take a value");
     requireArgument(keyStrength == null, "weak keys was already set");
     keyStrength = Strength.WEAK;
   }
 
   /** Configures the value as weak or soft references. */
-  void valueStrength(String key,  String value, Strength strength) {
+  void valueStrength(String key, @Nullable String value, Strength strength) {
     requireArgument(value == null, "%s does not take a value", key);
     requireArgument(valueStrength == null, "%s was already set to %s", key, valueStrength);
     valueStrength = strength;
   }
 
   /** Configures expire after access. */
-  void expireAfterAccess(String key,  String value) {
+  void expireAfterAccess(String key, @Nullable String value) {
     requireArgument(expireAfterAccessDuration == UNSET_INT, "expireAfterAccess was already set");
     expireAfterAccessDuration = parseDuration(key, value);
     expireAfterAccessTimeUnit = parseTimeUnit(key, value);
   }
 
   /** Configures expire after write. */
-  void expireAfterWrite(String key,  String value) {
+  void expireAfterWrite(String key, @Nullable String value) {
     requireArgument(expireAfterWriteDuration == UNSET_INT, "expireAfterWrite was already set");
     expireAfterWriteDuration = parseDuration(key, value);
     expireAfterWriteTimeUnit = parseTimeUnit(key, value);
   }
 
   /** Configures refresh after write. */
-  void refreshAfterWrite(String key,  String value) {
+  void refreshAfterWrite(String key, @Nullable String value) {
     requireArgument(refreshAfterWriteDuration == UNSET_INT, "refreshAfterWrite was already set");
     refreshAfterWriteDuration = parseDuration(key, value);
     refreshAfterWriteTimeUnit = parseTimeUnit(key, value);
   }
 
   /** Configures the value as weak or soft references. */
-  void recordStats( String value) {
+  void recordStats(@Nullable String value) {
     requireArgument(value == null, "record stats does not take a value");
     requireArgument(!recordStats, "record stats was already set");
     recordStats = true;
   }
 
   /** Returns a parsed int value. */
-  static int parseInt(String key,  String value) {
+  static int parseInt(String key, @Nullable String value) {
     requireArgument((value != null) && !value.isEmpty(), "value of key %s was omitted", key);
     try {
       return Integer.parseInt(value);
@@ -285,7 +285,7 @@ public final class CaffeineSpec {
   }
 
   /** Returns a parsed long value. */
-  static long parseLong(String key,  String value) {
+  static long parseLong(String key, @Nullable String value) {
     requireArgument((value != null) && !value.isEmpty(), "value of key %s was omitted", key);
     try {
       return Long.parseLong(value);
@@ -296,7 +296,7 @@ public final class CaffeineSpec {
   }
 
   /** Returns a parsed duration value. */
-  static long parseDuration(String key,  String value) {
+  static long parseDuration(String key, @Nullable String value) {
     requireArgument((value != null) && !value.isEmpty(), "value of key %s omitted", key);
     @SuppressWarnings("NullAway")
     String duration = value.substring(0, value.length() - 1);
@@ -304,7 +304,7 @@ public final class CaffeineSpec {
   }
 
   /** Returns a parsed {@link TimeUnit} value. */
-  static TimeUnit parseTimeUnit(String key,  String value) {
+  static TimeUnit parseTimeUnit(String key, @Nullable String value) {
     requireArgument((value != null) && !value.isEmpty(), "value of key %s omitted", key);
     @SuppressWarnings("NullAway")
     char lastChar = Character.toLowerCase(value.charAt(value.length() - 1));
@@ -355,7 +355,7 @@ public final class CaffeineSpec {
   }
 
   /** Converts an expiration duration/unit pair into a single long for hashing and equality. */
-  static long durationInNanos(long duration,  TimeUnit unit) {
+  static long durationInNanos(long duration, @Nullable TimeUnit unit) {
     return (unit == null) ? UNSET_INT : unit.toNanos(duration);
   }
 

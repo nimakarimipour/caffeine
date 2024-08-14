@@ -52,7 +52,7 @@ import com.github.benmanes.caffeine.cache.stats.StatsCounter;
  * @author ben.manes@gmail.com (Ben Manes)
  */
 final class UnboundedLocalCache<K, V> implements LocalCache<K, V> {
-   final RemovalListener<K, V> removalListener;
+  @Nullable final RemovalListener<K, V> removalListener;
   final ConcurrentHashMap<K, V> data;
   final StatsCounter statsCounter;
   final boolean isRecordingStats;
@@ -60,9 +60,9 @@ final class UnboundedLocalCache<K, V> implements LocalCache<K, V> {
   final Executor executor;
   final Ticker ticker;
 
-  transient  Set<K> keySet;
-  transient  Collection<V> values;
-  transient  Set<Entry<K, V>> entrySet;
+  transient @Nullable Set<K> keySet;
+  transient @Nullable Collection<V> values;
+  transient @Nullable Set<Entry<K, V>> entrySet;
 
   UnboundedLocalCache(Caffeine<? super K, ? super V> builder, boolean async) {
     this.data = new ConcurrentHashMap<>(builder.getInitialCapacity());
@@ -81,8 +81,8 @@ final class UnboundedLocalCache<K, V> implements LocalCache<K, V> {
 
   /* ---------------- Cache -------------- */
 
-  @Nullable @Override
-  public  V getIfPresent(Object key, boolean recordStats) {
+  @Override
+  public @Nullable V getIfPresent(Object key, boolean recordStats) {
     V value = data.get(key);
 
     if (recordStats) {
@@ -95,8 +95,8 @@ final class UnboundedLocalCache<K, V> implements LocalCache<K, V> {
     return value;
   }
 
-  @Nullable @Override
-  public  V getIfPresentQuietly(Object key, long[/* 1 */] writeTime) {
+  @Override
+  public @Nullable V getIfPresentQuietly(Object key, long[/* 1 */] writeTime) {
     return data.get(key);
   }
 
@@ -150,7 +150,7 @@ final class UnboundedLocalCache<K, V> implements LocalCache<K, V> {
   }
 
   @Override
-  public void notifyRemoval( K key,  V value, RemovalCause cause) {
+  public void notifyRemoval(@Nullable K key, @Nullable V value, RemovalCause cause) {
     requireNonNull(removalListener(), "Notification should be guarded with a check");
     executor.execute(() -> removalListener().onRemoval(key, value, cause));
   }
@@ -242,8 +242,8 @@ final class UnboundedLocalCache<K, V> implements LocalCache<K, V> {
     return value;
   }
 
-  @Nullable @Override
-  public  V computeIfPresent(K key,
+  @Override
+  public @Nullable V computeIfPresent(K key,
       BiFunction<? super K, ? super V, ? extends V> remappingFunction) {
     requireNonNull(remappingFunction);
 
@@ -354,18 +354,18 @@ final class UnboundedLocalCache<K, V> implements LocalCache<K, V> {
     return data.containsValue(value);
   }
 
-  @Nullable @Override
-  public  V get(Object key) {
+  @Override
+  public @Nullable V get(Object key) {
     return getIfPresent(key, /* recordStats */ false);
   }
 
   @Override
-  public  V put(K key, V value) {
+  public @Nullable V put(K key, V value) {
     return put(key, value, /* notifyWriter */ true);
   }
 
   @Override
-  public  V put(K key, V value, boolean notifyWriter) {
+  public @Nullable V put(K key, V value, boolean notifyWriter) {
     requireNonNull(value);
 
     // ensures that the removal notification is processed after the removal has completed
@@ -390,8 +390,8 @@ final class UnboundedLocalCache<K, V> implements LocalCache<K, V> {
     return oldValue[0];
   }
 
-  @Nullable @Override
-  public  V putIfAbsent(K key, V value) {
+  @Override
+  public @Nullable V putIfAbsent(K key, V value) {
     requireNonNull(value);
 
     boolean[] wasAbsent = new boolean[1];
@@ -413,7 +413,7 @@ final class UnboundedLocalCache<K, V> implements LocalCache<K, V> {
   }
 
   @Override
-  public  V remove(Object key) {
+  public @Nullable V remove(Object key) {
     @SuppressWarnings("unchecked")
     K castKey = (K) key;
     @SuppressWarnings({"unchecked", "rawtypes"})
@@ -465,7 +465,7 @@ final class UnboundedLocalCache<K, V> implements LocalCache<K, V> {
   }
 
   @Override
-  public  V replace(K key, V value) {
+  public @Nullable V replace(K key, V value) {
     requireNonNull(value);
 
     @SuppressWarnings({"unchecked", "rawtypes"})
@@ -590,7 +590,7 @@ final class UnboundedLocalCache<K, V> implements LocalCache<K, V> {
   static final class KeyIterator<K> implements Iterator<K> {
     final UnboundedLocalCache<K, ?> cache;
     final Iterator<K> iterator;
-     @Nullable K current;
+    @Nullable K current;
 
     KeyIterator(UnboundedLocalCache<K, ?> cache) {
       this.cache = requireNonNull(cache);
@@ -673,7 +673,7 @@ final class UnboundedLocalCache<K, V> implements LocalCache<K, V> {
   static final class ValuesIterator<K, V> implements Iterator<V> {
     final UnboundedLocalCache<K, V> cache;
     final Iterator<Entry<K, V>> iterator;
-     @Nullable Entry<K, V> entry;
+    @Nullable Entry<K, V> entry;
 
     ValuesIterator(UnboundedLocalCache<K, V> cache) {
       this.cache = requireNonNull(cache);
@@ -772,7 +772,7 @@ final class UnboundedLocalCache<K, V> implements LocalCache<K, V> {
   static final class EntryIterator<K, V> implements Iterator<Entry<K, V>> {
     final UnboundedLocalCache<K, V> cache;
     final Iterator<Entry<K, V>> iterator;
-     @Nullable Entry<K, V> entry;
+    @Nullable Entry<K, V> entry;
 
     EntryIterator(UnboundedLocalCache<K, V> cache) {
       this.cache = requireNonNull(cache);
@@ -832,8 +832,8 @@ final class UnboundedLocalCache<K, V> implements LocalCache<K, V> {
       });
     }
 
-    @Nullable @Override
-    public  EntrySpliterator<K, V> trySplit() {
+    @Override
+    public @Nullable EntrySpliterator<K, V> trySplit() {
       Spliterator<Entry<K, V>> split = spliterator.trySplit();
       return (split == null) ? null : new EntrySpliterator<>(cache, split);
     }
@@ -856,7 +856,7 @@ final class UnboundedLocalCache<K, V> implements LocalCache<K, V> {
     private static final long serialVersionUID = 1;
 
     final UnboundedLocalCache<K, V> cache;
-     Policy<K, V> policy;
+    @Nullable Policy<K, V> policy;
 
     UnboundedLocalManualCache(Caffeine<K, V> builder) {
       cache = new UnboundedLocalCache<>(builder, /* async */ false);
@@ -973,7 +973,7 @@ final class UnboundedLocalCache<K, V> implements LocalCache<K, V> {
       implements Serializable {
     private static final long serialVersionUID = 1;
 
-     Policy<K, V> policy;
+    @Nullable Policy<K, V> policy;
 
     @SuppressWarnings("unchecked")
     UnboundedLocalAsyncLoadingCache(Caffeine<K, V> builder, AsyncCacheLoader<? super K, V> loader) {

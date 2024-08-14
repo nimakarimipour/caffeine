@@ -28,7 +28,7 @@ import javax.annotation.concurrent.ThreadSafe;
 public interface BasicCache<K, V> {
 
   /** Returns the value stored in the cache, or null if not present. */
-  
+  @Nullable
   V get(@Nonnull K key);
 
   /** Stores the value into the cache, replacing an existing mapping if present. */

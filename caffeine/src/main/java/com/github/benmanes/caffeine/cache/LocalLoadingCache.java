@@ -63,7 +63,7 @@ interface LocalLoadingCache<C extends LocalCache<K, V>, K, V>
   }
 
   @Override
-  default  V get(K key) {
+  default @Nullable V get(K key) {
     return cache().computeIfAbsent(key, mappingFunction());
   }
 

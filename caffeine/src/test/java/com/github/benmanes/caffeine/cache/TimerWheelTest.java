@@ -299,13 +299,13 @@ public final class TimerWheelTest {
     @Override public Node<Long, Long> getPreviousInVariableOrder() {
       return prev;
     }
-    @Override public void setPreviousInVariableOrder( Node<Long, Long> prev) {
+    @Override public void setPreviousInVariableOrder(@Nullable Node<Long, Long> prev) {
       this.prev = prev;
     }
     @Override public Node<Long, Long> getNextInVariableOrder() {
       return next;
     }
-    @Override public void setNextInVariableOrder( Node<Long, Long> next) {
+    @Override public void setNextInVariableOrder(@Nullable Node<Long, Long> next) {
       this.next = next;
     }
 

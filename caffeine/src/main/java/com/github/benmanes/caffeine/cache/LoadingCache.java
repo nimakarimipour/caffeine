@@ -61,7 +61,7 @@ public interface LoadingCache<K, V> extends Cache<K, V> {
    * @throws RuntimeException or Error if the {@link CacheLoader} does so, in which case the mapping
    *         is left unestablished
    */
-  
+  @Nullable
   V get(@Nonnull K key);
 
   /**
