@@ -40,7 +40,7 @@ public final class Ehcache2<K, V> implements BasicCache<K, V> {
   }
 
   @Override
-  @SuppressWarnings("unchecked")
+  
   public V get(K key) {
     Element element = cache.get(key);
     return (element == null) ? null : (V) element.getObjectValue();

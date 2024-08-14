@@ -43,7 +43,7 @@ final class WriteOrderDeque<E extends WriteOrder<E>> extends AbstractLinkedDeque
   }
 
   @Override
-  @SuppressWarnings("unchecked")
+  
   public boolean remove(Object o) {
     return (o instanceof WriteOrder<?>) && remove((E) o);
   }

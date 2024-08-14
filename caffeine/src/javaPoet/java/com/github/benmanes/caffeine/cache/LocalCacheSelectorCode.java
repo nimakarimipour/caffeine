@@ -28,7 +28,7 @@ import static com.github.benmanes.caffeine.cache.Specifications.LOOKUP;
 /**
  * @author ben.manes@gmail.com (Ben Manes)
  */
-@SuppressWarnings("PMD.AvoidDuplicateLiterals")
+
 public final class LocalCacheSelectorCode {
   private final CodeBlock.Builder block;
 

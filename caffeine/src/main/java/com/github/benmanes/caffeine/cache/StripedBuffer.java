@@ -206,7 +206,7 @@ abstract class StripedBuffer<E> implements Buffer<E> {
    * @param e the element to add
    * @param wasUncontended false if CAS failed before call
    */
-  @SuppressWarnings("PMD.ConfusingTernary")
+  
   final void expandOrRetry(E e, boolean wasUncontended) {
     int h;
     if ((h = getProbe()) == 0) {
@@ -264,7 +264,7 @@ abstract class StripedBuffer<E> implements Buffer<E> {
         boolean init = false;
         try { // Initialize table
           if (table == buffers) {
-            @SuppressWarnings({"unchecked", "rawtypes"})
+            
             Buffer<E>[] rs = new Buffer[1];
             rs[0] = create(e);
             table = rs;

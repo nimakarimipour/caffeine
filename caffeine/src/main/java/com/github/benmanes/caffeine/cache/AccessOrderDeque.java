@@ -43,7 +43,7 @@ final class AccessOrderDeque<E extends AccessOrder<E>> extends AbstractLinkedDeq
   }
 
   @Override
-  @SuppressWarnings("unchecked")
+  
   public boolean remove(Object o) {
     return (o instanceof AccessOrder<?>) && remove((E) o);
   }

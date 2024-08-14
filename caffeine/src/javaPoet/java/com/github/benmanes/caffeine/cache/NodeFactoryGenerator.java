@@ -95,7 +95,7 @@ import com.squareup.javapoet.TypeSpec;
  *
  * @author ben.manes@gmail.com (Ben Manes)
  */
-@SuppressWarnings("PMD.AvoidDuplicateLiterals")
+
 public final class NodeFactoryGenerator {
   static final FieldSpec FACTORY = FieldSpec.builder(MethodType.class, "FACTORY")
       .initializer("$T.methodType($T.class)", MethodType.class, void.class)
@@ -313,7 +313,7 @@ public final class NodeFactoryGenerator {
     Set<Boolean> maximumSize = ImmutableSet.of(false, true);
     Set<Boolean> weighed = ImmutableSet.of(false, true);
 
-    @SuppressWarnings("unchecked")
+    
     Set<List<Object>> combinations = Sets.cartesianProduct(keyStrengths, valueStrengths,
         expireAfterAccess, expireAfterWrite, refreshAfterWrite, maximumSize, weighed);
     return combinations;

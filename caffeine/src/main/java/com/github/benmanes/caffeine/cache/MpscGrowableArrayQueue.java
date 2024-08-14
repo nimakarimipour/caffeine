@@ -64,7 +64,7 @@ final class MpscGrowableArrayQueue<E> extends MpscChunkedArrayQueue<E> {
   }
 }
 
-@SuppressWarnings("OvershadowingSubclassFields")
+
 abstract class MpscChunkedArrayQueue<E> extends MpscChunkedArrayQueueColdProducerFields<E> {
   long p0, p1, p2, p3, p4, p5, p6, p7;
   long p10, p11, p12, p13, p14, p15, p16, p17;
@@ -121,7 +121,7 @@ abstract class BaseMpscLinkedArrayQueueProducerFields<E> extends BaseMpscLinkedA
   protected long producerIndex;
 }
 
-@SuppressWarnings("OvershadowingSubclassFields")
+
 abstract class BaseMpscLinkedArrayQueuePad2<E> extends BaseMpscLinkedArrayQueueProducerFields<E> {
   long p01, p02, p03, p04, p05, p06, p07;
   long p10, p11, p12, p13, p14, p15, p16, p17;
@@ -133,7 +133,7 @@ abstract class BaseMpscLinkedArrayQueueConsumerFields<E> extends BaseMpscLinkedA
   protected long consumerIndex;
 }
 
-@SuppressWarnings("OvershadowingSubclassFields")
+
 abstract class BaseMpscLinkedArrayQueuePad3<E> extends BaseMpscLinkedArrayQueueConsumerFields<E> {
   long p0, p1, p2, p3, p4, p5, p6, p7;
   long p10, p11, p12, p13, p14, p15, p16, p17;
@@ -146,7 +146,7 @@ abstract class BaseMpscLinkedArrayQueueColdProducerFields<E>
   protected E[] producerBuffer;
 }
 
-@SuppressWarnings({"PMD", "restriction"})
+
 abstract class BaseMpscLinkedArrayQueue<E> extends BaseMpscLinkedArrayQueueColdProducerFields<E> {
   // No post padding here, subclasses must add
 
@@ -210,7 +210,7 @@ abstract class BaseMpscLinkedArrayQueue<E> extends BaseMpscLinkedArrayQueueColdP
   }
 
   @Override
-  @SuppressWarnings("MissingDefault")
+  
   public boolean offer(final E e) {
     if (null == e) {
       throw new NullPointerException();
@@ -305,7 +305,7 @@ abstract class BaseMpscLinkedArrayQueue<E> extends BaseMpscLinkedArrayQueueColdP
    * <p>
    * This implementation is correct for single consumer thread use only.
    */
-  @SuppressWarnings("unchecked")
+  
   @Override
   public E poll() {
     final E[] buffer = consumerBuffer;
@@ -341,7 +341,7 @@ abstract class BaseMpscLinkedArrayQueue<E> extends BaseMpscLinkedArrayQueueColdP
    * <p>
    * This implementation is correct for single consumer thread use only.
    */
-  @SuppressWarnings("unchecked")
+  
   @Override
   public E peek() {
     final E[] buffer = consumerBuffer;
@@ -364,7 +364,7 @@ abstract class BaseMpscLinkedArrayQueue<E> extends BaseMpscLinkedArrayQueueColdP
     return (E) e;
   }
 
-  @SuppressWarnings("unchecked")
+  
   private E[] getNextBuffer(final E[] buffer, final long mask) {
     final long nextArrayOffset = nextArrayOffset(mask);
     final E[] nextBuffer = (E[]) lvElement(buffer, nextArrayOffset);
@@ -490,7 +490,7 @@ abstract class BaseMpscLinkedArrayQueue<E> extends BaseMpscLinkedArrayQueueColdP
     return offer(e);
   }
 
-  @SuppressWarnings("unchecked")
+  
   public E relaxedPoll() {
     final E[] buffer = consumerBuffer;
     final long index = consumerIndex;
@@ -510,7 +510,7 @@ abstract class BaseMpscLinkedArrayQueue<E> extends BaseMpscLinkedArrayQueueColdP
     return (E) e;
   }
 
-  @SuppressWarnings("unchecked")
+  
   public E relaxedPeek() {
     final E[] buffer = consumerBuffer;
     final long index = consumerIndex;
@@ -559,7 +559,7 @@ abstract class BaseMpscLinkedArrayQueue<E> extends BaseMpscLinkedArrayQueueColdP
     soElement(oldBuffer, offsetInOld, JUMP);
   }
 
-  @SuppressWarnings("unchecked")
+  
   public static <E> E[] allocate(int capacity) {
     return (E[]) new Object[capacity];
   }
@@ -588,7 +588,7 @@ abstract class BaseMpscLinkedArrayQueue<E> extends BaseMpscLinkedArrayQueueColdP
  * field reload after a LoadLoad barrier.
  * <p>
  */
-@SuppressWarnings("restriction")
+
 final class UnsafeRefArrayAccess {
   public static final long REF_ARRAY_BASE;
   public static final int REF_ELEMENT_SHIFT;
@@ -635,7 +635,7 @@ final class UnsafeRefArrayAccess {
    * @param offset computed via {@link UnsafeRefArrayAccess#calcElementOffset(long)}
    * @return the element at the offset
    */
-  @SuppressWarnings("unchecked")
+  
   public static <E> E lpElement(E[] buffer, long offset) {
     return (E) UNSAFE.getObject(buffer, offset);
   }
@@ -647,7 +647,7 @@ final class UnsafeRefArrayAccess {
    * @param offset computed via {@link UnsafeRefArrayAccess#calcElementOffset(long)}
    * @return the element at the offset
    */
-  @SuppressWarnings("unchecked")
+  
   public static <E> E lvElement(E[] buffer, long offset) {
     return (E) UNSAFE.getObjectVolatile(buffer, offset);
   }

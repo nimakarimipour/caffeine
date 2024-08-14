@@ -25,7 +25,7 @@ import java.util.concurrent.TimeUnit;
  *
  * @author ben.manes@gmail.com (Ben Manes)
  */
-@SuppressWarnings("PMD.TooManyFields")
+
 final class SerializationProxy<K, V> implements Serializable {
   private static final long serialVersionUID = 1;
 
@@ -46,7 +46,7 @@ final class SerializationProxy<K, V> implements Serializable {
   long maximumSize = Caffeine.UNSET_INT;
   long maximumWeight = Caffeine.UNSET_INT;
 
-  @SuppressWarnings("unchecked")
+  
   Caffeine<Object, Object> recreateCaffeine() {
     Caffeine<Object, Object> builder = Caffeine.newBuilder();
     if (ticker != null) {
@@ -95,11 +95,11 @@ final class SerializationProxy<K, V> implements Serializable {
   Object readResolve() {
     Caffeine<Object, Object> builder = recreateCaffeine();
     if (async) {
-      @SuppressWarnings("unchecked")
+      
       AsyncCacheLoader<K, V> cacheLoader = (AsyncCacheLoader<K, V>) loader;
       return builder.buildAsync(cacheLoader);
     } else if (loader != null) {
-      @SuppressWarnings("unchecked")
+      
       CacheLoader<K, V> cacheLoader = (CacheLoader<K, V>) loader;
       return builder.build(cacheLoader);
     }

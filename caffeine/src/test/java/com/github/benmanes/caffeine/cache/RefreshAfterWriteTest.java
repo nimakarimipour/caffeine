@@ -145,7 +145,7 @@ public final class RefreshAfterWriteTest {
   @Test(dataProvider = "caches")
   @CacheSpec(refreshAfterWrite = Expire.ONE_MINUTE,
       population = { Population.PARTIAL, Population.FULL })
-  @SuppressWarnings("FutureReturnValueIgnored")
+  
   public void getFunc(AsyncLoadingCache<Integer, Integer> cache, CacheContext context) {
     Function<Integer, Integer> mappingFunction = context.original()::get;
     context.ticker().advance(30, TimeUnit.SECONDS);
@@ -177,7 +177,7 @@ public final class RefreshAfterWriteTest {
   @Test(dataProvider = "caches")
   @CacheSpec(refreshAfterWrite = Expire.ONE_MINUTE,
       population = { Population.PARTIAL, Population.FULL })
-  @SuppressWarnings("FutureReturnValueIgnored")
+  
   public void get(AsyncLoadingCache<Integer, Integer> cache, CacheContext context) {
     context.ticker().advance(30, TimeUnit.SECONDS);
     cache.get(context.firstKey());
@@ -285,7 +285,7 @@ public final class RefreshAfterWriteTest {
   @Test(dataProvider = "caches")
   @CacheSpec(refreshAfterWrite = Expire.ONE_MINUTE, loader = Loader.IDENTITY,
       population = { Population.PARTIAL, Population.FULL })
-  @SuppressWarnings("FutureReturnValueIgnored")
+  
   public void getAll(AsyncLoadingCache<Integer, Integer> cache, CacheContext context) {
     List<Integer> keys = ImmutableList.of(context.firstKey(), context.absentKey());
     context.ticker().advance(30, TimeUnit.SECONDS);

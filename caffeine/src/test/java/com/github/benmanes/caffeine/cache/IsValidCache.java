@@ -40,7 +40,7 @@ public final class IsValidCache<K, V>
     }
   }
 
-  @SuppressWarnings("unchecked")
+  
   @Override
   protected boolean matchesSafely(Cache<K, V> cache, Description description) {
     this.description = description;

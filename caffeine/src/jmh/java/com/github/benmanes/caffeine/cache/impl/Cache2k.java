@@ -26,7 +26,7 @@ import com.github.benmanes.caffeine.cache.BasicCache;
 public final class Cache2k<K, V> implements BasicCache<K, V> {
   private final Cache<K, V> cache;
 
-  @SuppressWarnings("unchecked")
+  
   public Cache2k(int maximumSize) {
     cache = (Cache<K, V>) Cache2kBuilder.forUnknownTypes()
         .entryCapacity(maximumSize)

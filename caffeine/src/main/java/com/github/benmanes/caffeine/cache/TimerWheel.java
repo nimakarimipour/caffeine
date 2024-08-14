@@ -75,7 +75,7 @@ final class TimerWheel<K, V> {
 
   long nanos;
 
-  @SuppressWarnings({"rawtypes", "unchecked"})
+  
   TimerWheel(BoundedLocalCache<K, V> cache) {
     this.cache = requireNonNull(cache);
 
@@ -315,13 +315,13 @@ final class TimerWheel<K, V> {
     @Override public Node<K, V> getPreviousInVariableOrder() {
       return prev;
     }
-    @Override public void setPreviousInVariableOrder(@Nullable Node<K, V> prev) {
+    @Override public void setPreviousInVariableOrder( Node<K, V> prev) {
       this.prev = prev;
     }
     @Override public Node<K, V> getNextInVariableOrder() {
       return next;
     }
-    @Override public void setNextInVariableOrder(@Nullable Node<K, V> next) {
+    @Override public void setNextInVariableOrder( Node<K, V> next) {
       this.next = next;
     }
 

@@ -1401,7 +1401,7 @@ public final class AsMapTest {
 
   @CheckNoWriter @CheckNoStats
   @Test(dataProvider = "caches")
-  @SuppressWarnings("SelfEquals")
+  
   @CacheSpec(removalListener = { Listener.DEFAULT, Listener.REJECTING })
   public void equals_self(Map<Integer, Integer> map, CacheContext context) {
     assertThat(map.equals(map), is(true));

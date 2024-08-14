@@ -80,14 +80,14 @@ public final class IsEmptyIterable<E> extends TypeSafeDiagnosingMatcher<Iterable
     builder.expectThat("toArray has data", c.toArray(new Object[0]), is(arrayWithSize(0)));
   }
 
-  @SuppressWarnings("unchecked")
+  
   private void checkSet(Set<? extends E> set, DescriptionBuilder builder) {
     builder.expectThat("hashcode", set.hashCode(), is(equalTo(emptySet().hashCode())));
     builder.expectThat("collection not equal to empty set", (Set<Object>) set, is(emptySet()));
     builder.expectThat("empty set not equal to collection", emptySet(), is((Set<Object>) set));
   }
 
-  @SuppressWarnings("unchecked")
+  
   private void checkList(List<? extends E> list, DescriptionBuilder builder) {
     builder.expectThat("hashcode", list.hashCode(), is(equalTo(emptyList().hashCode())));
     builder.expectThat("collection not equal to empty list", (List<Object>) list, is(emptyList()));
