@@ -29,8 +29,6 @@ import java.util.function.Function;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-import javax.annotation.Nullable;
-
 /**
  * This class provides a skeletal implementation of the {@link LoadingCache} interface to minimize
  * the effort required to implement a {@link LocalCache}.
@@ -63,7 +61,7 @@ interface LocalLoadingCache<C extends LocalCache<K, V>, K, V>
   }
 
   @Override
-  default @Nullable V get(K key) {
+  default V get(K key) {
     return cache().computeIfAbsent(key, mappingFunction());
   }
 

@@ -127,7 +127,6 @@ abstract class BaseMpscLinkedArrayQueuePad2<E> extends BaseMpscLinkedArrayQueueP
   long p10, p11, p12, p13, p14, p15, p16, p17;
 }
 
-@SuppressWarnings("NullAway")
 abstract class BaseMpscLinkedArrayQueueConsumerFields<E> extends BaseMpscLinkedArrayQueuePad2<E> {
   protected long consumerMask;
   protected E[] consumerBuffer;
@@ -140,7 +139,6 @@ abstract class BaseMpscLinkedArrayQueuePad3<E> extends BaseMpscLinkedArrayQueueC
   long p10, p11, p12, p13, p14, p15, p16, p17;
 }
 
-@SuppressWarnings("NullAway")
 abstract class BaseMpscLinkedArrayQueueColdProducerFields<E>
     extends BaseMpscLinkedArrayQueuePad3<E> {
   protected volatile long producerLimit;
@@ -148,7 +146,7 @@ abstract class BaseMpscLinkedArrayQueueColdProducerFields<E>
   protected E[] producerBuffer;
 }
 
-@SuppressWarnings({"PMD", "NullAway", "restriction"})
+@SuppressWarnings({"PMD", "restriction"})
 abstract class BaseMpscLinkedArrayQueue<E> extends BaseMpscLinkedArrayQueueColdProducerFields<E> {
   // No post padding here, subclasses must add
 
@@ -307,8 +305,8 @@ abstract class BaseMpscLinkedArrayQueue<E> extends BaseMpscLinkedArrayQueueColdP
    * <p>
    * This implementation is correct for single consumer thread use only.
    */
-  @Override
   @SuppressWarnings("unchecked")
+  @Override
   public E poll() {
     final E[] buffer = consumerBuffer;
     final long index = consumerIndex;

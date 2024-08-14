@@ -132,8 +132,8 @@ abstract class Node<K, V> implements AccessOrder<Node<K, V>>, WriteOrder<Node<K,
   public void setVariableTime(long time) {}
 
   @GuardedBy("evictionLock")
-  public Node<K, V> getPreviousInVariableOrder() {
-    throw new UnsupportedOperationException();
+  public @Nullable Node<K, V> getPreviousInVariableOrder() {
+    return null;
   }
 
   @GuardedBy("evictionLock")
@@ -142,8 +142,8 @@ abstract class Node<K, V> implements AccessOrder<Node<K, V>>, WriteOrder<Node<K,
   }
 
   @GuardedBy("evictionLock")
-  public Node<K, V> getNextInVariableOrder() {
-    throw new UnsupportedOperationException();
+  public @Nullable Node<K, V> getNextInVariableOrder() {
+    return null;
   }
 
   @GuardedBy("evictionLock")

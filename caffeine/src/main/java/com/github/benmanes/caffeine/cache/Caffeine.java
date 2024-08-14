@@ -35,7 +35,6 @@ import java.util.logging.Logger;
 
 import javax.annotation.Nonnegative;
 import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
 
 import com.github.benmanes.caffeine.cache.Async.AsyncExpiry;
 import com.github.benmanes.caffeine.cache.Async.AsyncRemovalListener;
@@ -149,16 +148,16 @@ public final class Caffeine<K, V> {
   long expireAfterWriteNanos = UNSET_INT;
   long expireAfterAccessNanos = UNSET_INT;
 
-  @Nullable RemovalListener<? super K, ? super V> removalListener;
-  @Nullable Supplier<StatsCounter> statsCounterSupplier;
-  @Nullable CacheWriter<? super K, ? super V> writer;
-  @Nullable Weigher<? super K, ? super V> weigher;
-  @Nullable Expiry<? super K, ? super V> expiry;
-  @Nullable Executor executor;
-  @Nullable Ticker ticker;
+  RemovalListener<? super K, ? super V> removalListener;
+  Supplier<StatsCounter> statsCounterSupplier;
+  CacheWriter<? super K, ? super V> writer;
+  Weigher<? super K, ? super V> weigher;
+  Expiry<? super K, ? super V> expiry;
+  Executor executor;
+  Ticker ticker;
 
-  @Nullable Strength keyStrength;
-  @Nullable Strength valueStrength;
+  Strength keyStrength;
+  Strength valueStrength;
 
   private Caffeine() {}
 
@@ -404,9 +403,9 @@ public final class Caffeine<K, V> {
 
   @Nonnull @SuppressWarnings({"unchecked", "rawtypes"})
   <K1 extends K, V1 extends V> Weigher<K1, V1> getWeigher(boolean isAsync) {
-    Weigher<K1, V1> delegate = (weigher == null) || (weigher == Weigher.singletonWeigher())
-        ? Weigher.singletonWeigher()
-        : Weigher.boundedWeigher((Weigher<K1, V1>) weigher);
+    Weigher<K1, V1> delegate = isWeighted() && (weigher != Weigher.singletonWeigher())
+        ? Weigher.boundedWeigher((Weigher<K1, V1>) weigher)
+        : Weigher.singletonWeigher();
     return isAsync ? (Weigher<K1, V1>) new AsyncWeigher(delegate) : delegate;
   }
 
@@ -613,7 +612,7 @@ public final class Caffeine<K, V> {
   }
 
   @SuppressWarnings("unchecked")
-  @Nullable Expiry<K, V> getExpiry(boolean isAsync) {
+  Expiry<K, V> getExpiry(boolean isAsync) {
     return isAsync && (expiry != null)
         ? (Expiry<K, V>) new AsyncExpiry<>(expiry)
         : (Expiry<K, V>) expiry;
@@ -721,7 +720,7 @@ public final class Caffeine<K, V> {
   }
 
   @SuppressWarnings({"unchecked", "rawtypes"})
-  @Nullable <K1 extends K, V1 extends V> RemovalListener<K1, V1> getRemovalListener(boolean async) {
+  <K1 extends K, V1 extends V> RemovalListener<K1, V1> getRemovalListener(boolean async) {
     RemovalListener<K1, V1> castedListener = (RemovalListener<K1, V1>) removalListener;
     return async && (castedListener != null)
         ? new AsyncRemovalListener(castedListener, getExecutor())
@@ -771,7 +770,7 @@ public final class Caffeine<K, V> {
   <K1 extends K, V1 extends V> CacheWriter<K1, V1> getCacheWriter() {
     @SuppressWarnings("unchecked")
     CacheWriter<K1, V1> castedWriter = (CacheWriter<K1, V1>) writer;
-    return (castedWriter == null) ? CacheWriter.disabledWriter() : castedWriter;
+    return (writer == null) ? CacheWriter.disabledWriter() : castedWriter;
   }
 
   /**

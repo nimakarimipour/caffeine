@@ -39,7 +39,6 @@ import java.util.NavigableMap;
 import java.util.Set;
 import java.util.TreeMap;
 
-import javax.annotation.Nullable;
 import javax.lang.model.element.Modifier;
 
 import com.github.benmanes.caffeine.cache.local.AddConstructor;
@@ -123,7 +122,7 @@ public final class LocalCacheFactoryGenerator {
         .addModifiers(Modifier.STATIC)
         .addCode(LocalCacheSelectorCode.get())
         .addParameter(BUILDER_PARAM)
-        .addParameter(CACHE_LOADER_PARAM.toBuilder().addAnnotation(Nullable.class).build())
+        .addParameter(CACHE_LOADER_PARAM)
         .addParameter(boolean.class, "async")
         .addJavadoc("Returns a cache optimized for this configuration.\n")
         .build());

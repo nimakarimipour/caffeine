@@ -44,7 +44,6 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
 
 import com.github.benmanes.caffeine.cache.stats.CacheStats;
 
@@ -62,7 +61,7 @@ abstract class LocalAsyncLoadingCache<C extends LocalCache<K, CompletableFuture<
   final boolean canBulkLoad;
   final AsyncCacheLoader<K, V> loader;
 
-  @Nullable LoadingCacheView localCacheView;
+  LoadingCacheView localCacheView;
 
   @SuppressWarnings("unchecked")
   LocalAsyncLoadingCache(C cache, AsyncCacheLoader<? super K, V> loader) {
@@ -100,7 +99,7 @@ abstract class LocalAsyncLoadingCache<C extends LocalCache<K, CompletableFuture<
   }
 
   @Override
-  public @Nullable CompletableFuture<V> getIfPresent(@Nonnull Object key) {
+  public CompletableFuture<V> getIfPresent(@Nonnull Object key) {
     return cache.getIfPresent(key, /* recordStats */ true);
   }
 
@@ -118,7 +117,7 @@ abstract class LocalAsyncLoadingCache<C extends LocalCache<K, CompletableFuture<
     return get(key, mappingFunction, /* recordStats */ true);
   }
 
-  @SuppressWarnings({"FutureReturnValueIgnored", "NullAway"})
+  @SuppressWarnings("FutureReturnValueIgnored")
   CompletableFuture<V> get(K key,
       BiFunction<? super K, Executor, CompletableFuture<V>> mappingFunction, boolean recordStats) {
     long startTime = cache.statsTicker().read();
@@ -281,7 +280,7 @@ abstract class LocalAsyncLoadingCache<C extends LocalCache<K, CompletableFuture<
     }
 
     @Override
-    public void accept(@Nullable Map<K, V> result, @Nullable Throwable error) {
+    public void accept(Map<K, V> result, Throwable error) {
       long loadTime = cache.statsTicker().read() - startTime;
 
       if (result == null) {
@@ -333,7 +332,7 @@ abstract class LocalAsyncLoadingCache<C extends LocalCache<K, CompletableFuture<
   final class LoadingCacheView implements LoadingCache<K, V>, Serializable {
     private static final long serialVersionUID = 1L;
 
-    transient @Nullable AsMapView<K, V> asMapView;
+    transient AsMapView<K, V> asMapView;
 
     /** A test-only method for validation. */
     LocalAsyncLoadingCache<C, K, V> getOuter() {
@@ -341,7 +340,7 @@ abstract class LocalAsyncLoadingCache<C extends LocalCache<K, CompletableFuture<
     }
 
     @Override
-    public @Nullable V getIfPresent(Object key) {
+    public V getIfPresent(Object key) {
       CompletableFuture<V> future = cache.getIfPresent(key, /* recordStats */ true);
       return Async.getIfReady(future);
     }
@@ -542,8 +541,8 @@ abstract class LocalAsyncLoadingCache<C extends LocalCache<K, CompletableFuture<
   static final class AsMapView<K, V> extends AbstractMap<K, V> implements ConcurrentMap<K, V> {
     final LocalCache<K, CompletableFuture<V>> delegate;
 
-    @Nullable Collection<V> values;
-    @Nullable Set<Entry<K, V>> entries;
+    Collection<V> values;
+    Set<Entry<K, V>> entries;
 
     AsMapView(LocalCache<K, CompletableFuture<V>> delegate) {
       this.delegate = delegate;
@@ -582,12 +581,12 @@ abstract class LocalAsyncLoadingCache<C extends LocalCache<K, CompletableFuture<
     }
 
     @Override
-    public @Nullable V get(Object key) {
+    public V get(Object key) {
       return Async.getIfReady(delegate.get(key));
     }
 
     @Override
-    public @Nullable V putIfAbsent(K key, V value) {
+    public V putIfAbsent(K key, V value) {
       requireNonNull(value);
       CompletableFuture<V> valueFuture =
           delegate.putIfAbsent(key, CompletableFuture.completedFuture(value));
@@ -595,7 +594,7 @@ abstract class LocalAsyncLoadingCache<C extends LocalCache<K, CompletableFuture<
     }
 
     @Override
-    public @Nullable V put(K key, V value) {
+    public V put(K key, V value) {
       requireNonNull(value);
       CompletableFuture<V> oldValueFuture =
           delegate.put(key, CompletableFuture.completedFuture(value));
@@ -603,7 +602,7 @@ abstract class LocalAsyncLoadingCache<C extends LocalCache<K, CompletableFuture<
     }
 
     @Override
-    public @Nullable V remove(Object key) {
+    public V remove(Object key) {
       CompletableFuture<V> oldValueFuture = delegate.remove(key);
       return Async.getWhenSuccessful(oldValueFuture);
     }
@@ -642,7 +641,7 @@ abstract class LocalAsyncLoadingCache<C extends LocalCache<K, CompletableFuture<
     }
 
     @Override
-    public @Nullable V replace(K key, V value) {
+    public V replace(K key, V value) {
       requireNonNull(value);
       CompletableFuture<V> oldValueFuture =
           delegate.replace(key, CompletableFuture.completedFuture(value));
@@ -670,7 +669,7 @@ abstract class LocalAsyncLoadingCache<C extends LocalCache<K, CompletableFuture<
     }
 
     @Override
-    public @Nullable V computeIfAbsent(K key, Function<? super K, ? extends V> mappingFunction) {
+    public V computeIfAbsent(K key, Function<? super K, ? extends V> mappingFunction) {
       requireNonNull(mappingFunction);
       CompletableFuture<V> valueFuture = delegate.computeIfAbsent(key, k -> {
         V newValue = mappingFunction.apply(key);
@@ -680,7 +679,7 @@ abstract class LocalAsyncLoadingCache<C extends LocalCache<K, CompletableFuture<
     }
 
     @Override
-    public @Nullable V computeIfPresent(K key,
+    public V computeIfPresent(K key,
         BiFunction<? super K, ? super V, ? extends V> remappingFunction) {
       requireNonNull(remappingFunction);
       boolean[] computed = { false };
@@ -705,7 +704,7 @@ abstract class LocalAsyncLoadingCache<C extends LocalCache<K, CompletableFuture<
     }
 
     @Override
-    public @Nullable V compute(K key,
+    public V compute(K key,
         BiFunction<? super K, ? super V, ? extends V> remappingFunction) {
       requireNonNull(remappingFunction);
       boolean[] computed = { false };
@@ -734,7 +733,7 @@ abstract class LocalAsyncLoadingCache<C extends LocalCache<K, CompletableFuture<
     }
 
     @Override
-    public @Nullable V merge(K key, V value,
+    public V merge(K key, V value,
         BiFunction<? super V, ? super V, ? extends V> remappingFunction) {
       requireNonNull(value);
       requireNonNull(remappingFunction);
@@ -868,8 +867,8 @@ abstract class LocalAsyncLoadingCache<C extends LocalCache<K, CompletableFuture<
       public Iterator<Entry<K, V>> iterator() {
         return new Iterator<Entry<K, V>>() {
           Iterator<Entry<K, CompletableFuture<V>>> iterator = delegate.entrySet().iterator();
-          @Nullable Entry<K, V> cursor;
-          @Nullable K removalKey;
+          Entry<K, V> cursor;
+          K removalKey;
 
           @Override
           public boolean hasNext() {
@@ -888,10 +887,8 @@ abstract class LocalAsyncLoadingCache<C extends LocalCache<K, CompletableFuture<
             if (!hasNext()) {
               throw new NoSuchElementException();
             }
-            @SuppressWarnings("NullAway")
-            K key = cursor.getKey();
+            removalKey = cursor.getKey();
             Entry<K, V> entry = cursor;
-            removalKey = key;
             cursor = null;
             return entry;
           }
