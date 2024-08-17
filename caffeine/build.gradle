@@ -61,6 +61,8 @@ dependencies {
   compileOnly libraries.errorProneAnnotations
   compileOnly "org.jspecify:jspecify:0.3.0"
   compileOnly "com.uber.nullaway:nullaway-annotations:0.10.10"
+  compileOnly "org.checkerframework:checker-qual:3.43.0"
+  javaPoetCompile "org.checkerframework:checker-qual:3.43.0"
 }
 
 compileCodeGenJava {

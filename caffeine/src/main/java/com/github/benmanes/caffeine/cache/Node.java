@@ -17,13 +17,13 @@ package com.github.benmanes.caffeine.cache;
 
 import java.lang.ref.ReferenceQueue;
 
-import javax.annotation.Nonnegative;
-import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
-import javax.annotation.concurrent.GuardedBy;
+import org.checkerframework.checker.index.qual.NonNegative;
+import org.checkerframework.checker.nullness.qual.NonNull;
+import org.checkerframework.checker.nullness.qual.Nullable;
 
 import com.github.benmanes.caffeine.cache.AccessOrderDeque.AccessOrder;
 import com.github.benmanes.caffeine.cache.WriteOrderDeque.WriteOrder;
+import com.google.errorprone.annotations.concurrent.GuardedBy;
 
 /**
  * An entry in the cache containing the key, value, weight, access, and write metadata. The key
@@ -42,7 +42,7 @@ abstract class Node<K, V> implements AccessOrder<Node<K, V>>, WriteOrder<Node<K,
    * Returns the reference that the cache is holding the entry by. This is either the key if
    * strongly held or a {@link java.lang.ref.WeakReference} to that key.
    */
-  @Nonnull
+  @NonNull
   public abstract Object getKeyReference();
 
   /** Return the value or {@code null} if it has been reclaimed by the garbage collector. */
@@ -53,7 +53,7 @@ abstract class Node<K, V> implements AccessOrder<Node<K, V>>, WriteOrder<Node<K,
    * Returns the reference to the value. This is either the value if strongly held or a
    * {@link java.lang.ref.Reference} to that value.
    */
-  @Nonnull
+  @NonNull
   public abstract Object getValueReference();
 
   /**
@@ -61,37 +61,35 @@ abstract class Node<K, V> implements AccessOrder<Node<K, V>>, WriteOrder<Node<K,
    * and rely on the memory fence when the lock is released.
    */
   @GuardedBy("this")
-  public abstract void setValue(@Nonnull V value, @Nullable ReferenceQueue<V> referenceQueue);
+  public abstract void setValue(@NonNull V value, @Nullable ReferenceQueue<V> referenceQueue);
 
   /**
    * Returns {@code true} if the given objects are considered equivalent. A strongly held value is
    * compared by equality and a weakly or softly held value is compared by identity.
    */
-  public abstract boolean containsValue(@Nonnull Object value);
+  public abstract boolean containsValue(@NonNull Object value);
 
   /** Returns the weight of this entry from the entry's perspective. */
-  @Nonnegative
+  @NonNegative
   @GuardedBy("this")
   public int getWeight() {
     return 1;
   }
 
   /** Sets the weight from the entry's perspective. */
-  @Nonnegative
   @GuardedBy("this")
-  public void setWeight(int weight) {}
+  public void setWeight(@NonNegative int weight) {}
 
   /** Returns the weight of this entry from the policy's perspective. */
-  @Nonnegative
+  @NonNegative
   @GuardedBy("evictionLock")
   public int getPolicyWeight() {
     return 1;
   }
 
   /** Sets the weight from the policy's perspective. */
-  @Nonnegative
   @GuardedBy("evictionLock")
-  public void setPolicyWeight(int weight) {}
+  public void setPolicyWeight(@NonNegative int weight) {}
 
   /* ---------------- Health -------------- */
 
@@ -132,8 +130,8 @@ abstract class Node<K, V> implements AccessOrder<Node<K, V>>, WriteOrder<Node<K,
   public void setVariableTime(long time) {}
 
   @GuardedBy("evictionLock")
-  public @Nullable Node<K, V> getPreviousInVariableOrder() {
-    return null;
+  public Node<K, V> getPreviousInVariableOrder() {
+    throw new UnsupportedOperationException();
   }
 
   @GuardedBy("evictionLock")
@@ -142,8 +140,8 @@ abstract class Node<K, V> implements AccessOrder<Node<K, V>>, WriteOrder<Node<K,
   }
 
   @GuardedBy("evictionLock")
-  public @Nullable Node<K, V> getNextInVariableOrder() {
-    return null;
+  public Node<K, V> getNextInVariableOrder() {
+    throw new UnsupportedOperationException();
   }
 
   @GuardedBy("evictionLock")

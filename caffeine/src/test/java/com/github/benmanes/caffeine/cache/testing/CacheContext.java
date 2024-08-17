@@ -27,12 +27,14 @@ import java.util.Collections;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Random;
 import java.util.Set;
 import java.util.concurrent.Executor;
 import java.util.concurrent.ThreadLocalRandom;
 
-import javax.annotation.Nullable;
+import org.checkerframework.checker.nullness.qual.Nullable;
 
+import com.github.benmanes.caffeine.cache.AsyncCache;
 import com.github.benmanes.caffeine.cache.AsyncCacheLoader;
 import com.github.benmanes.caffeine.cache.AsyncLoadingCache;
 import com.github.benmanes.caffeine.cache.Cache;
@@ -102,9 +104,9 @@ public final class CacheContext {
   final boolean isAsyncLoading;
 
   Cache<?, ?> cache;
+  AsyncCache<?, ?> asyncCache;
   Caffeine<Object, Object> caffeine;
   CacheBuilder<Object, Object> guava;
-  AsyncLoadingCache<?, ?> asyncCache;
 
   @Nullable Integer firstKey;
   @Nullable Integer middleKey;
@@ -480,5 +482,11 @@ public final class CacheContext {
   }
 
   @SuppressWarnings("serial")
-  static final class SerializableFakeTicker extends FakeTicker implements Serializable {}
+  static final class SerializableFakeTicker extends FakeTicker implements Serializable {
+    private static final long START_TIME = new Random().nextLong();
+
+    public SerializableFakeTicker() {
+      advance(START_TIME);
+    }
+  }
 }

@@ -54,13 +54,11 @@ public class GetPutBenchmark {
     "ElasticSearch",
     "Jackrabbit",
     "Cache2k",
-    "Ehcache2_Lru",
     "Ehcache3",
     "ExpiringMap_Fifo",
     "ExpiringMap_Lru",
     "TCache_Lfu",
     "TCache_Lru",
-    "Rapidoid",
   })
   CacheType cacheType;
 

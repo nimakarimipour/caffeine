@@ -28,8 +28,8 @@ import java.util.TreeMap;
 import java.util.concurrent.TimeUnit;
 import java.util.function.Function;
 
-import javax.annotation.Nullable;
-import javax.annotation.concurrent.NotThreadSafe;
+import org.checkerframework.checker.nullness.qual.NonNull;
+import org.checkerframework.checker.nullness.qual.Nullable;
 
 /**
  * A hierarchical timer wheel to add, remove, and fire expiration events in amortized O(1) time. The
@@ -38,7 +38,6 @@ import javax.annotation.concurrent.NotThreadSafe;
  *
  * @author ben.manes@gmail.com (Ben Manes)
  */
-@NotThreadSafe
 final class TimerWheel<K, V> {
 
   /*
@@ -100,10 +99,10 @@ final class TimerWheel<K, V> {
       for (int i = 0; i < SHIFT.length; i++) {
         long previousTicks = (previousTimeNanos >> SHIFT[i]);
         long currentTicks = (currentTimeNanos >> SHIFT[i]);
-        if ((currentTicks - previousTicks) <= 0) {
+        if ((currentTicks - previousTicks) <= 0L) {
           break;
         }
-        expire(i, previousTicks, currentTicks, previousTimeNanos, currentTimeNanos);
+        expire(i, previousTicks, currentTicks);
       }
     } catch (Throwable t) {
       nanos = previousTimeNanos;
@@ -117,15 +116,12 @@ final class TimerWheel<K, V> {
    * @param index the wheel being operated on
    * @param previousTicks the previous number of ticks
    * @param currentTicks the current number of ticks
-   * @param previousTimeNanos the previous time, in nanoseconds
-   * @param currentTimeNanos the current time, in nanoseconds
    */
-  void expire(int index, long previousTicks, long currentTicks,
-      long previousTimeNanos, long currentTimeNanos) {
+  void expire(int index, long previousTicks, long currentTicks) {
     Node<K, V>[] timerWheel = wheel[index];
 
     int start, end;
-    if ((currentTimeNanos - previousTimeNanos) >= SPANS[index + 1]) {
+    if ((currentTicks - previousTicks) >= timerWheel.length) {
       end = timerWheel.length;
       start = 0;
     } else {
@@ -148,7 +144,7 @@ final class TimerWheel<K, V> {
         node.setNextInVariableOrder(null);
 
         try {
-          if (((node.getVariableTime() - currentTimeNanos) > 0)
+          if (((node.getVariableTime() - nanos) > 0)
               || !cache.evictEntry(node, RemovalCause.EXPIRED, nanos)) {
             Node<K, V> newSentinel = findBucket(node.getVariableTime());
             link(newSentinel, node);
@@ -170,7 +166,7 @@ final class TimerWheel<K, V> {
    *
    * @param node the entry in the cache
    */
-  public void schedule(Node<K, V> node) {
+  public void schedule(@NonNull Node<K, V> node) {
     Node<K, V> sentinel = findBucket(node.getVariableTime());
     link(sentinel, node);
   }
@@ -180,7 +176,7 @@ final class TimerWheel<K, V> {
    *
    * @param node the entry in the cache
    */
-  public void reschedule(Node<K, V> node) {
+  public void reschedule(@NonNull Node<K, V> node) {
     if (node.getNextInVariableOrder() != null) {
       unlink(node);
       schedule(node);
@@ -192,7 +188,7 @@ final class TimerWheel<K, V> {
    *
    * @param node the entry in the cache
    */
-  public void deschedule(Node<K, V> node) {
+  public void deschedule(@NonNull Node<K, V> node) {
     unlink(node);
     node.setNextInVariableOrder(null);
     node.setPreviousInVariableOrder(null);
@@ -246,7 +242,7 @@ final class TimerWheel<K, V> {
    * @param transformer a function that unwraps the value
    * @return an unmodifiable snapshot in the desired order
    */
-  public Map<K, V> snapshot(boolean ascending, int limit, Function<V, V> transformer) {
+  public Map<K, V> snapshot(boolean ascending, int limit, @NonNull Function<V, V> transformer) {
     requireArgument(limit >= 0);
 
     Map<K, V> map = new LinkedHashMap<>(Math.min(limit, cache.size()));
@@ -315,21 +311,23 @@ final class TimerWheel<K, V> {
     @Override public Node<K, V> getPreviousInVariableOrder() {
       return prev;
     }
+    @SuppressWarnings("NullAway")
     @Override public void setPreviousInVariableOrder(@Nullable Node<K, V> prev) {
       this.prev = prev;
     }
     @Override public Node<K, V> getNextInVariableOrder() {
       return next;
     }
+    @SuppressWarnings("NullAway")
     @Override public void setNextInVariableOrder(@Nullable Node<K, V> next) {
       this.next = next;
     }
 
-    @Override public K getKey() { return null; }
+    @Override public @Nullable K getKey() { return null; }
     @Override public Object getKeyReference() { throw new UnsupportedOperationException(); }
-    @Override public V getValue() { return null; }
+    @Override public @Nullable V getValue() { return null; }
     @Override public Object getValueReference() { throw new UnsupportedOperationException(); }
-    @Override public void setValue(V value, ReferenceQueue<V> referenceQueue) {}
+    @Override public void setValue(V value, @Nullable ReferenceQueue<V> referenceQueue) {}
     @Override public boolean containsValue(Object value) { return false; }
     @Override public boolean isAlive() { return false; }
     @Override public boolean isRetired() { return false; }

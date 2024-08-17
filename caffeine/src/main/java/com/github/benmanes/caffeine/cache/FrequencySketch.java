@@ -15,11 +15,12 @@
  */
 package com.github.benmanes.caffeine.cache;
 
+import static com.github.benmanes.caffeine.cache.Caffeine.requireArgument;
+
 import java.util.concurrent.ThreadLocalRandom;
 
-import javax.annotation.Nonnegative;
-import javax.annotation.Nonnull;
-import javax.annotation.concurrent.NotThreadSafe;
+import org.checkerframework.checker.index.qual.NonNegative;
+import org.checkerframework.checker.nullness.qual.NonNull;
 
 /**
  * A probabilistic multiset for estimating the popularity of an element within a time window. The
@@ -28,7 +29,6 @@ import javax.annotation.concurrent.NotThreadSafe;
  *
  * @author ben.manes@gmail.com (Ben Manes)
  */
-@NotThreadSafe
 final class FrequencySketch<E> {
 
   /*
@@ -76,9 +76,9 @@ final class FrequencySketch<E> {
    * Creates a lazily initialized frequency sketch, requiring {@link #ensureCapacity} be called
    * when the maximum size of the cache has been determined.
    */
+  @SuppressWarnings("NullAway.Init")
   public FrequencySketch() {
-    int seed = ThreadLocalRandom.current().nextInt();
-    this.randomSeed = ((seed & 1) == 0) ? seed + 1 : seed;
+    this.randomSeed = 1 | ThreadLocalRandom.current().nextInt();
   }
 
   /**
@@ -88,8 +88,8 @@ final class FrequencySketch<E> {
    *
    * @param maximumSize the maximum size of the cache
    */
-  public void ensureCapacity(@Nonnegative long maximumSize) {
-    Caffeine.requireArgument(maximumSize >= 0);
+  public void ensureCapacity(@NonNegative long maximumSize) {
+    requireArgument(maximumSize >= 0);
     int maximum = (int) Math.min(maximumSize, Integer.MAX_VALUE >>> 1);
     if ((table != null) && (table.length >= maximum)) {
       return;
@@ -118,8 +118,8 @@ final class FrequencySketch<E> {
    * @param e the element to count occurrences of
    * @return the estimated number of occurrences of the element; possibly zero but never negative
    */
-  @Nonnegative
-  public int frequency(@Nonnull E e) {
+  @NonNegative
+  public int frequency(@NonNull E e) {
     if (isNotInitialized()) {
       return 0;
     }
@@ -142,7 +142,7 @@ final class FrequencySketch<E> {
    *
    * @param e the element to add
    */
-  public void increment(@Nonnull E e) {
+  public void increment(@NonNull E e) {
     if (isNotInitialized()) {
       return;
     }

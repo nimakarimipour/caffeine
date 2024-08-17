@@ -22,6 +22,7 @@ import static org.hamcrest.Matchers.nullValue;
 import static org.hamcrest.Matchers.sameInstance;
 import static org.mockito.Mockito.verify;
 
+import java.time.Duration;
 import java.util.concurrent.TimeUnit;
 import java.util.function.Supplier;
 
@@ -57,6 +58,7 @@ public final class CaffeineTest {
   public void unconfigured() {
     assertThat(Caffeine.newBuilder().build(), is(not(nullValue())));
     assertThat(Caffeine.newBuilder().build(loader), is(not(nullValue())));
+    assertThat(Caffeine.newBuilder().buildAsync(), is(not(nullValue())));
     assertThat(Caffeine.newBuilder().buildAsync(loader), is(not(nullValue())));
     assertThat(Caffeine.newBuilder().toString(), is(Caffeine.newBuilder().toString()));
   }
@@ -64,12 +66,13 @@ public final class CaffeineTest {
   @Test
   public void configured() {
     Caffeine<Object, Object> configured = Caffeine.newBuilder()
-        .initialCapacity(1).weakKeys().softValues()
+        .initialCapacity(1).weakKeys()
         .expireAfterAccess(1, TimeUnit.SECONDS).expireAfterWrite(1, TimeUnit.SECONDS)
         .removalListener((k, v, c) -> {}).recordStats();
     assertThat(configured.build(), is(not(nullValue())));
+    assertThat(configured.buildAsync(), is(not(nullValue())));
     assertThat(configured.build(loader), is(not(nullValue())));
-    assertThat(Caffeine.newBuilder().buildAsync(loader), is(not(nullValue())));
+    assertThat(configured.buildAsync(loader), is(not(nullValue())));
 
     assertThat(configured.refreshAfterWrite(1, TimeUnit.SECONDS).toString(),
         is(not(Caffeine.newBuilder().toString())));
@@ -324,6 +327,41 @@ public final class CaffeineTest {
     assertThat(expiration.getExpiresAfter(TimeUnit.NANOSECONDS), is((long) Integer.MAX_VALUE));
   }
 
+  /* ---------------- expireAfterAccess: java.time -------------- */
+
+  @Test(expectedExceptions = IllegalArgumentException.class)
+  public void expireAfterAccess_duration_negative() {
+    Caffeine.newBuilder().expireAfterAccess(Duration.ofMillis(-1));
+  }
+
+  @Test(expectedExceptions = IllegalStateException.class)
+  public void expireAfterAccess_duration_expiry() {
+    Caffeine.newBuilder().expireAfter(expiry).expireAfterAccess(Duration.ofMillis(1));
+  }
+
+  @Test(expectedExceptions = IllegalStateException.class)
+  public void expireAfterAccess_duration_twice() {
+    Caffeine.newBuilder().expireAfterAccess(Duration.ofMillis(1))
+        .expireAfterAccess(Duration.ofMillis(1));
+  }
+
+  @Test
+  public void expireAfterAccess_duration_small() {
+    Caffeine<?, ?> builder = Caffeine.newBuilder().expireAfterAccess(Duration.ofMillis(0));
+    assertThat(builder.expireAfterAccessNanos, is(0L));
+    Expiration<?, ?> expiration = builder.build().policy().expireAfterAccess().get();
+    assertThat(expiration.getExpiresAfter(TimeUnit.MILLISECONDS), is(0L));
+  }
+
+  @Test
+  public void expireAfterAccess_duration_large() {
+    Caffeine<?, ?> builder = Caffeine.newBuilder()
+        .expireAfterAccess(Duration.ofNanos(Integer.MAX_VALUE));
+    assertThat(builder.expireAfterAccessNanos, is((long) Integer.MAX_VALUE));
+    Expiration<?, ?> expiration = builder.build().policy().expireAfterAccess().get();
+    assertThat(expiration.getExpiresAfter(TimeUnit.NANOSECONDS), is((long) Integer.MAX_VALUE));
+  }
+
   /* ---------------- expireAfterWrite -------------- */
 
   @Test(expectedExceptions = IllegalArgumentException.class)
@@ -359,6 +397,40 @@ public final class CaffeineTest {
     assertThat(expiration.getExpiresAfter(TimeUnit.NANOSECONDS), is((long) Integer.MAX_VALUE));
   }
 
+  /* ---------------- expireAfterWrite: java.time -------------- */
+
+  @Test(expectedExceptions = IllegalArgumentException.class)
+  public void expireAfterWrite_duration_negative() {
+    Caffeine.newBuilder().expireAfterWrite(Duration.ofMillis(-1));
+  }
+
+  @Test(expectedExceptions = IllegalStateException.class)
+  public void expireAfterWrite_duration_expiry() {
+    Caffeine.newBuilder().expireAfter(expiry).expireAfterWrite(Duration.ofMillis(1));
+  }
+
+  @Test(expectedExceptions = IllegalStateException.class)
+  public void expireAfterWrite_duration_twice() {
+    Caffeine.newBuilder().expireAfterWrite(Duration.ofMillis(1))
+        .expireAfterWrite(Duration.ofMillis(1));
+  }
+
+  @Test
+  public void expireAfterWrite_duration_small() {
+    Caffeine<?, ?> builder = Caffeine.newBuilder().expireAfterWrite(Duration.ofMillis(0));
+    assertThat(builder.expireAfterWriteNanos, is(0L));
+    Expiration<?, ?> expiration = builder.build().policy().expireAfterWrite().get();
+    assertThat(expiration.getExpiresAfter(TimeUnit.MILLISECONDS), is(0L));
+  }
+
+  @Test
+  public void expireAfterWrite_duration_large() {
+    Caffeine<?, ?> builder = Caffeine.newBuilder()
+        .expireAfterWrite(Duration.ofNanos(Integer.MAX_VALUE));
+    assertThat(builder.expireAfterWriteNanos, is((long) Integer.MAX_VALUE));
+    Expiration<?, ?> expiration = builder.build().policy().expireAfterWrite().get();
+    assertThat(expiration.getExpiresAfter(TimeUnit.NANOSECONDS), is((long) Integer.MAX_VALUE));
+  }
 
   /* ---------------- expiry -------------- */
 
@@ -391,6 +463,11 @@ public final class CaffeineTest {
 
   /* ---------------- refreshAfterWrite -------------- */
 
+  @Test(expectedExceptions = IllegalArgumentException.class)
+  public void refreshAfterWrite_negative() {
+    Caffeine.newBuilder().refreshAfterWrite(-1, TimeUnit.MILLISECONDS);
+  }
+
   @Test(expectedExceptions = IllegalStateException.class)
   public void refreshAfterWrite_twice() {
     Caffeine.newBuilder().refreshAfterWrite(1, TimeUnit.MILLISECONDS)
@@ -411,6 +488,37 @@ public final class CaffeineTest {
   public void refreshAfterWrite() {
     Caffeine<Object, Object> builder = Caffeine.newBuilder()
         .refreshAfterWrite(1, TimeUnit.MILLISECONDS);
+    assertThat(builder.getRefreshAfterWriteNanos(), is(TimeUnit.MILLISECONDS.toNanos(1)));
+    builder.build(k -> k);
+  }
+
+  /* ---------------- refreshAfterWrite: java.time -------------- */
+
+  @Test(expectedExceptions = IllegalArgumentException.class)
+  public void refreshAfterWrite_duration_negative() {
+    Caffeine.newBuilder().refreshAfterWrite(Duration.ofMillis(-1));
+  }
+
+  @Test(expectedExceptions = IllegalStateException.class)
+  public void refreshAfterWrite_duration_twice() {
+    Caffeine.newBuilder().refreshAfterWrite(Duration.ofMillis(1))
+        .refreshAfterWrite(Duration.ofMillis(1));
+  }
+
+  @Test(expectedExceptions = IllegalStateException.class)
+  public void refreshAfterWrite_duration_noCacheLoader() {
+    Caffeine.newBuilder().refreshAfterWrite(Duration.ofMillis(1)).build();
+  }
+
+  @Test(expectedExceptions = IllegalArgumentException.class)
+  public void refreshAfterWrite_duration_zero() {
+    Caffeine.newBuilder().refreshAfterWrite(Duration.ofMillis(0));
+  }
+
+  @Test
+  public void refreshAfterWrite_duration() {
+    Caffeine<Object, Object> builder = Caffeine.newBuilder()
+        .refreshAfterWrite(Duration.ofMillis(1));
     assertThat(builder.getRefreshAfterWriteNanos(), is(TimeUnit.MILLISECONDS.toNanos(1)));
     builder.build(k -> k);
   }

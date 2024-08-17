@@ -31,8 +31,8 @@ import java.util.concurrent.ThreadLocalRandom;
 import java.util.concurrent.atomic.AtomicReference;
 import java.util.function.Function;
 
-import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
+import org.checkerframework.checker.nullness.qual.NonNull;
+import org.checkerframework.checker.nullness.qual.Nullable;
 
 import com.github.benmanes.caffeine.SingleConsumerQueue.Node;
 import com.github.benmanes.caffeine.base.UnsafeAccess;
@@ -76,6 +76,7 @@ import com.github.benmanes.caffeine.base.UnsafeAccess;
  * @author ben.manes@gmail.com (Ben Manes)
  * @param <E> the type of elements held in this collection
  */
+@SuppressWarnings("NullAway")
 public final class SingleConsumerQueue<E> extends SCQHeader.HeadAndTailRef<E>
     implements Queue<E>, Serializable {
 
@@ -288,7 +289,7 @@ public final class SingleConsumerQueue<E> extends SCQHeader.HeadAndTailRef<E>
   }
 
   /** Adds the linked list of nodes to the queue. */
-  void append(@Nonnull Node<E> first, @Nonnull Node<E> last) {
+  void append(@NonNull Node<E> first, @NonNull Node<E> last) {
     for (;;) {
       Node<E> t = tail;
       if (casTail(t, last)) {
@@ -327,7 +328,7 @@ public final class SingleConsumerQueue<E> extends SCQHeader.HeadAndTailRef<E>
    * @return either {@code null} if the element was transferred, the first node if neither a
    *         transfer nor receive were successful, or the received last element from a producer
    */
-  @Nullable Node<E> transferOrCombine(@Nonnull Node<E> first, Node<E> last) {
+  @Nullable Node<E> transferOrCombine(@NonNull Node<E> first, Node<E> last) {
     int index = index();
     AtomicReference<Node<E>> slot = arena[index];
 
@@ -369,7 +370,7 @@ public final class SingleConsumerQueue<E> extends SCQHeader.HeadAndTailRef<E>
   }
 
   /** Returns the last node in the linked list. */
-  @Nonnull static <E> Node<E> findLast(@Nonnull Node<E> node) {
+  @NonNull static <E> Node<E> findLast(@NonNull Node<E> node) {
     Node<E> next;
     while ((next = node.getNextRelaxed()) != null) {
       node = next;
@@ -467,8 +468,8 @@ public final class SingleConsumerQueue<E> extends SCQHeader.HeadAndTailRef<E>
   static class Node<E> {
     static final long NEXT_OFFSET = UnsafeAccess.objectFieldOffset(Node.class, "next");
 
-    E value;
-    volatile Node<E> next;
+    @Nullable E value;
+    @Nullable volatile Node<E> next;
 
     Node(@Nullable E value) {
       this.value = value;
@@ -536,7 +537,7 @@ final class SCQHeader {
 
   /** Enforces a memory layout to avoid false sharing by padding the head node. */
   abstract static class HeadRef<E> extends PadHead<E> {
-    Node<E> head;
+    @Nullable Node<E> head;
   }
 
   abstract static class PadHeadAndTail<E> extends HeadRef<E> {
@@ -548,7 +549,7 @@ final class SCQHeader {
   abstract static class HeadAndTailRef<E> extends PadHeadAndTail<E> {
     static final long TAIL_OFFSET = UnsafeAccess.objectFieldOffset(HeadAndTailRef.class, "tail");
 
-    volatile Node<E> tail;
+    @Nullable volatile Node<E> tail;
 
     void lazySetTail(Node<E> next) {
       UnsafeAccess.UNSAFE.putOrderedObject(this, TAIL_OFFSET, next);

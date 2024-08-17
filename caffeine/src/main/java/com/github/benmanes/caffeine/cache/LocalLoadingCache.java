@@ -19,8 +19,8 @@ import static java.util.Objects.requireNonNull;
 
 import java.lang.reflect.Method;
 import java.util.Collections;
-import java.util.HashMap;
-import java.util.HashSet;
+import java.util.LinkedHashMap;
+import java.util.LinkedHashSet;
 import java.util.Map;
 import java.util.Set;
 import java.util.concurrent.CompletableFuture;
@@ -29,14 +29,15 @@ import java.util.function.Function;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
+import org.checkerframework.checker.nullness.qual.Nullable;
+
 /**
  * This class provides a skeletal implementation of the {@link LoadingCache} interface to minimize
  * the effort required to implement a {@link LocalCache}.
  *
  * @author ben.manes@gmail.com (Ben Manes)
  */
-interface LocalLoadingCache<C extends LocalCache<K, V>, K, V>
-    extends LocalManualCache<C, K, V>, LoadingCache<K, V> {
+interface LocalLoadingCache<K, V> extends LocalManualCache<K, V>, LoadingCache<K, V> {
   Logger logger = Logger.getLogger(LocalLoadingCache.class.getName());
 
   /** Returns the {@link CacheLoader} used by this cache. */
@@ -61,7 +62,7 @@ interface LocalLoadingCache<C extends LocalCache<K, V>, K, V>
   }
 
   @Override
-  default V get(K key) {
+  default @Nullable V get(K key) {
     return cache().computeIfAbsent(key, mappingFunction());
   }
 
@@ -72,13 +73,13 @@ interface LocalLoadingCache<C extends LocalCache<K, V>, K, V>
 
   /** Sequentially loads each missing entry. */
   default Map<K, V> loadSequentially(Iterable<? extends K> keys) {
-    Set<K> uniqueKeys = new HashSet<>();
+    Set<K> uniqueKeys = new LinkedHashSet<>();
     for (K key : keys) {
       uniqueKeys.add(key);
     }
 
     int count = 0;
-    Map<K, V> result = new HashMap<>(uniqueKeys.size());
+    Map<K, V> result = new LinkedHashMap<>(uniqueKeys.size());
     try {
       for (K key : uniqueKeys) {
         count++;
@@ -98,7 +99,7 @@ interface LocalLoadingCache<C extends LocalCache<K, V>, K, V>
   /** Batch loads the missing entries. */
   default Map<K, V> loadInBulk(Iterable<? extends K> keys) {
     Map<K, V> found = cache().getAllPresent(keys);
-    Set<K> keysToLoad = new HashSet<>();
+    Set<K> keysToLoad = new LinkedHashSet<>();
     for (K key : keys) {
       if (!found.containsKey(key)) {
         keysToLoad.add(key);
@@ -108,7 +109,7 @@ interface LocalLoadingCache<C extends LocalCache<K, V>, K, V>
       return found;
     }
 
-    Map<K, V> result = new HashMap<>(found);
+    Map<K, V> result = new LinkedHashMap<>(found);
     bulkLoad(keysToLoad, result);
     return Collections.unmodifiableMap(result);
   }
@@ -125,10 +126,13 @@ interface LocalLoadingCache<C extends LocalCache<K, V>, K, V>
       Map<K, V> loaded = (Map<K, V>) cacheLoader().loadAll(keysToLoad);
       loaded.forEach((key, value) -> {
         cache().put(key, value, /* notifyWriter */ false);
-        if (keysToLoad.contains(key)) {
+      });
+      for (K key : keysToLoad) {
+        V value = loaded.get(key);
+        if (value != null) {
           result.put(key, value);
         }
-      });
+      }
       success = !loaded.isEmpty();
     } catch (RuntimeException e) {
       throw e;

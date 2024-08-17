@@ -19,10 +19,9 @@ import java.util.Map;
 import java.util.concurrent.ConcurrentMap;
 import java.util.function.Function;
 
-import javax.annotation.CheckForNull;
-import javax.annotation.Nonnegative;
-import javax.annotation.Nonnull;
-import javax.annotation.concurrent.ThreadSafe;
+import org.checkerframework.checker.index.qual.NonNegative;
+import org.checkerframework.checker.nullness.qual.NonNull;
+import org.checkerframework.checker.nullness.qual.Nullable;
 
 import com.github.benmanes.caffeine.cache.stats.CacheStats;
 
@@ -38,7 +37,6 @@ import com.github.benmanes.caffeine.cache.stats.CacheStats;
  * @param <K> the type of keys maintained by this cache
  * @param <V> the type of mapped values
  */
-@ThreadSafe
 public interface Cache<K, V> {
 
   /**
@@ -50,8 +48,8 @@ public interface Cache<K, V> {
    *         mapping for the key
    * @throws NullPointerException if the specified key is null
    */
-  @CheckForNull
-  V getIfPresent(@Nonnull Object key);
+  @Nullable
+  V getIfPresent(@NonNull Object key);
 
   /**
    * Returns the value associated with the {@code key} in this cache, obtaining that value from the
@@ -78,8 +76,8 @@ public interface Cache<K, V> {
    * @throws RuntimeException or Error if the mappingFunction does so, in which case the mapping is
    *         left unestablished
    */
-  @CheckForNull
-  V get(@Nonnull K key, @Nonnull Function<? super K, ? extends V> mappingFunction);
+  @Nullable
+  V get(@NonNull K key, @NonNull Function<? super K, ? extends V> mappingFunction);
 
   /**
    * Returns a map of the values associated with the {@code keys} in this cache. The returned map
@@ -92,8 +90,8 @@ public interface Cache<K, V> {
    * @return the unmodifiable mapping of keys to values for the specified keys found in this cache
    * @throws NullPointerException if the specified collection is null or contains a null element
    */
-  @Nonnull
-  Map<K, V> getAllPresent(@Nonnull Iterable<?> keys);
+  @NonNull
+  Map<@NonNull K, @NonNull V> getAllPresent(@NonNull Iterable<@NonNull ?> keys);
 
   /**
    * Associates the {@code value} with the {@code key} in this cache. If the cache previously
@@ -107,7 +105,7 @@ public interface Cache<K, V> {
    * @param value value to be associated with the specified key
    * @throws NullPointerException if the specified key or value is null
    */
-  void put(@Nonnull K key, @Nonnull V value);
+  void put(@NonNull K key, @NonNull V value);
 
   /**
    * Copies all of the mappings from the specified map to the cache. The effect of this call is
@@ -119,7 +117,7 @@ public interface Cache<K, V> {
    * @throws NullPointerException if the specified map is null or the specified map contains null
    *         keys or values
    */
-  void putAll(@Nonnull Map<? extends K,? extends V> map);
+  void putAll(@NonNull Map<? extends @NonNull K,? extends @NonNull V> map);
 
   /**
    * Discards any cached value for the {@code key}. The behavior of this operation is undefined for
@@ -128,7 +126,7 @@ public interface Cache<K, V> {
    * @param key the key whose mapping is to be removed from the cache
    * @throws NullPointerException if the specified key is null
    */
-  void invalidate(@Nonnull Object key);
+  void invalidate(@NonNull Object key);
 
   /**
    * Discards any cached values for the {@code keys}. The behavior of this operation is undefined
@@ -137,7 +135,7 @@ public interface Cache<K, V> {
    * @param keys the keys whose associated values are to be removed
    * @throws NullPointerException if the specified collection is null or contains a null element
    */
-  void invalidateAll(@Nonnull Iterable<?> keys);
+  void invalidateAll(@NonNull Iterable<?> keys);
 
   /**
    * Discards all entries in the cache. The behavior of this operation is undefined for an entry
@@ -153,7 +151,7 @@ public interface Cache<K, V> {
    *
    * @return the estimated number of mappings
    */
-  @Nonnegative
+  @NonNegative
   long estimatedSize();
 
   /**
@@ -165,7 +163,7 @@ public interface Cache<K, V> {
    *
    * @return the current snapshot of the statistics of this cache
    */
-  @Nonnull
+  @NonNull
   CacheStats stats();
 
   /**
@@ -178,8 +176,8 @@ public interface Cache<K, V> {
    *
    * @return a thread-safe view of this cache supporting all of the optional {@link Map} operations
    */
-  @Nonnull
-  ConcurrentMap<K, V> asMap();
+  @NonNull
+  ConcurrentMap<@NonNull K, @NonNull V> asMap();
 
   /**
    * Performs any pending maintenance operations needed by the cache. Exactly which activities are
@@ -194,6 +192,6 @@ public interface Cache<K, V> {
    *
    * @return access to inspect and perform advanced operations based on the cache's characteristics
    */
-  @Nonnull
+  @NonNull
   Policy<K, V> policy();
 }
