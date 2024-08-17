@@ -108,9 +108,9 @@ public final class CacheContext {
   Caffeine<Object, Object> caffeine;
   CacheBuilder<Object, Object> guava;
 
-  @Nullable Integer firstKey;
-  @Nullable Integer middleKey;
-  @Nullable Integer lastKey;
+   Integer firstKey;
+   Integer middleKey;
+   Integer lastKey;
   long initialSize;
 
   // Generated on-demand

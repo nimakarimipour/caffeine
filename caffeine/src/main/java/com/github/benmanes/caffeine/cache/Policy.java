@@ -48,7 +48,7 @@ public interface Policy<K, V> {
    *
    * @return access to low-level operations for this cache if an eviction policy is used
    */
-  @NonNull
+  
   Optional<Eviction<K, V>> eviction();
 
   /**
@@ -65,7 +65,7 @@ public interface Policy<K, V> {
    * @return access to low-level operations for this cache if a time-to-idle expiration policy is
    *         used
    */
-  @NonNull
+  
   Optional<Expiration<K, V>> expireAfterAccess();
 
   /**
@@ -79,7 +79,7 @@ public interface Policy<K, V> {
    * @return access to low-level operations for this cache if a time-to-live expiration policy is
    *         used
    */
-  @NonNull
+  
   Optional<Expiration<K, V>> expireAfterWrite();
 
   /**
@@ -92,7 +92,7 @@ public interface Policy<K, V> {
    *
    * @return access to low-level operations for this cache if a variable expiration policy is used
    */
-  @NonNull
+  
   default Optional<VarExpiration<K, V>> expireVariably() {
     // This method will be abstract in version 3.0.0
     return Optional.empty();
@@ -108,7 +108,7 @@ public interface Policy<K, V> {
    *
    * @return access to low-level operations for this cache if a time-to-live refresh policy is used
    */
-  @NonNull
+  
   Optional<Expiration<K, V>> refreshAfterWrite();
 
   /** The low-level operations for a cache with a size-based eviction policy. */
@@ -128,8 +128,8 @@ public interface Policy<K, V> {
      * @param key the key for the entry being queried
      * @return the weight if the entry is present in the cache
      */
-    @NonNull
-    default OptionalInt weightOf(@NonNull K key) {
+    
+    default OptionalInt weightOf( K key) {
       // This method will be abstract in version 3.0.0
       return OptionalInt.empty();
     }
@@ -140,7 +140,7 @@ public interface Policy<K, V> {
      *
      * @return the combined weight of the values in this cache
      */
-    @NonNull
+    
     OptionalLong weightedSize();
 
     /**
@@ -181,8 +181,8 @@ public interface Policy<K, V> {
      *        the limit)
      * @return a snapshot view of the cache from coldest entry to the hottest
      */
-    @NonNull
-    Map<@NonNull K, @NonNull V> coldest(@NonNegative int limit);
+    
+    Map< K,  V> coldest(@NonNegative int limit);
 
     /**
      * Returns an unmodifiable snapshot {@link Map} view of the cache with ordered traversal. The
@@ -198,8 +198,8 @@ public interface Policy<K, V> {
      *        the limit)
      * @return a snapshot view of the cache from hottest entry to the coldest
      */
-    @NonNull
-    Map<@NonNull K, @NonNull V> hottest(@NonNegative int limit);
+    
+    Map< K,  V> hottest(@NonNegative int limit);
   }
 
   /** The low-level operations for a cache with a fixed expiration policy. */
@@ -219,8 +219,8 @@ public interface Policy<K, V> {
      * @param unit the unit that {@code age} is expressed in
      * @return the age if the entry is present in the cache
      */
-    @NonNull
-    OptionalLong ageOf(@NonNull K key, @NonNull TimeUnit unit);
+    
+    OptionalLong ageOf( K key,  TimeUnit unit);
 
     /**
      * Returns the age of the entry based on the expiration policy. The entry's age is the cache's
@@ -233,8 +233,8 @@ public interface Policy<K, V> {
      * @param key the key for the entry being queried
      * @return the age if the entry is present in the cache
      */
-    @NonNull
-    default Optional<Duration> ageOf(@NonNull K key) {
+    
+    default Optional<Duration> ageOf( K key) {
       // This method will be abstract in version 3.0.0
       OptionalLong duration = ageOf(key, TimeUnit.NANOSECONDS);
       return duration.isPresent()
@@ -254,7 +254,7 @@ public interface Policy<K, V> {
      * @return the length of time after which an entry should be automatically removed
      */
     @NonNegative
-    long getExpiresAfter(@NonNull TimeUnit unit);
+    long getExpiresAfter( TimeUnit unit);
 
     /**
      * Returns the fixed duration used to determine if an entry should be automatically removed due
@@ -264,7 +264,7 @@ public interface Policy<K, V> {
      *
      * @return the length of time after which an entry should be automatically removed
      */
-    @NonNull
+    
     default Duration getExpiresAfter() {
       // This method will be abstract in version 3.0.0
       return Duration.ofNanos(getExpiresAfter(TimeUnit.NANOSECONDS));
@@ -280,7 +280,7 @@ public interface Policy<K, V> {
      * @param unit the unit that {@code duration} is expressed in
      * @throws IllegalArgumentException if {@code duration} is negative
      */
-    void setExpiresAfter(@NonNegative long duration, @NonNull TimeUnit unit);
+    void setExpiresAfter(@NonNegative long duration,  TimeUnit unit);
 
     /**
      * Specifies that each entry should be automatically removed from the cache once a fixed
@@ -289,7 +289,7 @@ public interface Policy<K, V> {
      * @param duration the length of time after which an entry should be automatically removed
      * @throws IllegalArgumentException if {@code duration} is negative
      */
-    default void setExpiresAfter(@NonNull Duration duration) {
+    default void setExpiresAfter( Duration duration) {
       // This method will be abstract in version 3.0.0
       setExpiresAfter(duration.toNanos(), TimeUnit.NANOSECONDS);
     }
@@ -308,8 +308,8 @@ public interface Policy<K, V> {
      *        the limit)
      * @return a snapshot view of the cache from oldest entry to the youngest
      */
-    @NonNull
-    Map<@NonNull K, @NonNull V> oldest(@NonNegative int limit);
+    
+    Map< K,  V> oldest(@NonNegative int limit);
 
     /**
      * Returns an unmodifiable snapshot {@link Map} view of the cache with ordered traversal. The
@@ -325,8 +325,8 @@ public interface Policy<K, V> {
      *        the limit)
      * @return a snapshot view of the cache from youngest entry to the oldest
      */
-    @NonNull
-    Map<@NonNull K, @NonNull V> youngest(@NonNegative int limit);
+    
+    Map< K,  V> youngest(@NonNegative int limit);
   }
 
   /** The low-level operations for a cache with a variable expiration policy. */
@@ -342,8 +342,8 @@ public interface Policy<K, V> {
      * @param unit the unit that {@code age} is expressed in
      * @return the duration if the entry is present in the cache
      */
-    @NonNull
-    OptionalLong getExpiresAfter(@NonNull K key, @NonNull TimeUnit unit);
+    
+    OptionalLong getExpiresAfter( K key,  TimeUnit unit);
 
     /**
      * Returns the duration until the entry should be automatically removed. The expiration policy
@@ -352,8 +352,8 @@ public interface Policy<K, V> {
      * @param key the key for the entry being queried
      * @return the duration if the entry is present in the cache
      */
-    @NonNull
-    default Optional<Duration> getExpiresAfter(@NonNull K key) {
+    
+    default Optional<Duration> getExpiresAfter( K key) {
       // This method will be abstract in version 3.0.0
       OptionalLong duration = getExpiresAfter(key, TimeUnit.NANOSECONDS);
       return duration.isPresent()
@@ -371,7 +371,7 @@ public interface Policy<K, V> {
      * @throws IllegalArgumentException if {@code duration} is negative
      * @throws NullPointerException if the unit is null
      */
-    void setExpiresAfter(@NonNull K key, @NonNegative long duration, @NonNull TimeUnit unit);
+    void setExpiresAfter( K key, @NonNegative long duration,  TimeUnit unit);
 
     /**
      * Specifies that the entry should be automatically removed from the cache once the duration has
@@ -381,7 +381,7 @@ public interface Policy<K, V> {
      * @param duration the length of time from now when the entry should be automatically removed
      * @throws IllegalArgumentException if {@code duration} is negative
      */
-    default void setExpiresAfter(@NonNull K key, @NonNull Duration duration) {
+    default void setExpiresAfter( K key,  Duration duration) {
       // This method will be abstract in version 3.0.0
       setExpiresAfter(key, duration.toNanos(), TimeUnit.NANOSECONDS);
     }
@@ -401,8 +401,8 @@ public interface Policy<K, V> {
      * @return <tt>true</tt> if this cache did not already contain the specified entry
      * @throws IllegalArgumentException if {@code duration} is negative
      */
-    default boolean putIfAbsent(@NonNull K key, @NonNull V value,
-        @NonNegative long duration, @NonNull TimeUnit unit) {
+    default boolean putIfAbsent( K key,  V value,
+        @NonNegative long duration,  TimeUnit unit) {
       // This method was added & implemented in version 2.6.0
       throw new UnsupportedOperationException();
     }
@@ -419,7 +419,7 @@ public interface Policy<K, V> {
      * @return <tt>true</tt> if this cache did not already contain the specified entry
      * @throws IllegalArgumentException if {@code duration} is negative
      */
-    default boolean putIfAbsent(@NonNull K key, @NonNull V value, @NonNull Duration duration) {
+    default boolean putIfAbsent( K key,  V value,  Duration duration) {
       // This method will be abstract in version 3.0.0
       return putIfAbsent(key, value, duration.toNanos(), TimeUnit.NANOSECONDS);
     }
@@ -439,8 +439,8 @@ public interface Policy<K, V> {
      * @throws IllegalArgumentException if {@code duration} is negative
      * @throws NullPointerException if the specified key or value is null
      */
-    default void put(@NonNull K key, @NonNull V value,
-        @NonNegative long duration, @NonNull TimeUnit unit) {
+    default void put( K key,  V value,
+        @NonNegative long duration,  TimeUnit unit) {
       // This method was added & implemented in version 2.6.0
       throw new UnsupportedOperationException();
     }
@@ -456,7 +456,7 @@ public interface Policy<K, V> {
      * @param duration the length of time from now when the entry should be automatically removed
      * @throws IllegalArgumentException if {@code duration} is negative
      */
-    default void put(@NonNull K key, @NonNull V value, @NonNull Duration duration) {
+    default void put( K key,  V value,  Duration duration) {
       // This method will be abstract in version 3.0.0
       put(key, value, duration.toNanos(), TimeUnit.NANOSECONDS);
     }
@@ -475,8 +475,8 @@ public interface Policy<K, V> {
      *        the limit)
      * @return a snapshot view of the cache from oldest entry to the youngest
      */
-    @NonNull
-    Map<@NonNull K, @NonNull V> oldest(@NonNegative int limit);
+    
+    Map< K,  V> oldest(@NonNegative int limit);
 
     /**
      * Returns an unmodifiable snapshot {@link Map} view of the cache with ordered traversal. The
@@ -492,7 +492,7 @@ public interface Policy<K, V> {
      *        the limit)
      * @return a snapshot view of the cache from youngest entry to the oldest
      */
-    @NonNull
-    Map<@NonNull K, @NonNull V> youngest(@NonNegative int limit);
+    
+    Map< K,  V> youngest(@NonNegative int limit);
   }
 }

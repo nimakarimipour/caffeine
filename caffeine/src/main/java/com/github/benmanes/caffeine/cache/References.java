@@ -44,7 +44,7 @@ final class References {
      * @return The object to which this reference refers, or {@code null} if this reference object
      *         has been cleared
      */
-    @Nullable
+    
     E get();
 
     /**
@@ -54,7 +54,7 @@ final class References {
      *
      * @return the key that is associated to the cached entry
      */
-    @NonNull
+    
     Object getKeyReference();
 
     /**
@@ -64,7 +64,7 @@ final class References {
      * @param object the reference object with which to compare
      * @return {@code true} if this object is the same as the argument; {@code false} otherwise
      */
-    default boolean referenceEquals(@Nullable Object object) {
+    default boolean referenceEquals( Object object) {
       if (object == this) {
         return true;
       } else if (object instanceof InternalReference<?>) {
@@ -84,7 +84,7 @@ final class References {
     private final int hashCode;
     private final E e;
 
-    public LookupKeyReference(@NonNull E e) {
+    public LookupKeyReference( E e) {
       this.hashCode = System.identityHashCode(e);
       this.e = requireNonNull(e);
     }
@@ -118,7 +118,7 @@ final class References {
   static class WeakKeyReference<K> extends WeakReference<K> implements InternalReference<K> {
     private final int hashCode;
 
-    public WeakKeyReference(@Nullable K key, @Nullable ReferenceQueue<K> queue) {
+    public WeakKeyReference( K key,  ReferenceQueue<K> queue) {
       super(key, queue);
       hashCode = System.identityHashCode(key);
     }
@@ -148,8 +148,8 @@ final class References {
       implements InternalReference<V> {
     private final Object keyReference;
 
-    public WeakValueReference(@NonNull Object keyReference,
-        @Nullable V value, @Nullable ReferenceQueue<V> queue) {
+    public WeakValueReference( Object keyReference,
+         V value,  ReferenceQueue<V> queue) {
       super(value, queue);
       this.keyReference = keyReference;
     }
@@ -180,8 +180,8 @@ final class References {
       implements InternalReference<V> {
     private final Object keyReference;
 
-    public SoftValueReference(@NonNull Object keyReference,
-        @Nullable V value, @Nullable ReferenceQueue<V> queue) {
+    public SoftValueReference( Object keyReference,
+         V value,  ReferenceQueue<V> queue) {
       super(value, queue);
       this.keyReference = keyReference;
     }

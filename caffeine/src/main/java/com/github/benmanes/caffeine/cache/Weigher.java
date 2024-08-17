@@ -42,7 +42,7 @@ public interface Weigher<K, V> {
    * @return the weight of the entry; must be non-negative
    */
   @NonNegative
-  int weigh(@NonNull K key, @NonNull V value);
+  int weigh( K key,  V value);
 
   /**
    * Returns a weigher where an entry has a weight of {@code 1}.
@@ -51,7 +51,7 @@ public interface Weigher<K, V> {
    * @param <V> the type of values
    * @return a weigher where an entry has a weight of {@code 1}
    */
-  @NonNull
+  
   static <K, V> Weigher<K, V> singletonWeigher() {
     @SuppressWarnings("unchecked")
     Weigher<K, V> self = (Weigher<K, V>) SingletonWeigher.INSTANCE;
@@ -66,8 +66,8 @@ public interface Weigher<K, V> {
    * @param <V> the type of values
    * @return a weigher that enforces that the weight is non-negative
    */
-  @NonNull
-  static <K, V> Weigher<K, V> boundedWeigher(@NonNull Weigher<K, V> delegate) {
+  
+  static <K, V> Weigher<K, V> boundedWeigher( Weigher<K, V> delegate) {
     return new BoundedWeigher<>(delegate);
   }
 }

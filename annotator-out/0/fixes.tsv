@@ -1,1 +1,3 @@
 kind	class	method	param	index	uri	reason	annotation	rootClass	rootMethod
+FIELD	com.github.benmanes.caffeine.cache.LocalAsyncLoadingCache	null	cacheView	null	/home/nima/Developer/nullness-benchmarks/caffeine/caffeine/src/main/java/com/github/benmanes/caffeine/cache/LocalAsyncLoadingCache.java	METHOD_NO_INIT	nullable	com.github.benmanes.caffeine.cache.LocalAsyncLoadingCache	null
+PARAMETER	com.github.benmanes.caffeine.cache.LocalAsyncLoadingCache$AsyncBulkCompleter	accept(java.util.Map,java.lang.Throwable)	result	0	/home/nima/Developer/nullness-benchmarks/caffeine/caffeine/src/main/java/com/github/benmanes/caffeine/cache/LocalAsyncLoadingCache.java	PASS_NULLABLE	nullable	com.github.benmanes.caffeine.cache.LocalAsyncLoadingCache	getAllBulk(java.lang.Iterable)

@@ -46,8 +46,8 @@ public interface AsyncCache<K, V> {
    *         or {@code null} if this map contains no mapping for the key
    * @throws NullPointerException if the specified key is null
    */
-  @Nullable
-  CompletableFuture<V> getIfPresent(@NonNull Object key);
+  
+  CompletableFuture<V> getIfPresent( Object key);
 
   /**
    * Returns the future associated with {@code key} in this cache, obtaining that value from
@@ -67,9 +67,9 @@ public interface AsyncCache<K, V> {
    * @return the current (existing or computed) future value associated with the specified key
    * @throws NullPointerException if the specified key or mappingFunction is null
    */
-  @NonNull
-  CompletableFuture<V> get(@NonNull K key,
-      @NonNull Function<? super K, ? extends V> mappingFunction);
+  
+  CompletableFuture<V> get( K key,
+       Function<? super K, ? extends V> mappingFunction);
 
   /**
    * Returns the future associated with {@code key} in this cache, obtaining that value from
@@ -92,9 +92,9 @@ public interface AsyncCache<K, V> {
    * @throws RuntimeException or Error if the mappingFunction does when constructing the future,
    *         in which case the mapping is left unestablished
    */
-  @NonNull
-  CompletableFuture<V> get(@NonNull K key,
-      @NonNull BiFunction<? super K, Executor, CompletableFuture<V>> mappingFunction);
+  
+  CompletableFuture<V> get( K key,
+       BiFunction<? super K, Executor, CompletableFuture<V>> mappingFunction);
 
   /**
    * Associates {@code value} with {@code key} in this cache. If the cache previously contained a
@@ -108,7 +108,7 @@ public interface AsyncCache<K, V> {
    * @param valueFuture value to be associated with the specified key
    * @throws NullPointerException if the specified key or value is null
    */
-  void put(@NonNull K key, @NonNull CompletableFuture<V> valueFuture);
+  void put( K key,  CompletableFuture<V> valueFuture);
 
   /**
    * Returns a view of the entries stored in this cache as a synchronous {@link Cache}. A mapping is
@@ -118,6 +118,6 @@ public interface AsyncCache<K, V> {
    *
    * @return a thread-safe synchronous view of this cache
    */
-  @NonNull
+  
   Cache<K, V> synchronous();
 }

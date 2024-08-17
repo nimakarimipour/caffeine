@@ -48,8 +48,8 @@ public interface Cache<K, V> {
    *         mapping for the key
    * @throws NullPointerException if the specified key is null
    */
-  @Nullable
-  V getIfPresent(@NonNull Object key);
+  
+  V getIfPresent( Object key);
 
   /**
    * Returns the value associated with the {@code key} in this cache, obtaining that value from the
@@ -76,8 +76,8 @@ public interface Cache<K, V> {
    * @throws RuntimeException or Error if the mappingFunction does so, in which case the mapping is
    *         left unestablished
    */
-  @Nullable
-  V get(@NonNull K key, @NonNull Function<? super K, ? extends V> mappingFunction);
+  
+  V get( K key,  Function<? super K, ? extends V> mappingFunction);
 
   /**
    * Returns a map of the values associated with the {@code keys} in this cache. The returned map
@@ -90,8 +90,8 @@ public interface Cache<K, V> {
    * @return the unmodifiable mapping of keys to values for the specified keys found in this cache
    * @throws NullPointerException if the specified collection is null or contains a null element
    */
-  @NonNull
-  Map<@NonNull K, @NonNull V> getAllPresent(@NonNull Iterable<@NonNull ?> keys);
+  
+  Map< K,  V> getAllPresent( Iterable< ?> keys);
 
   /**
    * Associates the {@code value} with the {@code key} in this cache. If the cache previously
@@ -105,7 +105,7 @@ public interface Cache<K, V> {
    * @param value value to be associated with the specified key
    * @throws NullPointerException if the specified key or value is null
    */
-  void put(@NonNull K key, @NonNull V value);
+  void put( K key,  V value);
 
   /**
    * Copies all of the mappings from the specified map to the cache. The effect of this call is
@@ -117,7 +117,7 @@ public interface Cache<K, V> {
    * @throws NullPointerException if the specified map is null or the specified map contains null
    *         keys or values
    */
-  void putAll(@NonNull Map<? extends @NonNull K,? extends @NonNull V> map);
+  void putAll( Map<? extends  K,? extends  V> map);
 
   /**
    * Discards any cached value for the {@code key}. The behavior of this operation is undefined for
@@ -126,7 +126,7 @@ public interface Cache<K, V> {
    * @param key the key whose mapping is to be removed from the cache
    * @throws NullPointerException if the specified key is null
    */
-  void invalidate(@NonNull Object key);
+  void invalidate( Object key);
 
   /**
    * Discards any cached values for the {@code keys}. The behavior of this operation is undefined
@@ -135,7 +135,7 @@ public interface Cache<K, V> {
    * @param keys the keys whose associated values are to be removed
    * @throws NullPointerException if the specified collection is null or contains a null element
    */
-  void invalidateAll(@NonNull Iterable<?> keys);
+  void invalidateAll( Iterable<?> keys);
 
   /**
    * Discards all entries in the cache. The behavior of this operation is undefined for an entry
@@ -163,7 +163,7 @@ public interface Cache<K, V> {
    *
    * @return the current snapshot of the statistics of this cache
    */
-  @NonNull
+  
   CacheStats stats();
 
   /**
@@ -176,8 +176,8 @@ public interface Cache<K, V> {
    *
    * @return a thread-safe view of this cache supporting all of the optional {@link Map} operations
    */
-  @NonNull
-  ConcurrentMap<@NonNull K, @NonNull V> asMap();
+  
+  ConcurrentMap< K,  V> asMap();
 
   /**
    * Performs any pending maintenance operations needed by the cache. Exactly which activities are
@@ -192,6 +192,6 @@ public interface Cache<K, V> {
    *
    * @return access to inspect and perform advanced operations based on the cache's characteristics
    */
-  @NonNull
+  
   Policy<K, V> policy();
 }

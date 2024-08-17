@@ -49,7 +49,7 @@ public final class RandomSeedEnforcer {
   }
 
   /** Returns the underlying bounded cache, or null if not applicable. */
-  private static @Nullable BoundedLocalCache<?, ?> unwrap(Cache<?, ?> cache) {
+  private static  BoundedLocalCache<?, ?> unwrap(Cache<?, ?> cache) {
     ConcurrentMap<?, ?> map = cache.asMap();
     if (map instanceof LocalAsyncLoadingCache.AsMapView<?, ?>) {
       map = ((LocalAsyncLoadingCache.AsMapView<?, ?>) cache.asMap()).delegate;

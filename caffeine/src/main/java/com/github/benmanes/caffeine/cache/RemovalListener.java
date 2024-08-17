@@ -46,5 +46,5 @@ public interface RemovalListener<K, V> {
    * @param value the value represented by this entry, or {@code null} if collected
    * @param cause the reason for which the entry was removed
    */
-  void onRemoval(@Nullable K key, @Nullable V value, @NonNull RemovalCause cause);
+  void onRemoval( K key,  V value,  RemovalCause cause);
 }

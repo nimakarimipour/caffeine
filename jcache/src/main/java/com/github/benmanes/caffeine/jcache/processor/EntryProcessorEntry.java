@@ -20,7 +20,7 @@ import static java.util.Objects.requireNonNull;
 import java.util.Objects;
 import java.util.Optional;
 
-import javax.annotation.Nullable;
+import org.checkerframework.checker.nullness.qual.Nullable;
 import javax.cache.Cache;
 import javax.cache.integration.CacheLoader;
 import javax.cache.processor.EntryProcessor;

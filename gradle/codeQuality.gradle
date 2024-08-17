@@ -101,6 +101,10 @@ tasks.withType(JavaCompile) {
     '-Xep:RemoveUnusedImports',
   ]
   if (name == 'compileJava') {
+    // disable all error prone checks
+    options.compilerArgs += [
+      '-XepDisableAllChecks',
+    ]
     options.compilerArgs += [
       '-XepOpt:NullAway:AnnotatedPackages=com.github.benmanes.caffeine',
       "-XepOpt:NullAway:SerializeFixMetadata=true",

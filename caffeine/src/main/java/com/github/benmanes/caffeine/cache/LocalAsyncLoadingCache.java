@@ -47,7 +47,7 @@ abstract class LocalAsyncLoadingCache<K, V>
   final boolean canBulkLoad;
   final AsyncCacheLoader<K, V> loader;
 
-  @Nullable LoadingCacheView<K, V> cacheView;
+   LoadingCacheView<K, V> cacheView;
 
   @SuppressWarnings("unchecked")
   LocalAsyncLoadingCache(AsyncCacheLoader<? super K, V> loader) {
@@ -176,7 +176,7 @@ abstract class LocalAsyncLoadingCache<K, V>
     }
 
     @Override
-    public void accept(@Nullable Map<K, V> result, @Nullable Throwable error) {
+    public void accept( Map<K, V> result,  Throwable error) {
       long loadTime = cache().statsTicker().read() - startTime;
 
       if (result == null) {

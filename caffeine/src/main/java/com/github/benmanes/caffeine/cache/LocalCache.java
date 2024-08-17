@@ -38,7 +38,7 @@ interface LocalCache<K, V> extends ConcurrentMap<K, V> {
   boolean isRecordingStats();
 
   /** Returns the {@link StatsCounter} used by this cache. */
-  @NonNull StatsCounter statsCounter();
+   StatsCounter statsCounter();
 
   /** Returns whether this cache notifies when an entry is removed. */
   boolean hasRemovalListener();
@@ -47,21 +47,21 @@ interface LocalCache<K, V> extends ConcurrentMap<K, V> {
   RemovalListener<K, V> removalListener();
 
   /** Asynchronously sends a removal notification to the listener. */
-  void notifyRemoval(@Nullable K key, @Nullable V value, RemovalCause cause);
+  void notifyRemoval( K key,  V value, RemovalCause cause);
 
   /** Returns the {@link Executor} used by this cache. */
-  @NonNull
+  
   Executor executor();
 
   /** Returns whether the cache captures the write time of the entry. */
   boolean hasWriteTime();
 
   /** Returns the {@link Ticker} used by this cache for expiration. */
-  @NonNull
+  
   Ticker expirationTicker();
 
   /** Returns the {@link Ticker} used by this cache for statistics. */
-  @NonNull
+  
   Ticker statsTicker();
 
   /** See {@link Cache#estimatedSize()}. */
@@ -71,29 +71,29 @@ interface LocalCache<K, V> extends ConcurrentMap<K, V> {
    * See {@link Cache#getIfPresent(Object)}. This method differs by accepting a parameter of whether
    * to record the hit and miss statistics based on the success of this operation.
    */
-  @Nullable
-  V getIfPresent(@NonNull Object key, boolean recordStats);
+  
+  V getIfPresent( Object key, boolean recordStats);
 
   /**
    * See {@link Cache#getIfPresent(Object)}. This method differs by not recording the access with
    * the statistics nor the eviction policy, and populates the write time if known.
    */
-  @Nullable
-  V getIfPresentQuietly(@NonNull Object key, @NonNull long[/* 1 */] writeTime);
+  
+  V getIfPresentQuietly( Object key,  long[/* 1 */] writeTime);
 
   /** See {@link Cache#getAllPresent}. */
-  @NonNull
-  Map<K, V> getAllPresent(@NonNull Iterable<?> keys);
+  
+  Map<K, V> getAllPresent( Iterable<?> keys);
 
   /**
    * See {@link Cache#put(Object, Object)}. This method differs by allowing the operation to not
    * notify the writer when an entry was inserted or updated.
    */
-  @Nullable
-  V put(@NonNull K key, @NonNull V value, boolean notifyWriter);
+  
+  V put( K key,  V value, boolean notifyWriter);
 
   @Override
-  default @Nullable V compute(K key,
+  default  V compute(K key,
       BiFunction<? super K, ? super V, ? extends V> remappingFunction) {
     return compute(key, remappingFunction, /* recordMiss */ false, /* recordLoad */ true);
   }
@@ -102,11 +102,11 @@ interface LocalCache<K, V> extends ConcurrentMap<K, V> {
    * See {@link ConcurrentMap#compute}. This method differs by accepting parameters indicating
    * whether to record miss and load statistics based on the success of this operation.
    */
-  @Nullable V compute(K key, BiFunction<? super K, ? super V, ? extends V> remappingFunction,
+   V compute(K key, BiFunction<? super K, ? super V, ? extends V> remappingFunction,
       boolean recordMiss, boolean recordLoad);
 
   @Override
-  default @Nullable V computeIfAbsent(K key, Function<? super K, ? extends V> mappingFunction) {
+  default  V computeIfAbsent(K key, Function<? super K, ? extends V> mappingFunction) {
     return computeIfAbsent(key, mappingFunction, /* recordStats */ true, /* recordLoad */ true);
   }
 
@@ -114,7 +114,7 @@ interface LocalCache<K, V> extends ConcurrentMap<K, V> {
    * See {@link ConcurrentMap#computeIfAbsent}. This method differs by accepting parameters
    * indicating how to record statistics.
    */
-  @Nullable V computeIfAbsent(K key, Function<? super K, ? extends V> mappingFunction,
+   V computeIfAbsent(K key, Function<? super K, ? extends V> mappingFunction,
       boolean recordStats, boolean recordLoad);
 
   /** See {@link Cache#invalidateAll(Iterable)}. */

@@ -21,7 +21,7 @@ import java.io.Serializable;
 import java.util.Objects;
 
 import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
+import org.checkerframework.checker.nullness.qual.Nullable;
 import javax.cache.expiry.Duration;
 import javax.cache.expiry.ExpiryPolicy;
 

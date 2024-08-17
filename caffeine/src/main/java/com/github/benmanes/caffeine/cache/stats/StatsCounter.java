@@ -99,7 +99,7 @@ public interface StatsCounter {
    *
    * @return a snapshot of this counter's values
    */
-  @NonNull
+  
   CacheStats snapshot();
 
   /**
@@ -107,7 +107,7 @@ public interface StatsCounter {
    *
    * @return an accumulator that does not record metrics
    */
-  static @NonNull StatsCounter disabledStatsCounter() {
+  static  StatsCounter disabledStatsCounter() {
     return DisabledStatsCounter.INSTANCE;
   }
 
@@ -118,7 +118,7 @@ public interface StatsCounter {
    * @param statsCounter the accumulator to delegate to
    * @return an accumulator that suppresses and logs any exception thrown by the delegate
    */
-  static @NonNull StatsCounter guardedStatsCounter(@NonNull StatsCounter statsCounter) {
+  static  StatsCounter guardedStatsCounter( StatsCounter statsCounter) {
     return new GuardedStatsCounter(statsCounter);
   }
 }

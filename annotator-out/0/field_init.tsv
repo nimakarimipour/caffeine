@@ -1,1 +1,2 @@
 kind	class	method	param	index	uri	field
+METHOD	com.github.benmanes.caffeine.cache.LocalAsyncLoadingCache	synchronous()	null	null	/home/nima/Developer/nullness-benchmarks/caffeine/caffeine/src/main/java/com/github/benmanes/caffeine/cache/LocalAsyncLoadingCache.java	cacheView
