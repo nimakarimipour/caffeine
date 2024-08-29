@@ -33,6 +33,7 @@ import com.google.common.collect.ForwardingMap;
  */
 @State(Scope.Benchmark)
 public class DelegationBenchmark {
+
   private static final int SIZE = (2 << 14);
   private static final int MASK = SIZE - 1;
 
