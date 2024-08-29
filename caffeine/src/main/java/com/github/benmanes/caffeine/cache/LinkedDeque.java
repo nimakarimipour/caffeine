@@ -80,19 +80,19 @@ interface LinkedDeque<E> extends Deque<E> {
    * Retrieves the previous element or <tt>null</tt> if either the element is unlinked or the first
    * element on the deque.
    */
-  @Nullable E getPrevious(E e);
+   @Nullable E getPrevious(E e);
 
   /** Sets the previous element or <tt>null</tt> if there is no link. */
-  void setPrevious(E e, @Nullable E prev);
+  void setPrevious(E e,  @Nullable E prev);
 
   /**
    * Retrieves the next element or <tt>null</tt> if either the element is unlinked or the last
    * element on the deque.
    */
-  @Nullable E getNext(E e);
+   @Nullable E getNext(E e);
 
   /** Sets the next element or <tt>null</tt> if there is no link. */
-  void setNext(E e, @Nullable E next);
+  void setNext(E e,  @Nullable E next);
 
   @Override
   PeekingIterator<E> iterator();
@@ -103,7 +103,7 @@ interface LinkedDeque<E> extends Deque<E> {
   interface PeekingIterator<E> extends Iterator<E> {
 
     /** Returns the next element in the iteration, without advancing the iteration. */
-    @Nullable E peek();
+     E peek();
 
     /** Returns an iterator that returns the first iteration followed by the second iteration. */
     static <E> PeekingIterator<E> concat(PeekingIterator<E> first, PeekingIterator<E> second) {
@@ -119,7 +119,7 @@ interface LinkedDeque<E> extends Deque<E> {
           }
           throw new NoSuchElementException();
         }
-        @Override public @Nullable E peek() {
+        @Override public  E peek() {
           return first.hasNext() ? first.peek() : second.peek();
         }
       };
@@ -143,7 +143,7 @@ interface LinkedDeque<E> extends Deque<E> {
           boolean greaterOrEqual = (comparator.compare(o1, o2) >= 0);
           return greaterOrEqual ? first.next() : second.next();
         }
-        @Override public @Nullable E peek() {
+        @Override public  E peek() {
           if (!first.hasNext()) {
             return second.peek();
           } else if (!second.hasNext()) {
