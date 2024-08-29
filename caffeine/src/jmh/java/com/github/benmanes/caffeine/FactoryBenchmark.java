@@ -109,7 +109,7 @@ public class FactoryBenchmark {
   }
 
   static final class Alpha {
-    @SuppressWarnings("unused")
+    
     private final int x;
 
     public Alpha(int x) {

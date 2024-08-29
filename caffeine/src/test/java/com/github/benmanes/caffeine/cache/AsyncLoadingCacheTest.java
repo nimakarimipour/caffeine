@@ -77,7 +77,7 @@ import com.google.common.primitives.Ints;
  */
 @Listeners(CacheValidationListener.class)
 @Test(dataProviderClass = CacheProvider.class)
-@SuppressWarnings("FutureReturnValueIgnored")
+
 public final class AsyncLoadingCacheTest {
 
   /* ---------------- getIfPresent -------------- */
@@ -590,7 +590,7 @@ public final class AsyncLoadingCacheTest {
   @CacheSpec(implementation = Implementation.Caffeine, compute = Compute.ASYNC,
       removalListener = { Listener.DEFAULT, Listener.REJECTING })
   public void getAll_badLoader(CacheContext context) {
-    @SuppressWarnings("serial")
+    
     final class LoadAllException extends RuntimeException {};
 
     AsyncCacheLoader<Integer, Integer> loader = new AsyncCacheLoader<Integer, Integer>() {

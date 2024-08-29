@@ -122,7 +122,7 @@ public final class CacheStats {
    *
    * @return an empty statistics instance
    */
-  @Nonnull
+  
   public static CacheStats empty() {
     return EMPTY_STATS;
   }
@@ -303,8 +303,8 @@ public final class CacheStats {
    * @param other the statistics to subtract with
    * @return the difference between this instance and {@code other}
    */
-  @Nonnull
-  public CacheStats minus(@Nonnull CacheStats other) {
+  
+  public CacheStats minus( CacheStats other) {
     return new CacheStats(
         Math.max(0L, hitCount - other.hitCount),
         Math.max(0L, missCount - other.missCount),
@@ -322,8 +322,8 @@ public final class CacheStats {
    * @param other the statistics to add with
    * @return the sum of the statistics
    */
-  @Nonnull
-  public CacheStats plus(@Nonnull CacheStats other) {
+  
+  public CacheStats plus( CacheStats other) {
     return new CacheStats(
         hitCount + other.hitCount,
         missCount + other.missCount,

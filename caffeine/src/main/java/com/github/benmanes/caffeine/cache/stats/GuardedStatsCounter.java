@@ -26,7 +26,7 @@ import java.util.logging.Logger;
  *
  * @author ben.manes@gmail.com (Ben Manes)
  */
-@SuppressWarnings("PMD.AvoidDuplicateLiterals")
+
 final class GuardedStatsCounter implements StatsCounter {
   static final Logger logger = Logger.getLogger(GuardedStatsCounter.class.getName());
 
@@ -73,7 +73,7 @@ final class GuardedStatsCounter implements StatsCounter {
   }
 
   @Override
-  @SuppressWarnings("deprecation")
+  
   public void recordEviction() {
     try {
       delegate.recordEviction();

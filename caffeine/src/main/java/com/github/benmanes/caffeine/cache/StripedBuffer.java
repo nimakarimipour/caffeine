@@ -25,6 +25,7 @@ import java.util.concurrent.ThreadLocalRandom;
 import java.util.function.Consumer;
 
 import com.github.benmanes.caffeine.base.UnsafeAccess;
+import javax.annotation.Nullable;
 
 /**
  * A base class providing the mechanics for supporting dynamic striping of bounded buffers. This
@@ -95,7 +96,7 @@ abstract class StripedBuffer<E> implements Buffer<E> {
   static final int ATTEMPTS = 3;
 
   /** Table of buffers. When non-null, size is a power of 2. */
-  transient volatile Buffer<E>[] table;
+  @Nullable transient volatile Buffer<E>[] table;
 
   /** Spinlock (locked via CAS) used when resizing and/or creating Buffers. */
   transient volatile int tableBusy;
@@ -206,7 +207,7 @@ abstract class StripedBuffer<E> implements Buffer<E> {
    * @param e the element to add
    * @param wasUncontended false if CAS failed before call
    */
-  @SuppressWarnings("PMD.ConfusingTernary")
+  
   final void expandOrRetry(E e, boolean wasUncontended) {
     int h;
     if ((h = getProbe()) == 0) {
@@ -264,7 +265,7 @@ abstract class StripedBuffer<E> implements Buffer<E> {
         boolean init = false;
         try { // Initialize table
           if (table == buffers) {
-            @SuppressWarnings({"unchecked", "rawtypes"})
+            
             Buffer<E>[] rs = new Buffer[1];
             rs[0] = create(e);
             table = rs;

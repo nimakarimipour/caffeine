@@ -507,7 +507,7 @@ public final class ExpirationTest {
       expiry = { CacheExpiry.DISABLED, CacheExpiry.CREATE, CacheExpiry.WRITE, CacheExpiry.ACCESS },
       expireAfterAccess = {Expire.DISABLED, Expire.ONE_MINUTE},
       expireAfterWrite = {Expire.DISABLED, Expire.ONE_MINUTE})
-  @SuppressWarnings("FutureReturnValueIgnored")
+  
   public void get(AsyncLoadingCache<Integer, Integer> cache, CacheContext context) {
     context.ticker().advance(2, TimeUnit.MINUTES);
 
@@ -525,7 +525,7 @@ public final class ExpirationTest {
       mustExpireWithAnyOf = { AFTER_WRITE, VARIABLE },
       expiry = { CacheExpiry.DISABLED, CacheExpiry.WRITE },
       expireAfterWrite = {Expire.DISABLED, Expire.ONE_MINUTE})
-  @SuppressWarnings("FutureReturnValueIgnored")
+  
   public void get_writeTime(AsyncLoadingCache<Integer, Integer> cache, CacheContext context) {
     Integer key = context.absentKey();
     Integer value = context.absentValue();
@@ -544,7 +544,7 @@ public final class ExpirationTest {
       expiry = { CacheExpiry.DISABLED, CacheExpiry.CREATE, CacheExpiry.WRITE, CacheExpiry.ACCESS },
       expireAfterAccess = {Expire.DISABLED, Expire.ONE_MINUTE}, expiryTime = Expire.ONE_MINUTE,
       expireAfterWrite = {Expire.DISABLED, Expire.ONE_MINUTE})
-  @SuppressWarnings("FutureReturnValueIgnored")
+  
   public void get_async(AsyncLoadingCache<Integer, Integer> cache, CacheContext context) {
     CompletableFuture<Integer> future = new CompletableFuture<Integer>();
     cache.get(context.absentKey(), (k, e) -> future);
@@ -571,7 +571,7 @@ public final class ExpirationTest {
       expireAfterAccess = {Expire.DISABLED, Expire.ONE_MINUTE},
       expireAfterWrite = {Expire.DISABLED, Expire.ONE_MINUTE},
       expiryTime = Expire.ONE_MINUTE, loader = {Loader.BULK_IDENTITY})
-  @SuppressWarnings("FutureReturnValueIgnored")
+  
   public void getAll(AsyncLoadingCache<Integer, Integer> cache, CacheContext context) {
     Set<Integer> keys = context.firstMiddleLastKeys();
     context.ticker().advance(1, TimeUnit.MINUTES);
@@ -604,7 +604,7 @@ public final class ExpirationTest {
       expiry = { CacheExpiry.DISABLED, CacheExpiry.CREATE, CacheExpiry.WRITE, CacheExpiry.ACCESS },
       expireAfterAccess = {Expire.DISABLED, Expire.ONE_MINUTE}, expiryTime = Expire.ONE_MINUTE,
       expireAfterWrite = {Expire.DISABLED, Expire.ONE_MINUTE})
-  @SuppressWarnings("FutureReturnValueIgnored")
+  
   public void put_insert_async(AsyncLoadingCache<Integer, Integer> cache, CacheContext context) {
     CompletableFuture<Integer> future = new CompletableFuture<Integer>();
     cache.put(context.absentKey(), future);

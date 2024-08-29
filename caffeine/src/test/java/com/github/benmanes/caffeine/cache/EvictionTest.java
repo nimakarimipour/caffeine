@@ -129,7 +129,7 @@ public final class EvictionTest {
       weigher = CacheWeigher.COLLECTION, keys = ReferenceType.STRONG, values = ReferenceType.STRONG)
   public void evict_weighted(Cache<Integer, List<Integer>> cache,
       CacheContext context, Eviction<?, ?> eviction) {
-    @SuppressWarnings({"unchecked", "rawtypes"})
+    
     CacheWriter<Integer, List<Integer>> writer = (CacheWriter) context.cacheWriter();
 
     // Enforce full initialization of internal structures
@@ -205,7 +205,7 @@ public final class EvictionTest {
       weigher = CacheWeigher.VALUE, population = Population.EMPTY,
       keys = ReferenceType.STRONG, values = ReferenceType.STRONG,
       removalListener = Listener.CONSUMING)
-  @SuppressWarnings("FutureReturnValueIgnored")
+  
   public void evict_weighted_async(AsyncLoadingCache<Integer, Integer> cache,
       CacheContext context, Eviction<?, ?> eviction) {
     AtomicBoolean ready = new AtomicBoolean();
@@ -237,7 +237,7 @@ public final class EvictionTest {
   @CacheSpec(implementation = Implementation.Caffeine, maximumSize = Maximum.ZERO,
       weigher = CacheWeigher.COLLECTION, population = Population.EMPTY,
       keys = ReferenceType.STRONG, values = ReferenceType.STRONG)
-  @SuppressWarnings("FutureReturnValueIgnored")
+  
   public void evict_zero_async(AsyncLoadingCache<Integer, List<Integer>> cache,
       CacheContext context, Eviction<?, ?> eviction) {
     AtomicBoolean ready = new AtomicBoolean();
@@ -327,7 +327,7 @@ public final class EvictionTest {
       keys = ReferenceType.STRONG, values = ReferenceType.STRONG)
   public void put_changeWeight(Cache<String, List<Integer>> cache,
       CacheContext context, Eviction<?, ?> eviction) {
-    @SuppressWarnings({"unchecked", "rawtypes"})
+    
     CacheWriter<String, List<Integer>> writer = (CacheWriter) context.cacheWriter();
 
     cache.putAll(ImmutableMap.of("a", asList(1, 2, 3), "b", asList(1)));
@@ -347,7 +347,7 @@ public final class EvictionTest {
   @CacheSpec(implementation = Implementation.Caffeine, maximumSize = Maximum.FULL,
       weigher = CacheWeigher.COLLECTION, population = Population.EMPTY,
       keys = ReferenceType.STRONG, values = ReferenceType.STRONG)
-  @SuppressWarnings("FutureReturnValueIgnored")
+  
   public void put_asyncWeight(AsyncLoadingCache<Integer, List<Integer>> cache,
       CacheContext context, Eviction<?, ?> eviction) {
     AtomicBoolean ready = new AtomicBoolean();

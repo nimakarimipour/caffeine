@@ -78,8 +78,8 @@ public final class CaffeineSpec {
   long maximumSize = UNSET_INT;
   boolean recordStats;
 
-  Strength keyStrength;
-  Strength valueStrength;
+  @Nullable Strength keyStrength;
+  @Nullable Strength valueStrength;
 
   long expireAfterAccessDuration = UNSET_INT;
   TimeUnit expireAfterAccessTimeUnit;
@@ -88,7 +88,7 @@ public final class CaffeineSpec {
   TimeUnit expireAfterWriteTimeUnit;
 
   long refreshAfterWriteDuration = UNSET_INT;
-  TimeUnit refreshAfterWriteTimeUnit;
+  @Nullable TimeUnit refreshAfterWriteTimeUnit;
 
   private CaffeineSpec(String specification) {
     this.specification = requireNonNull(specification);
@@ -170,7 +170,7 @@ public final class CaffeineSpec {
   }
 
   /** Configures the setting. */
-  void configure(String key, @Nullable String value) {
+  void configure(String key,  String value) {
     switch (key) {
       case "initialCapacity":
         initialCapacity(key, value);
@@ -233,14 +233,14 @@ public final class CaffeineSpec {
   }
 
   /** Configures the keys as weak references. */
-  void weakKeys(@Nullable String value) {
+  void weakKeys( String value) {
     requireArgument(value == null, "weak keys does not take a value");
     requireArgument(keyStrength == null, "weak keys was already set");
     keyStrength = Strength.WEAK;
   }
 
   /** Configures the value as weak or soft references. */
-  void valueStrength(String key, @Nullable String value, Strength strength) {
+  void valueStrength(String key,  String value, Strength strength) {
     requireArgument(value == null, "%s does not take a value", key);
     requireArgument(valueStrength == null, "%s was already set to %s", key, valueStrength);
     valueStrength = strength;
@@ -268,7 +268,7 @@ public final class CaffeineSpec {
   }
 
   /** Configures the value as weak or soft references. */
-  void recordStats(@Nullable String value) {
+  void recordStats( String value) {
     requireArgument(value == null, "record stats does not take a value");
     requireArgument(!recordStats, "record stats was already set");
     recordStats = true;
@@ -353,7 +353,7 @@ public final class CaffeineSpec {
   }
 
   /** Converts an expiration duration/unit pair into a single long for hashing and equality. */
-  static long durationInNanos(long duration, @Nullable TimeUnit unit) {
+  static long durationInNanos(long duration,  @Nullable TimeUnit unit) {
     return (unit == null) ? UNSET_INT : unit.toNanos(duration);
   }
 

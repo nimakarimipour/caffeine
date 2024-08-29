@@ -62,7 +62,7 @@ import com.google.common.util.concurrent.ThreadFactoryBuilder;
  *
  * @author ben.manes@gmail.com (Ben Manes)
  */
-@SuppressWarnings("ImmutableEnumChecker")
+
 @Target(METHOD) @Retention(RUNTIME)
 public @interface CacheSpec {
 
@@ -282,7 +282,7 @@ public @interface CacheSpec {
     },
     MOCKITO {
       @Override public <K, V> Expiry<K, V> createExpiry(Expire expiryTime) {
-        @SuppressWarnings("unchecked")
+        
         Expiry<K, V> mock = Mockito.mock(Expiry.class);
         when(mock.expireAfterCreate(any(), any(), anyLong()))
             .thenReturn(expiryTime.timeNanos());
@@ -585,7 +585,7 @@ public @interface CacheSpec {
     /** A writer that records interactions. */
     MOCKITO {
       @Override public <K, V> CacheWriter<K, V> create() {
-        @SuppressWarnings("unchecked")
+        
         CacheWriter<K, V> mock = Mockito.mock(CacheWriter.class);
         return mock;
       }

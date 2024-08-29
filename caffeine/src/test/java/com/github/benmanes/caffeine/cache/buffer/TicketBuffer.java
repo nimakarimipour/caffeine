@@ -39,7 +39,7 @@ final class TicketBuffer<E> extends ReadBuffer<E> {
 
   long readCounter;
 
-  @SuppressWarnings({"unchecked", "rawtypes"})
+  
   TicketBuffer() {
     writeCounter = new AtomicLong();
     buffer = new AtomicReference[BUFFER_SIZE];

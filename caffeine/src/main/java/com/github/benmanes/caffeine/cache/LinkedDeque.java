@@ -21,6 +21,7 @@ import java.util.Iterator;
 import java.util.NoSuchElementException;
 
 import javax.annotation.concurrent.NotThreadSafe;
+import javax.annotation.Nullable;
 
 /**
  * A linked list extension of the {@link Deque} interface where the link pointers are tightly
@@ -79,19 +80,19 @@ interface LinkedDeque<E> extends Deque<E> {
    * Retrieves the previous element or <tt>null</tt> if either the element is unlinked or the first
    * element on the deque.
    */
-  E getPrevious(E e);
+  @Nullable E getPrevious(E e);
 
   /** Sets the previous element or <tt>null</tt> if there is no link. */
-  void setPrevious(E e, E prev);
+  void setPrevious(E e, @Nullable E prev);
 
   /**
    * Retrieves the next element or <tt>null</tt> if either the element is unlinked or the last
    * element on the deque.
    */
-  E getNext(E e);
+  @Nullable E getNext(E e);
 
   /** Sets the next element or <tt>null</tt> if there is no link. */
-  void setNext(E e, E next);
+  void setNext(E e, @Nullable E next);
 
   @Override
   PeekingIterator<E> iterator();

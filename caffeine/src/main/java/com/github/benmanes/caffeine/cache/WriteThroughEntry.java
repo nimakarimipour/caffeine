@@ -19,6 +19,7 @@ import static java.util.Objects.requireNonNull;
 
 import java.util.AbstractMap.SimpleEntry;
 import java.util.concurrent.ConcurrentMap;
+import javax.annotation.Nullable;
 
 /**
  * An entry that allows updates to write through to the backing map.
@@ -30,7 +31,7 @@ final class WriteThroughEntry<K, V> extends SimpleEntry<K, V> {
 
   private final ConcurrentMap<K, V> map;
 
-  WriteThroughEntry(ConcurrentMap<K, V> map, K key, V value) {
+  WriteThroughEntry(ConcurrentMap<K, V> map, @Nullable K key, @Nullable V value) {
     super(key, value);
     this.map = requireNonNull(map);
   }

@@ -63,7 +63,7 @@ public final class GuavaCacheFromContext {
   private GuavaCacheFromContext() {}
 
   /** Returns a Guava-backed cache. */
-  @SuppressWarnings("CheckReturnValue")
+  
   public static <K, V> Cache<K, V> newGuavaCache(CacheContext context) {
     checkState(!context.isAsync(), "Guava caches are synchronous only");
 
@@ -126,7 +126,7 @@ public final class GuavaCacheFromContext {
           new SingleLoader<Integer, Integer>(context.loader())),
           ticker, context.isRecordingStats());
     }
-    @SuppressWarnings("unchecked")
+    
     Cache<K, V> castedCache = (Cache<K, V>) context.cache;
     return castedCache;
   }

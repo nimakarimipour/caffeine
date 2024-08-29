@@ -28,6 +28,7 @@ import java.util.concurrent.CompletionException;
 import java.util.function.Function;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.annotation.Nullable;
 
 /**
  * This class provides a skeletal implementation of the {@link LoadingCache} interface to minimize
@@ -60,7 +61,7 @@ interface LocalLoadingCache<C extends LocalCache<K, V>, K, V>
     }
   }
 
-  @Override
+  @Nullable @Override
   default V get(K key) {
     return cache().computeIfAbsent(key, mappingFunction());
   }
@@ -121,7 +122,7 @@ interface LocalLoadingCache<C extends LocalCache<K, V>, K, V>
     boolean success = false;
     long startTime = cache().statsTicker().read();
     try {
-      @SuppressWarnings("unchecked")
+      
       Map<K, V> loaded = (Map<K, V>) cacheLoader().loadAll(keysToLoad);
       loaded.forEach((key, value) -> {
         cache().put(key, value, /* notifyWriter */ false);
@@ -145,7 +146,7 @@ interface LocalLoadingCache<C extends LocalCache<K, V>, K, V>
   }
 
   @Override
-  @SuppressWarnings("FutureReturnValueIgnored")
+  
   default void refresh(K key) {
     requireNonNull(key);
 

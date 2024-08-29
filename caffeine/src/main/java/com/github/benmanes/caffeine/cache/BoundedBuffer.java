@@ -64,7 +64,7 @@ final class BoundedBuffer<E> extends StripedBuffer<E> {
   static final class RingBuffer<E> extends BBHeader.ReadAndWriteCounterRef implements Buffer<E> {
     final AtomicReferenceArray<E> buffer;
 
-    @SuppressWarnings({"unchecked", "cast", "rawtypes"})
+    
     public RingBuffer(E e) {
       buffer = new AtomicReferenceArray<>(SPACED_SIZE);
       buffer.lazySet(0, e);
@@ -123,7 +123,7 @@ final class BoundedBuffer<E> extends StripedBuffer<E> {
 /** The namespace for field padding through inheritance. */
 final class BBHeader {
 
-  @SuppressWarnings("PMD.AbstractClassWithoutAbstractMethod")
+  
   abstract static class PadReadCounter {
     long p00, p01, p02, p03, p04, p05, p06, p07;
     long p10, p11, p12, p13, p14, p15, p16;
