@@ -22,7 +22,7 @@ def run_annotator():
     commands = []
     commands += ["java", "-jar", ANNOTATOR_JAR]
     commands += ['-d', OUT_DIR]
-    commands += ['-bc', 'cd {} && JAVA_HOME=/usr/lib/jvm/java-1.8.0-openjdk-amd64 ./gradlew caffeine:compileJava --rerun-tasks'.format(REPO)]
+    commands += ['-bc', 'cd {} && ./gradlew clean caffeine:compileJava --no-build-cache --rerun-tasks'.format(REPO)]
     commands += ['-cp', '{}/paths.tsv'.format(OUT_DIR)]
     commands += ['-i', 'com.uber.nullaway.annotations.Initializer']
     commands += ['-n', 'javax.annotation.Nullable']
@@ -30,7 +30,7 @@ def run_annotator():
     commands += ['-cn', 'NULLAWAY']
     commands += ["--depth", "10"]
     # Uncomment to see build output
-    commands += ['-rboserr']
+    # commands += ['-rboserr']
     # Uncomment to disable outer loop
     # commands += ['-dol']
     # Uncomment to disable parallel processing
