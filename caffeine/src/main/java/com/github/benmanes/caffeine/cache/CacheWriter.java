@@ -42,7 +42,7 @@ public interface CacheWriter<K, V> {
    * @param value the value associated with {@code key} that should be written
    * @throws RuntimeException or Error, in which case the mapping is unchanged
    */
-  void write(@Nonnull K key, @Nonnull V value);
+  void write( K key,  V value);
 
   /**
    * Deletes the value corresponding to the {@code key} from the external resource. The cache will
@@ -53,7 +53,7 @@ public interface CacheWriter<K, V> {
    * @param cause the reason for which the entry was removed
    * @throws RuntimeException or Error, in which case the mapping is unchanged
    */
-  void delete(@Nonnull K key, @Nullable V value, @Nonnull RemovalCause cause);
+  void delete( @Nullable K key,  @Nullable V value,  RemovalCause cause);
 
   /**
    * Returns a writer that does nothing.
@@ -62,7 +62,7 @@ public interface CacheWriter<K, V> {
    * @param <V> the type of values
    * @return a writer that performs no operations
    */
-  static @Nonnull <K, V> CacheWriter<K, V> disabledWriter() {
+  static  <K, V> CacheWriter<K, V> disabledWriter() {
     @SuppressWarnings("unchecked")
     CacheWriter<K, V> writer = (CacheWriter<K, V>) DisabledWriter.INSTANCE;
     return writer;
@@ -76,5 +76,5 @@ enum DisabledWriter implements CacheWriter<Object, Object> {
   public void write(Object key, Object value) {}
 
   @Override
-  public void delete(Object key, Object value, RemovalCause cause) {}
+  public void delete(@Nullable Object key, @Nullable Object value, RemovalCause cause) {}
 }

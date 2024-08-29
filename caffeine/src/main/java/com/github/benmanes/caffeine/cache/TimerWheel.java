@@ -315,19 +315,19 @@ final class TimerWheel<K, V> {
     @Override public Node<K, V> getPreviousInVariableOrder() {
       return prev;
     }
-    @Override public void setPreviousInVariableOrder(@Nullable Node<K, V> prev) {
+    @Override public void setPreviousInVariableOrder( Node<K, V> prev) {
       this.prev = prev;
     }
     @Override public Node<K, V> getNextInVariableOrder() {
       return next;
     }
-    @Override public void setNextInVariableOrder(@Nullable Node<K, V> next) {
+    @Override public void setNextInVariableOrder( Node<K, V> next) {
       this.next = next;
     }
 
-    @Override public K getKey() { return null; }
+    @Nullable @Override public K getKey() { return null; }
     @Override public Object getKeyReference() { throw new UnsupportedOperationException(); }
-    @Override public V getValue() { return null; }
+    @Nullable @Override public V getValue() { return null; }
     @Override public Object getValueReference() { throw new UnsupportedOperationException(); }
     @Override public void setValue(V value, ReferenceQueue<V> referenceQueue) {}
     @Override public boolean containsValue(Object value) { return false; }

@@ -24,6 +24,7 @@ import java.util.function.Function;
 import javax.annotation.CheckForNull;
 import javax.annotation.Nonnull;
 import javax.annotation.concurrent.ThreadSafe;
+import javax.annotation.Nullable;
 
 /**
  * A semi-persistent mapping from keys to values. Values are automatically loaded by the cache
@@ -49,7 +50,7 @@ public interface AsyncLoadingCache<K, V> {
    * @throws NullPointerException if the specified key is null
    */
   @CheckForNull
-  CompletableFuture<V> getIfPresent(@Nonnull Object key);
+  CompletableFuture<V> getIfPresent( Object key);
 
   /**
    * Returns the future associated with {@code key} in this cache, obtaining that value from
@@ -69,9 +70,9 @@ public interface AsyncLoadingCache<K, V> {
    * @return the current (existing or computed) future value associated with the specified key
    * @throws NullPointerException if the specified key or mappingFunction is null
    */
-  @Nonnull
-  CompletableFuture<V> get(@Nonnull K key,
-      @Nonnull Function<? super K, ? extends V> mappingFunction);
+  
+  @Nullable CompletableFuture<V> get( K key,
+       Function<? super K, ? extends V> mappingFunction);
 
   /**
    * Returns the future associated with {@code key} in this cache, obtaining that value from
@@ -94,9 +95,9 @@ public interface AsyncLoadingCache<K, V> {
    * @throws RuntimeException or Error if the mappingFunction does when constructing the future,
    *         in which case the mapping is left unestablished
    */
-  @Nonnull
-  CompletableFuture<V> get(@Nonnull K key,
-      @Nonnull BiFunction<? super K, Executor, CompletableFuture<V>> mappingFunction);
+  
+  @Nullable CompletableFuture<V> get( K key,
+       BiFunction<? super K, Executor, CompletableFuture<V>> mappingFunction);
 
   /**
    * Returns the future associated with {@code key} in this cache, obtaining that value from
@@ -114,8 +115,8 @@ public interface AsyncLoadingCache<K, V> {
    * @throws RuntimeException or Error if the {@link CacheLoader} does when constructing the future,
    *         in which case the mapping is left unestablished
    */
-  @Nonnull
-  CompletableFuture<V> get(@Nonnull K key);
+  
+  CompletableFuture<V> get( K key);
 
   /**
    * Returns the future of a map of the values associated with {@code keys}, creating or retrieving
@@ -143,8 +144,8 @@ public interface AsyncLoadingCache<K, V> {
    *         {@link CacheLoader#asyncLoadAll} returns {@code null}, or fails when constructing the
    *         future, in which case the mapping is left unestablished
    */
-  @Nonnull
-  CompletableFuture<Map<K, V>> getAll(@Nonnull Iterable<? extends K> keys);
+  
+  CompletableFuture<Map<K, V>> getAll( Iterable<? extends K> keys);
 
   /**
    * Associates {@code value} with {@code key} in this cache. If the cache previously contained a
@@ -158,7 +159,7 @@ public interface AsyncLoadingCache<K, V> {
    * @param valueFuture value to be associated with the specified key
    * @throws NullPointerException if the specified key or value is null
    */
-  void put(@Nonnull K key, @Nonnull CompletableFuture<V> valueFuture);
+  void put( K key,  CompletableFuture<V> valueFuture);
 
   /**
    * Returns a view of the entries stored in this cache as a synchronous {@link LoadingCache}. A
@@ -168,6 +169,6 @@ public interface AsyncLoadingCache<K, V> {
    *
    * @return a thread-safe synchronous view of this cache
    */
-  @Nonnull
+  
   LoadingCache<K, V> synchronous();
 }

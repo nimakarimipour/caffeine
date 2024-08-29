@@ -39,7 +39,7 @@ public interface Ticker {
    *
    * @return a ticker that reads the current time using {@link System#nanoTime}
    */
-  static @Nonnull Ticker systemTicker() {
+  static  Ticker systemTicker() {
     return SystemTicker.INSTANCE;
   }
 
@@ -48,7 +48,7 @@ public interface Ticker {
    *
    * @return a ticker that always returns {@code 0}
    */
-  static @Nonnull Ticker disabledTicker() {
+  static  Ticker disabledTicker() {
     return DisabledTicker.INSTANCE;
   }
 }

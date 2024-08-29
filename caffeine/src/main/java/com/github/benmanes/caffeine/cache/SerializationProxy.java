@@ -17,6 +17,7 @@ package com.github.benmanes.caffeine.cache;
 
 import java.io.Serializable;
 import java.util.concurrent.TimeUnit;
+import javax.annotation.Nullable;
 
 /**
  * Serializes the configuration of the cache, reconsitituting it as a {@link Cache},
@@ -29,20 +30,20 @@ import java.util.concurrent.TimeUnit;
 final class SerializationProxy<K, V> implements Serializable {
   private static final long serialVersionUID = 1;
 
-  Ticker ticker;
+  @Nullable Ticker ticker;
   boolean async;
   boolean weakKeys;
   boolean weakValues;
   boolean softValues;
-  Expiry<?, ?> expiry;
-  Weigher<?, ?> weigher;
-  CacheWriter<?, ?> writer;
+  @Nullable Expiry<?, ?> expiry;
+  @Nullable Weigher<?, ?> weigher;
+  @Nullable CacheWriter<?, ?> writer;
   boolean isRecordingStats;
   long expiresAfterWriteNanos;
   long expiresAfterAccessNanos;
   long refreshAfterWriteNanos;
-  AsyncCacheLoader<?, ?> loader;
-  RemovalListener<?, ?> removalListener;
+  @Nullable AsyncCacheLoader<?, ?> loader;
+  @Nullable RemovalListener<?, ?> removalListener;
   long maximumSize = Caffeine.UNSET_INT;
   long maximumWeight = Caffeine.UNSET_INT;
 

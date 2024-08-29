@@ -99,13 +99,13 @@ public class TimerWheelBenchmark {
     @Override public Node<Integer, Integer> getPreviousInVariableOrder() {
       return prev;
     }
-    @Override public void setPreviousInVariableOrder(@Nullable Node<Integer, Integer> prev) {
+    @Override public void setPreviousInVariableOrder( Node<Integer, Integer> prev) {
       this.prev = prev;
     }
     @Override public Node<Integer, Integer> getNextInVariableOrder() {
       return next;
     }
-    @Override public void setNextInVariableOrder(@Nullable Node<Integer, Integer> next) {
+    @Override public void setNextInVariableOrder( Node<Integer, Integer> next) {
       this.next = next;
     }
 

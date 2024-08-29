@@ -20,6 +20,7 @@ import java.util.concurrent.ThreadLocalRandom;
 import javax.annotation.Nonnegative;
 import javax.annotation.Nonnull;
 import javax.annotation.concurrent.NotThreadSafe;
+import javax.annotation.Nullable;
 
 /**
  * A probabilistic multiset for estimating the popularity of an element within a time window. The
@@ -119,7 +120,7 @@ final class FrequencySketch<E> {
    * @return the estimated number of occurrences of the element; possibly zero but never negative
    */
   @Nonnegative
-  public int frequency(@Nonnull E e) {
+  public int frequency( E e) {
     if (isNotInitialized()) {
       return 0;
     }
@@ -142,7 +143,7 @@ final class FrequencySketch<E> {
    *
    * @param e the element to add
    */
-  public void increment(@Nonnull E e) {
+  public void increment( E e) {
     if (isNotInitialized()) {
       return;
     }

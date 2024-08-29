@@ -23,6 +23,7 @@ import static com.github.benmanes.caffeine.cache.UnsafeRefArrayAccess.soElement;
 import java.lang.reflect.Field;
 import java.util.AbstractQueue;
 import java.util.Iterator;
+import javax.annotation.Nullable;
 
 /**
  * An MPSC array queue which starts at <i>initialCapacity</i> and grows to <i>maxCapacity</i> in
@@ -129,7 +130,7 @@ abstract class BaseMpscLinkedArrayQueuePad2<E> extends BaseMpscLinkedArrayQueueP
 
 abstract class BaseMpscLinkedArrayQueueConsumerFields<E> extends BaseMpscLinkedArrayQueuePad2<E> {
   protected long consumerMask;
-  protected E[] consumerBuffer;
+  @Nullable protected E[] consumerBuffer;
   protected long consumerIndex;
 }
 
@@ -143,7 +144,7 @@ abstract class BaseMpscLinkedArrayQueueColdProducerFields<E>
     extends BaseMpscLinkedArrayQueuePad3<E> {
   protected volatile long producerLimit;
   protected long producerMask;
-  protected E[] producerBuffer;
+  @Nullable protected E[] producerBuffer;
 }
 
 @SuppressWarnings({"PMD", "restriction"})
@@ -305,7 +306,7 @@ abstract class BaseMpscLinkedArrayQueue<E> extends BaseMpscLinkedArrayQueueColdP
    * <p>
    * This implementation is correct for single consumer thread use only.
    */
-  @SuppressWarnings("unchecked")
+  @Nullable @SuppressWarnings("unchecked")
   @Override
   public E poll() {
     final E[] buffer = consumerBuffer;
@@ -365,7 +366,7 @@ abstract class BaseMpscLinkedArrayQueue<E> extends BaseMpscLinkedArrayQueueColdP
   }
 
   @SuppressWarnings("unchecked")
-  private E[] getNextBuffer(final E[] buffer, final long mask) {
+  private E[] getNextBuffer(@Nullable final E[] buffer, final long mask) {
     final long nextArrayOffset = nextArrayOffset(mask);
     final E[] nextBuffer = (E[]) lvElement(buffer, nextArrayOffset);
     soElement(buffer, nextArrayOffset, null);
@@ -490,7 +491,7 @@ abstract class BaseMpscLinkedArrayQueue<E> extends BaseMpscLinkedArrayQueueColdP
     return offer(e);
   }
 
-  @SuppressWarnings("unchecked")
+  @Nullable @SuppressWarnings("unchecked")
   public E relaxedPoll() {
     final E[] buffer = consumerBuffer;
     final long index = consumerIndex;
@@ -524,7 +525,7 @@ abstract class BaseMpscLinkedArrayQueue<E> extends BaseMpscLinkedArrayQueueColdP
     return (E) e;
   }
 
-  private void resize(long oldMask, E[] oldBuffer, long pIndex, final E e) {
+  private void resize(long oldMask, @Nullable E[] oldBuffer, long pIndex, final E e) {
     int newBufferLength = getNextBufferSize(oldBuffer);
     final E[] newBuffer = allocate(newBufferLength);
 
@@ -567,7 +568,7 @@ abstract class BaseMpscLinkedArrayQueue<E> extends BaseMpscLinkedArrayQueueColdP
   /**
    * @return next buffer size(inclusive of next array pointer)
    */
-  protected abstract int getNextBufferSize(E[] buffer);
+  protected abstract int getNextBufferSize(@Nullable E[] buffer);
 
   /**
    * @return current buffer capacity for elements (excluding next pointer and jump entry) * 2
@@ -624,7 +625,7 @@ final class UnsafeRefArrayAccess {
    * @param offset computed via {@link UnsafeRefArrayAccess#calcElementOffset}
    * @param e an orderly kitty
    */
-  public static <E> void soElement(E[] buffer, long offset, E e) {
+  public static <E> void soElement(@Nullable E[] buffer, long offset, @Nullable E e) {
     UNSAFE.putOrderedObject(buffer, offset, e);
   }
 
@@ -648,7 +649,7 @@ final class UnsafeRefArrayAccess {
    * @return the element at the offset
    */
   @SuppressWarnings("unchecked")
-  public static <E> E lvElement(E[] buffer, long offset) {
+  public static <E> E lvElement(@Nullable E[] buffer, long offset) {
     return (E) UNSAFE.getObjectVolatile(buffer, offset);
   }
 

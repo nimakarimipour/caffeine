@@ -22,6 +22,7 @@ import java.io.Serializable;
 import javax.annotation.Nonnegative;
 import javax.annotation.Nonnull;
 import javax.annotation.concurrent.ThreadSafe;
+import javax.annotation.Nullable;
 
 /**
  * Calculates the weights of cache entries. The total weight threshold is used to determine when an
@@ -44,7 +45,7 @@ public interface Weigher<K, V> {
    * @return the weight of the entry; must be non-negative
    */
   @Nonnegative
-  int weigh(@Nonnull K key, @Nonnull V value);
+  int weigh( K key,  V value);
 
   /**
    * Returns a weigher where an entry has a weight of {@code 1}.
@@ -53,7 +54,7 @@ public interface Weigher<K, V> {
    * @param <V> the type of values
    * @return a weigher where an entry has a weight of {@code 1}
    */
-  @Nonnull
+  
   static <K, V> Weigher<K, V> singletonWeigher() {
     @SuppressWarnings("unchecked")
     Weigher<K, V> self = (Weigher<K, V>) SingletonWeigher.INSTANCE;
@@ -68,8 +69,8 @@ public interface Weigher<K, V> {
    * @param <V> the type of values
    * @return a weigher that enforces that the weight is non-negative
    */
-  @Nonnull
-  static <K, V> Weigher<K, V> boundedWeigher(@Nonnull Weigher<K, V> delegate) {
+  
+  static <K, V> Weigher<K, V> boundedWeigher( @Nullable Weigher<K, V> delegate) {
     return new BoundedWeigher<>(delegate);
   }
 }
@@ -86,7 +87,7 @@ final class BoundedWeigher<K, V> implements Weigher<K, V>, Serializable {
   static final long serialVersionUID = 1;
   final Weigher<? super K, ? super V> delegate;
 
-  BoundedWeigher(Weigher<? super K, ? super V> delegate) {
+  BoundedWeigher(@Nullable Weigher<? super K, ? super V> delegate) {
     this.delegate = requireNonNull(delegate);
   }
 

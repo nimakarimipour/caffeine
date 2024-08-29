@@ -46,6 +46,7 @@ import java.util.logging.Logger;
 import javax.annotation.Nonnull;
 
 import com.github.benmanes.caffeine.cache.stats.CacheStats;
+import javax.annotation.Nullable;
 
 /**
  * This class provides a skeletal implementation of the {@link AsyncLoadingCache} interface to
@@ -61,7 +62,7 @@ abstract class LocalAsyncLoadingCache<C extends LocalCache<K, CompletableFuture<
   final boolean canBulkLoad;
   final AsyncCacheLoader<K, V> loader;
 
-  LoadingCacheView localCacheView;
+  @Nullable LoadingCacheView localCacheView;
 
   @SuppressWarnings("unchecked")
   LocalAsyncLoadingCache(C cache, AsyncCacheLoader<? super K, V> loader) {
@@ -98,26 +99,26 @@ abstract class LocalAsyncLoadingCache<C extends LocalCache<K, CompletableFuture<
     }
   }
 
-  @Override
-  public CompletableFuture<V> getIfPresent(@Nonnull Object key) {
+  @Nullable @Override
+  public CompletableFuture<V> getIfPresent( Object key) {
     return cache.getIfPresent(key, /* recordStats */ true);
   }
 
-  @Override
-  public CompletableFuture<V> get(@Nonnull K key,
-      @Nonnull Function<? super K, ? extends V> mappingFunction) {
+  @Nullable @Override
+  public CompletableFuture<V> get( K key,
+       Function<? super K, ? extends V> mappingFunction) {
     requireNonNull(mappingFunction);
     return get(key, (k1, executor) -> CompletableFuture.supplyAsync(
         () -> mappingFunction.apply(key), executor));
   }
 
-  @Override
+  @Nullable @Override
   public CompletableFuture<V> get(K key,
       BiFunction<? super K, Executor, CompletableFuture<V>> mappingFunction) {
     return get(key, mappingFunction, /* recordStats */ true);
   }
 
-  @SuppressWarnings("FutureReturnValueIgnored")
+  @Nullable @SuppressWarnings("FutureReturnValueIgnored")
   CompletableFuture<V> get(K key,
       BiFunction<? super K, Executor, CompletableFuture<V>> mappingFunction, boolean recordStats) {
     long startTime = cache.statsTicker().read();
@@ -280,7 +281,7 @@ abstract class LocalAsyncLoadingCache<C extends LocalCache<K, CompletableFuture<
     }
 
     @Override
-    public void accept(Map<K, V> result, Throwable error) {
+    public void accept(@Nullable Map<K, V> result, Throwable error) {
       long loadTime = cache.statsTicker().read() - startTime;
 
       if (result == null) {
@@ -332,14 +333,14 @@ abstract class LocalAsyncLoadingCache<C extends LocalCache<K, CompletableFuture<
   final class LoadingCacheView implements LoadingCache<K, V>, Serializable {
     private static final long serialVersionUID = 1L;
 
-    transient AsMapView<K, V> asMapView;
+    @Nullable transient AsMapView<K, V> asMapView;
 
     /** A test-only method for validation. */
     LocalAsyncLoadingCache<C, K, V> getOuter() {
       return LocalAsyncLoadingCache.this;
     }
 
-    @Override
+    @Nullable @Override
     public V getIfPresent(Object key) {
       CompletableFuture<V> future = cache.getIfPresent(key, /* recordStats */ true);
       return Async.getIfReady(future);
@@ -541,8 +542,8 @@ abstract class LocalAsyncLoadingCache<C extends LocalCache<K, CompletableFuture<
   static final class AsMapView<K, V> extends AbstractMap<K, V> implements ConcurrentMap<K, V> {
     final LocalCache<K, CompletableFuture<V>> delegate;
 
-    Collection<V> values;
-    Set<Entry<K, V>> entries;
+    @Nullable Collection<V> values;
+    @Nullable Set<Entry<K, V>> entries;
 
     AsMapView(LocalCache<K, CompletableFuture<V>> delegate) {
       this.delegate = delegate;
@@ -580,12 +581,12 @@ abstract class LocalAsyncLoadingCache<C extends LocalCache<K, CompletableFuture<
       return false;
     }
 
-    @Override
+    @Nullable @Override
     public V get(Object key) {
       return Async.getIfReady(delegate.get(key));
     }
 
-    @Override
+    @Nullable @Override
     public V putIfAbsent(K key, V value) {
       requireNonNull(value);
       CompletableFuture<V> valueFuture =
@@ -593,7 +594,7 @@ abstract class LocalAsyncLoadingCache<C extends LocalCache<K, CompletableFuture<
       return Async.getWhenSuccessful(valueFuture);
     }
 
-    @Override
+    @Nullable @Override
     public V put(K key, V value) {
       requireNonNull(value);
       CompletableFuture<V> oldValueFuture =
@@ -601,7 +602,7 @@ abstract class LocalAsyncLoadingCache<C extends LocalCache<K, CompletableFuture<
       return Async.getWhenSuccessful(oldValueFuture);
     }
 
-    @Override
+    @Nullable @Override
     public V remove(Object key) {
       CompletableFuture<V> oldValueFuture = delegate.remove(key);
       return Async.getWhenSuccessful(oldValueFuture);
@@ -640,7 +641,7 @@ abstract class LocalAsyncLoadingCache<C extends LocalCache<K, CompletableFuture<
       }
     }
 
-    @Override
+    @Nullable @Override
     public V replace(K key, V value) {
       requireNonNull(value);
       CompletableFuture<V> oldValueFuture =
@@ -668,7 +669,7 @@ abstract class LocalAsyncLoadingCache<C extends LocalCache<K, CompletableFuture<
       return replaced[0];
     }
 
-    @Override
+    @Nullable @Override
     public V computeIfAbsent(K key, Function<? super K, ? extends V> mappingFunction) {
       requireNonNull(mappingFunction);
       CompletableFuture<V> valueFuture = delegate.computeIfAbsent(key, k -> {
@@ -678,7 +679,7 @@ abstract class LocalAsyncLoadingCache<C extends LocalCache<K, CompletableFuture<
       return Async.getWhenSuccessful(valueFuture);
     }
 
-    @Override
+    @Nullable @Override
     public V computeIfPresent(K key,
         BiFunction<? super K, ? super V, ? extends V> remappingFunction) {
       requireNonNull(remappingFunction);
@@ -703,7 +704,7 @@ abstract class LocalAsyncLoadingCache<C extends LocalCache<K, CompletableFuture<
       }
     }
 
-    @Override
+    @Nullable @Override
     public V compute(K key,
         BiFunction<? super K, ? super V, ? extends V> remappingFunction) {
       requireNonNull(remappingFunction);
@@ -732,7 +733,7 @@ abstract class LocalAsyncLoadingCache<C extends LocalCache<K, CompletableFuture<
       }
     }
 
-    @Override
+    @Nullable @Override
     public V merge(K key, V value,
         BiFunction<? super V, ? super V, ? extends V> remappingFunction) {
       requireNonNull(value);
@@ -867,8 +868,8 @@ abstract class LocalAsyncLoadingCache<C extends LocalCache<K, CompletableFuture<
       public Iterator<Entry<K, V>> iterator() {
         return new Iterator<Entry<K, V>>() {
           Iterator<Entry<K, CompletableFuture<V>>> iterator = delegate.entrySet().iterator();
-          Entry<K, V> cursor;
-          K removalKey;
+          @Nullable Entry<K, V> cursor;
+          @Nullable K removalKey;
 
           @Override
           public boolean hasNext() {

@@ -215,7 +215,7 @@ public final class SingleConsumerQueue<E> extends SCQHeader.HeadAndTailRef<E>
     return false;
   }
 
-  @Override
+  @Nullable @Override
   public E peek() {
     Node<E> h = head;
     Node<E> t = tail;
@@ -238,7 +238,7 @@ public final class SingleConsumerQueue<E> extends SCQHeader.HeadAndTailRef<E>
     return true;
   }
 
-  @Override
+  @Nullable @Override
   public E poll() {
     Node<E> h = head;
     Node<E> next = h.getNextRelaxed();
@@ -288,7 +288,7 @@ public final class SingleConsumerQueue<E> extends SCQHeader.HeadAndTailRef<E>
   }
 
   /** Adds the linked list of nodes to the queue. */
-  void append(@Nonnull Node<E> first, @Nonnull Node<E> last) {
+  void append( Node<E> first,  @Nullable Node<E> last) {
     for (;;) {
       Node<E> t = tail;
       if (casTail(t, last)) {
@@ -327,7 +327,7 @@ public final class SingleConsumerQueue<E> extends SCQHeader.HeadAndTailRef<E>
    * @return either {@code null} if the element was transferred, the first node if neither a
    *         transfer nor receive were successful, or the received last element from a producer
    */
-  @Nullable Node<E> transferOrCombine(@Nonnull Node<E> first, Node<E> last) {
+   @Nullable Node<E> transferOrCombine( Node<E> first, @Nullable Node<E> last) {
     int index = index();
     AtomicReference<Node<E>> slot = arena[index];
 
@@ -369,7 +369,7 @@ public final class SingleConsumerQueue<E> extends SCQHeader.HeadAndTailRef<E>
   }
 
   /** Returns the last node in the linked list. */
-  @Nonnull static <E> Node<E> findLast(@Nonnull Node<E> node) {
+   static <E> Node<E> findLast( Node<E> node) {
     Node<E> next;
     while ((next = node.getNextRelaxed()) != null) {
       node = next;
@@ -381,7 +381,7 @@ public final class SingleConsumerQueue<E> extends SCQHeader.HeadAndTailRef<E>
   public Iterator<E> iterator() {
     return new Iterator<E>() {
       Node<E> prev;
-      Node<E> t = tail;
+      @Nullable Node<E> t = tail;
       Node<E> cursor = head;
       boolean failOnRemoval = true;
 
@@ -390,7 +390,7 @@ public final class SingleConsumerQueue<E> extends SCQHeader.HeadAndTailRef<E>
         return (cursor != t);
       }
 
-      @Override
+      @Nullable @Override
       public E next() {
         if (!hasNext()) {
           throw new NoSuchElementException();
@@ -467,19 +467,19 @@ public final class SingleConsumerQueue<E> extends SCQHeader.HeadAndTailRef<E>
   static class Node<E> {
     static final long NEXT_OFFSET = UnsafeAccess.objectFieldOffset(Node.class, "next");
 
-    E value;
-    volatile Node<E> next;
+    @Nullable E value;
+    @Nullable volatile Node<E> next;
 
-    Node(@Nullable E value) {
+    Node( @Nullable E value) {
       this.value = value;
     }
 
     @SuppressWarnings("unchecked")
-    @Nullable Node<E> getNextRelaxed() {
+     Node<E> getNextRelaxed() {
       return (Node<E>) UnsafeAccess.UNSAFE.getObject(this, NEXT_OFFSET);
     }
 
-    void lazySetNext(@Nullable Node<E> newNext) {
+    void lazySetNext( @Nullable Node<E> newNext) {
       UnsafeAccess.UNSAFE.putOrderedObject(this, NEXT_OFFSET, newNext);
     }
 
@@ -503,7 +503,7 @@ public final class SingleConsumerQueue<E> extends SCQHeader.HeadAndTailRef<E>
   static final class LinearizableNode<E> extends Node<E> {
     volatile boolean done;
 
-    LinearizableNode(@Nullable E value) {
+    LinearizableNode( E value) {
       super(value);
     }
 
@@ -548,13 +548,13 @@ final class SCQHeader {
   abstract static class HeadAndTailRef<E> extends PadHeadAndTail<E> {
     static final long TAIL_OFFSET = UnsafeAccess.objectFieldOffset(HeadAndTailRef.class, "tail");
 
-    volatile Node<E> tail;
+    @Nullable volatile Node<E> tail;
 
     void lazySetTail(Node<E> next) {
       UnsafeAccess.UNSAFE.putOrderedObject(this, TAIL_OFFSET, next);
     }
 
-    boolean casTail(Node<E> expect, Node<E> update) {
+    boolean casTail(@Nullable Node<E> expect, @Nullable Node<E> update) {
       return UnsafeAccess.UNSAFE.compareAndSwapObject(this, TAIL_OFFSET, expect, update);
     }
   }

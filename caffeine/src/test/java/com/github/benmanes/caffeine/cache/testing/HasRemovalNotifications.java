@@ -46,7 +46,7 @@ public final class HasRemovalNotifications<K, V> extends TypeSafeDiagnosingMatch
   private final RemovalCause cause;
   private final CacheContext context;
 
-  public HasRemovalNotifications(CacheContext context, int count, @Nullable RemovalCause cause) {
+  public HasRemovalNotifications(CacheContext context, int count,  RemovalCause cause) {
     this.context = checkNotNull(context);
     this.cause = cause;
     this.count = count;
