@@ -104,7 +104,7 @@ public final class CaffeineCacheFromContext {
       context.cache = builder.build(context.loader);
     }
 
-    @SuppressWarnings("unchecked")
+    
     Cache<K, V> castedCache = (Cache<K, V>) context.cache;
     RandomSeedEnforcer.ensureRandomSeed(castedCache);
     return castedCache;

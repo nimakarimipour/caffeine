@@ -106,9 +106,9 @@ public final class CacheContext {
   CacheBuilder<Object, Object> guava;
   AsyncLoadingCache<?, ?> asyncCache;
 
-  @Nullable Integer firstKey;
-  @Nullable Integer middleKey;
-  @Nullable Integer lastKey;
+   Integer firstKey;
+   Integer middleKey;
+   Integer lastKey;
   long initialSize;
 
   // Generated on-demand
@@ -479,6 +479,6 @@ public final class CacheContext {
         .toString();
   }
 
-  @SuppressWarnings("serial")
+  
   static final class SerializableFakeTicker extends FakeTicker implements Serializable {}
 }

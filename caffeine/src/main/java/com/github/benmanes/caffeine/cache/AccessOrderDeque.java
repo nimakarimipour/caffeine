@@ -44,7 +44,7 @@ final class AccessOrderDeque<E extends AccessOrder<E>> extends AbstractLinkedDeq
   }
 
   @Override
-  @SuppressWarnings("unchecked")
+  
   public boolean remove(Object o) {
     return (o instanceof AccessOrder<?>) && remove((E) o);
   }
@@ -58,23 +58,23 @@ final class AccessOrderDeque<E extends AccessOrder<E>> extends AbstractLinkedDeq
     return false;
   }
 
-  @Override
-  public @Nullable E getPrevious(E e) {
+  @Nullable @Override
+  public  E getPrevious(E e) {
     return e.getPreviousInAccessOrder();
   }
 
   @Override
-  public void setPrevious(E e, @Nullable E prev) {
+  public void setPrevious(E e,  @Nullable E prev) {
     e.setPreviousInAccessOrder(prev);
   }
 
-  @Override
-  public @Nullable E getNext(E e) {
+  @Nullable @Override
+  public  E getNext(E e) {
     return e.getNextInAccessOrder();
   }
 
   @Override
-  public void setNext(E e, @Nullable E next) {
+  public void setNext(E e,  @Nullable E next) {
     e.setNextInAccessOrder(next);
   }
 
@@ -87,18 +87,18 @@ final class AccessOrderDeque<E extends AccessOrder<E>> extends AbstractLinkedDeq
      * Retrieves the previous element or <tt>null</tt> if either the element is unlinked or the first
      * element on the deque.
      */
-    @Nullable T getPreviousInAccessOrder();
+     @Nullable T getPreviousInAccessOrder();
 
     /** Sets the previous element or <tt>null</tt> if there is no link. */
-    void setPreviousInAccessOrder(@Nullable T prev);
+    void setPreviousInAccessOrder( @Nullable T prev);
 
     /**
      * Retrieves the next element or <tt>null</tt> if either the element is unlinked or the last
      * element on the deque.
      */
-    @Nullable T getNextInAccessOrder();
+     @Nullable T getNextInAccessOrder();
 
     /** Sets the next element or <tt>null</tt> if there is no link. */
-    void setNextInAccessOrder(@Nullable T next);
+    void setNextInAccessOrder( @Nullable T next);
   }
 }

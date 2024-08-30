@@ -30,7 +30,7 @@ import com.github.benmanes.caffeine.cache.ReadBuffer;
 final class ManyToOneBuffer<E> extends ManyToOneHeader.ReadAndWriteCounterRef<E> {
   final AtomicReference<E>[] buffer;
 
-  @SuppressWarnings({"unchecked", "rawtypes"})
+  
   ManyToOneBuffer() {
     buffer = new AtomicReference[BUFFER_SIZE];
     for (int i = 0; i < BUFFER_SIZE; i++) {

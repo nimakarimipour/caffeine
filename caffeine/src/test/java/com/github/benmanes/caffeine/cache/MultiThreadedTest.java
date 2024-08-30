@@ -94,7 +94,7 @@ public final class MultiThreadedTest {
     Threads.runTest(cache, asyncOperations);
   }
 
-  @SuppressWarnings({"unchecked", "rawtypes", "SizeGreaterThanOrEqualsZero", "SelfEquals"})
+  
   List<BiConsumer<LoadingCache<Integer, Integer>, Integer>> operations = ImmutableList.of(
       // LoadingCache
       (cache, key) -> { cache.get(key); },
@@ -155,7 +155,7 @@ public final class MultiThreadedTest {
       });
 
 
-  @SuppressWarnings({"unchecked", "rawtypes", "FutureReturnValueIgnored"})
+  
   List<BiConsumer<AsyncLoadingCache<Integer, Integer>, Integer>> asyncOperations = ImmutableList.of(
       (cache, key) -> { cache.getIfPresent(key); },
       (cache, key) -> { cache.get(key, k -> key); },

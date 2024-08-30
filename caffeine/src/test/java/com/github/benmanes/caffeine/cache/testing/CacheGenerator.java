@@ -79,7 +79,7 @@ final class CacheGenerator {
   }
 
   /** Returns the Cartesian set of the possible cache configurations. */
-  @SuppressWarnings("unchecked")
+  
   private Set<List<Object>> combinations() {
     Set<Boolean> asyncLoading = ImmutableSet.of(true, false);
     Set<Stats> statistics = filterTypes(options.stats(), cacheSpec.stats());
@@ -208,7 +208,7 @@ final class CacheGenerator {
   }
 
   /** Fills the cache up to the population size. */
-  @SuppressWarnings({"deprecation", "unchecked", "BoxedPrimitiveConstructor"})
+  
   private void populate(CacheContext context, Cache<Integer, Integer> cache) {
     if (context.population.size() == 0) {
       return;

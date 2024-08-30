@@ -49,7 +49,7 @@ public interface Policy<K, V> {
    *
    * @return access to low-level operations for this cache if an eviction policy is used
    */
-  @Nonnull
+  
   Optional<Eviction<K, V>> eviction();
 
   /**
@@ -66,7 +66,7 @@ public interface Policy<K, V> {
    * @return access to low-level operations for this cache if a time-to-idle expiration policy is
    *         used
    */
-  @Nonnull
+  
   Optional<Expiration<K, V>> expireAfterAccess();
 
   /**
@@ -80,7 +80,7 @@ public interface Policy<K, V> {
    * @return access to low-level operations for this cache if a time-to-live expiration policy is
    *         used
    */
-  @Nonnull
+  
   Optional<Expiration<K, V>> expireAfterWrite();
 
   /**
@@ -93,7 +93,7 @@ public interface Policy<K, V> {
    *
    * @return access to low-level operations for this cache if a variable expiration policy is used
    */
-  @Nonnull
+  
   default Optional<VarExpiration<K, V>> expireVariably() {
     // This method will be abstract in version 3.0.0
     return Optional.empty();
@@ -109,7 +109,7 @@ public interface Policy<K, V> {
    *
    * @return access to low-level operations for this cache if a time-to-live refresh policy is used
    */
-  @Nonnull
+  
   Optional<Expiration<K, V>> refreshAfterWrite();
 
   /** The low-level operations for a cache with a size-based eviction policy. */
@@ -129,8 +129,8 @@ public interface Policy<K, V> {
      * @param key the key for the entry being queried
      * @return the weight if the entry is present in the cache
      */
-    @Nonnull
-    default OptionalInt weightOf(@Nonnull K key) {
+    
+    default OptionalInt weightOf( K key) {
       // This method will be abstract in version 3.0.0
       return OptionalInt.empty();
     }
@@ -141,7 +141,7 @@ public interface Policy<K, V> {
      *
      * @return the combined weight of the values in this cache
      */
-    @Nonnull
+    
     OptionalLong weightedSize();
 
     /**
@@ -182,7 +182,7 @@ public interface Policy<K, V> {
      *        the limit)
      * @return a snapshot view of the cache from coldest entry to the hottest
      */
-    @Nonnull
+    
     Map<K, V> coldest(@Nonnegative int limit);
 
     /**
@@ -199,7 +199,7 @@ public interface Policy<K, V> {
      *        the limit)
      * @return a snapshot view of the cache from hottest entry to the coldest
      */
-    @Nonnull
+    
     Map<K, V> hottest(@Nonnegative int limit);
   }
 
@@ -218,8 +218,8 @@ public interface Policy<K, V> {
      * @param unit the unit that {@code age} is expressed in
      * @return the age if the entry is present in the cache
      */
-    @Nonnull
-    OptionalLong ageOf(@Nonnull K key, @Nonnull TimeUnit unit);
+    
+    OptionalLong ageOf( K key,  TimeUnit unit);
 
     /**
      * Returns the fixed duration used to determine if an entry should be automatically removed due
@@ -231,7 +231,7 @@ public interface Policy<K, V> {
      * @return the length of time after which an entry should be automatically removed
      */
     @Nonnegative
-    long getExpiresAfter(@Nonnull TimeUnit unit);
+    long getExpiresAfter( TimeUnit unit);
 
     /**
      * Specifies that each entry should be automatically removed from the cache once a fixed
@@ -241,7 +241,7 @@ public interface Policy<K, V> {
      * @param unit the unit that {@code duration} is expressed in
      * @throws IllegalArgumentException if {@code duration} is negative
      */
-    void setExpiresAfter(@Nonnegative long duration, @Nonnull TimeUnit unit);
+    void setExpiresAfter(@Nonnegative long duration,  TimeUnit unit);
 
     /**
      * Returns an unmodifiable snapshot {@link Map} view of the cache with ordered traversal. The
@@ -257,7 +257,7 @@ public interface Policy<K, V> {
      *        the limit)
      * @return a snapshot view of the cache from oldest entry to the youngest
      */
-    @Nonnull
+    
     Map<K, V> oldest(@Nonnegative int limit);
 
     /**
@@ -274,7 +274,7 @@ public interface Policy<K, V> {
      *        the limit)
      * @return a snapshot view of the cache from youngest entry to the oldest
      */
-    @Nonnull
+    
     Map<K, V> youngest(@Nonnegative int limit);
   }
 
@@ -289,8 +289,8 @@ public interface Policy<K, V> {
      * @param unit the unit that {@code age} is expressed in
      * @return the duration if the entry is present in the cache
      */
-    @Nonnull
-    OptionalLong getExpiresAfter(@Nonnull K key, @Nonnull TimeUnit unit);
+    
+    OptionalLong getExpiresAfter( K key,  TimeUnit unit);
 
     /**
      * Specifies that the entry should be automatically removed from the cache once the duration has
@@ -302,7 +302,7 @@ public interface Policy<K, V> {
      * @throws IllegalArgumentException if {@code duration} is negative
      * @throws NullPointerException if the unit is null
      */
-    void setExpiresAfter(@Nonnull K key, @Nonnegative long duration, @Nonnull TimeUnit unit);
+    void setExpiresAfter( K key, @Nonnegative long duration,  TimeUnit unit);
 
     /**
      * Associates the {@code value} with the {@code key} in this cache if the specified key is not
@@ -318,8 +318,8 @@ public interface Policy<K, V> {
      * @throws IllegalArgumentException if {@code duration} is negative
      * @throws NullPointerException if the specified key or value is null
      */
-    default boolean putIfAbsent(@Nonnull K key, @Nonnull V value,
-        @Nonnegative long duration, @Nonnull TimeUnit unit) {
+    default boolean putIfAbsent( K key,  V value,
+        @Nonnegative long duration,  TimeUnit unit) {
       // This method will be abstract in version 3.0.0; added & implemented in version 2.6.0
       throw new UnsupportedOperationException();
     }
@@ -337,8 +337,8 @@ public interface Policy<K, V> {
      * @throws IllegalArgumentException if {@code duration} is negative
      * @throws NullPointerException if the specified key or value is null
      */
-    default void put(@Nonnull K key, @Nonnull V value,
-        @Nonnegative long duration, @Nonnull TimeUnit unit) {
+    default void put( K key,  V value,
+        @Nonnegative long duration,  TimeUnit unit) {
       // This method will be abstract in version 3.0.0; added & implemented in version 2.6.0
       throw new UnsupportedOperationException();
     }
@@ -357,7 +357,7 @@ public interface Policy<K, V> {
      *        the limit)
      * @return a snapshot view of the cache from oldest entry to the youngest
      */
-    @Nonnull
+    
     Map<K, V> oldest(@Nonnegative int limit);
 
     /**
@@ -374,7 +374,7 @@ public interface Policy<K, V> {
      *        the limit)
      * @return a snapshot view of the cache from youngest entry to the oldest
      */
-    @Nonnull
+    
     Map<K, V> youngest(@Nonnegative int limit);
   }
 }

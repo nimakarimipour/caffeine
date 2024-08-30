@@ -29,7 +29,7 @@ import javax.annotation.Nullable;
  *
  * @author ben.manes@gmail.com (Ben Manes)
  */
-@SuppressWarnings("PMD.TooManyFields")
+
 final class SerializationProxy<K, V> implements Serializable {
   private static final long serialVersionUID = 1;
 
@@ -44,14 +44,14 @@ final class SerializationProxy<K, V> implements Serializable {
   long maximumSize = UNSET_INT;
   long maximumWeight = UNSET_INT;
 
-  @Nullable Ticker ticker;
-  @Nullable Expiry<?, ?> expiry;
-  @Nullable Weigher<?, ?> weigher;
-  @Nullable CacheWriter<?, ?> writer;
-  @Nullable AsyncCacheLoader<?, ?> loader;
-  @Nullable RemovalListener<?, ?> removalListener;
+   @Nullable Ticker ticker;
+   @Nullable Expiry<?, ?> expiry;
+   @Nullable Weigher<?, ?> weigher;
+   @Nullable CacheWriter<?, ?> writer;
+   @Nullable AsyncCacheLoader<?, ?> loader;
+   @Nullable RemovalListener<?, ?> removalListener;
 
-  @SuppressWarnings("unchecked")
+  
   Caffeine<Object, Object> recreateCaffeine() {
     Caffeine<Object, Object> builder = Caffeine.newBuilder();
     if (ticker != null) {
@@ -102,11 +102,11 @@ final class SerializationProxy<K, V> implements Serializable {
     if (loader == null) {
       return builder.build();
     } else if (async) {
-      @SuppressWarnings("unchecked")
+      
       AsyncCacheLoader<K, V> cacheLoader = (AsyncCacheLoader<K, V>) loader;
       return builder.buildAsync(cacheLoader);
     } else {
-      @SuppressWarnings("unchecked")
+      
       CacheLoader<K, V> cacheLoader = (CacheLoader<K, V>) loader;
       return builder.build(cacheLoader);
     }

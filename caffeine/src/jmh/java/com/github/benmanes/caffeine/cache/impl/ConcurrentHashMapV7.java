@@ -113,7 +113,7 @@ import com.github.benmanes.caffeine.base.UnsafeAccess;
  * @param <K> the type of keys maintained by this map
  * @param <V> the type of mapped values
  */
-@SuppressWarnings({"all", "unchecked", "rawtypes", "serial", "JdkObsolete"})
+
 public class ConcurrentHashMapV7<K, V> extends AbstractMap<K, V>
         implements ConcurrentMap<K, V>, Serializable {
     private static final long serialVersionUID = 7249069246763182397L;
@@ -325,7 +325,7 @@ public class ConcurrentHashMapV7<K, V> extends AbstractMap<K, V>
      * read semantics. Note: This is manually integrated into a few
      * performance-sensitive methods to reduce call overhead.
      */
-    @SuppressWarnings("unchecked")
+    
     static final <K,V> HashEntry<K,V> entryAt(HashEntry<K,V>[] tab, int i) {
         return (tab == null) ? null :
             (HashEntry<K,V>) UNSAFE.getObjectVolatile
@@ -503,7 +503,7 @@ public class ConcurrentHashMapV7<K, V> extends AbstractMap<K, V>
          * Doubles size of table and repacks entries, also adding the
          * given node to new table
          */
-        @SuppressWarnings("unchecked")
+        
         private void rehash(HashEntry<K,V> node) {
             /*
              * Reclassify nodes in each list to new table.  Because we
@@ -754,7 +754,7 @@ public class ConcurrentHashMapV7<K, V> extends AbstractMap<K, V>
      * fully ordered writes), some performance-sensitive methods rely
      * on this method only as a recheck upon null reads.
      */
-    @SuppressWarnings("unchecked")
+    
     static final <K,V> Segment<K,V> segmentAt(Segment<K,V>[] ss, int j) {
         long u = (j << SSHIFT) + SBASE;
         return ss == null ? null :
@@ -768,7 +768,7 @@ public class ConcurrentHashMapV7<K, V> extends AbstractMap<K, V>
      * @param k the index
      * @return the segment
      */
-    @SuppressWarnings("unchecked")
+    
     private Segment<K,V> ensureSegment(int k) {
         final Segment<K,V>[] ss = this.segments;
         long u = (k << SSHIFT) + SBASE; // raw offset
@@ -798,7 +798,7 @@ public class ConcurrentHashMapV7<K, V> extends AbstractMap<K, V>
     /**
      * Get the segment for the given hash
      */
-    @SuppressWarnings("unchecked")
+    
     private Segment<K,V> segmentForHash(int h) {
         long u = (((h >>> segmentShift) & segmentMask) << SSHIFT) + SBASE;
         return (Segment<K,V>) UNSAFE.getObjectVolatile(segments, u);
@@ -807,7 +807,7 @@ public class ConcurrentHashMapV7<K, V> extends AbstractMap<K, V>
     /**
      * Gets the table entry for the given segment and hash
      */
-    @SuppressWarnings("unchecked")
+    
     static final <K,V> HashEntry<K,V> entryForHash(Segment<K,V> seg, int h) {
         HashEntry<K,V>[] tab;
         return (seg == null || (tab = seg.table) == null) ? null :
@@ -833,7 +833,7 @@ public class ConcurrentHashMapV7<K, V> extends AbstractMap<K, V>
      * negative or the load factor or concurrencyLevel are
      * nonpositive.
      */
-    @SuppressWarnings("unchecked")
+    
     public ConcurrentHashMapV7(int initialCapacity,
                              float loadFactor, int concurrencyLevel) {
         if (!(loadFactor > 0) || initialCapacity < 0 || concurrencyLevel <= 0) {
@@ -1063,7 +1063,7 @@ public class ConcurrentHashMapV7<K, V> extends AbstractMap<K, V>
      * @throws NullPointerException if the specified key is null
      */
     @Override
-    @SuppressWarnings("unchecked")
+    
     public boolean containsKey(Object key) {
         Segment<K,V> s; // same as get() except no need for volatile value read
         HashEntry<K,V>[] tab;
@@ -1179,7 +1179,7 @@ public class ConcurrentHashMapV7<K, V> extends AbstractMap<K, V>
      * @throws NullPointerException if the specified key or value is null
      */
     @Override
-    @SuppressWarnings("unchecked")
+    
     public V put(K key, V value) {
         Segment<K,V> s;
         if (value == null) {
@@ -1202,7 +1202,7 @@ public class ConcurrentHashMapV7<K, V> extends AbstractMap<K, V>
      * @throws NullPointerException if the specified key or value is null
      */
     @Override
-    @SuppressWarnings("unchecked")
+    
     public V putIfAbsent(K key, V value) {
         Segment<K,V> s;
         if (value == null) {
@@ -1646,7 +1646,7 @@ public class ConcurrentHashMapV7<K, V> extends AbstractMap<K, V>
      * stream (i.e., deserialize it).
      * @param s the stream
      */
-    @SuppressWarnings("unchecked")
+    
     private void readObject(java.io.ObjectInputStream s)
         throws IOException, ClassNotFoundException {
         // Don't call defaultReadObject()

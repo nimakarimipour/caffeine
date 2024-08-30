@@ -54,15 +54,15 @@ public final class IsCacheReserializable<T> extends TypeSafeDiagnosingMatcher<T>
     T copy = SerializableTester.reserialize(original);
 
     if (original instanceof AsyncLoadingCache<?, ?>) {
-      @SuppressWarnings("unchecked")
+      
       AsyncLoadingCache<Object, Object> asyncCache = (AsyncLoadingCache<Object, Object>) original;
-      @SuppressWarnings("unchecked")
+      
       AsyncLoadingCache<Object, Object> asyncCopy = (AsyncLoadingCache<Object, Object>) copy;
       checkAsynchronousCache(asyncCache, asyncCopy, desc);
     } else if (original instanceof Cache<?, ?>) {
-      @SuppressWarnings("unchecked")
+      
       Cache<Object, Object> syncCache = (Cache<Object, Object>) original;
-      @SuppressWarnings("unchecked")
+      
       Cache<Object, Object> syncCopy = (Cache<Object, Object>) copy;
       checkSyncronousCache(syncCache, syncCopy, desc);
     } else {
@@ -100,7 +100,7 @@ public final class IsCacheReserializable<T> extends TypeSafeDiagnosingMatcher<T>
 
   /* ---------------- Unbounded -------------- */
 
-  @SuppressWarnings("unchecked")
+  
   private static <K, V> void checkIfUnbounded(
       Cache<K, V> original, Cache<K, V> copy, DescriptionBuilder desc) {
     if (original instanceof UnboundedLocalCache.UnboundedLocalManualCache<?, ?>) {
@@ -164,7 +164,7 @@ public final class IsCacheReserializable<T> extends TypeSafeDiagnosingMatcher<T>
 
   /* ---------------- Bounded -------------- */
 
-  @SuppressWarnings("unchecked")
+  
   private static <K, V> void checkIfBounded(
       Cache<K, V> original, Cache<K, V> copy, DescriptionBuilder desc) {
     if (original instanceof BoundedLocalCache.BoundedLocalManualCache<?, ?>) {
@@ -257,7 +257,7 @@ public final class IsCacheReserializable<T> extends TypeSafeDiagnosingMatcher<T>
     }
   }
 
-  @SuppressWarnings("unchecked")
+  
   private static <K, V> Weigher<K, V> unwrapWeigher(Weigher<K, V> weigher) {
     for (;;) {
       if (weigher instanceof BoundedWeigher<?, ?>) {
@@ -270,7 +270,7 @@ public final class IsCacheReserializable<T> extends TypeSafeDiagnosingMatcher<T>
     }
   }
 
-  @SuppressWarnings("unchecked")
+  
   private static <K, V> Expiry<K, V> unwrapExpiry(Expiry<K, V> expiry) {
     for (;;) {
       if (expiry instanceof AsyncExpiry<?, ?>) {
