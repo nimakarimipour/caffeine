@@ -102,6 +102,7 @@ tasks.withType(JavaCompile) {
   ]
   if (name == 'compileJava') {
     options.compilerArgs += [
+      "-XepDisableAllChecks",
       '-XepOpt:NullAway:AnnotatedPackages=com.github.benmanes.caffeine',
       "-XepOpt:NullAway:SerializeFixMetadata=true",
       "-XepOpt:NullAway:FixSerializationConfigPath=/home/nima/Developer/nullness-benchmarks/caffeine/annotator-out/checker.xml",
